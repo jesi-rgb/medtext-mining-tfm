@@ -1,0 +1,65 @@
+\chapter{Fundamentos de la minería de texto}
+En este capítulo discutiremos algunas de las técnicas y términos más importantes a la hora de hablar de minería de texto, así como minería de datos en general, con objeto de que todas las consideraciones realizadas posteriormente queden claras.
+
+En \textit{Text Mining Applied to Electronic Medical Records: A Literature Review}~\cite{textmining2015} se hace una revisión de los diferentes aspectos a tener en cuenta durante el procesamiento de textos médicos. Nos apoyaremos en gran medida en la estructura, contenidos y referencias de este artículo, que resume muy bien todo lo que necesitamos saber para resolver nuestro problema.
+
+\section{Minería de datos}
+La minería de datos es una rama de la informática que se dedica a encontrar tendencias y patrones en grandes volúmenes de información. Estas tendencias y patrones crean \textit{conocimiento} a partir de los datos, es decir: información estructurada desde los datos no estructurados. Esta información es muy valiosa y contribuye en las decisiones que se vayan a tomar o a monitorizar algunos aspectos que sean de vital importancia para el interesado. 
+
+La minería de datos puede dividirse en un número de técnicas que funcionan de forma diferente en función del tipo de datos que tengamos y la información que busquemos.
+
+\begin{enumerate}
+    \item \textbf{Asociación}: esta técnica se centra en encontrar relaciones entre las distintas variables de nuestros datos, con objeto de encontrar muestras que sean estadísticamente dependientes. Una de las técnicas más utilizadas son las reglas de asociación, cuya salida tras el cálculo son un conjunto de reglas con antecedentes y consecuentes, muy fácilmente interpretables por cualquier persona, familiarizada o no con la ciencia de datos. \cite{associationrules1991}
+    \item \textbf{Clasificación}: el proceso de clasificación trata de asignar una categoría a un conjunto de elementos que tengan algún aspecto en común. La clasificación en la minería de datos es una de las técnicas más utilizadas, ya que la naturaleza de gran parte de los datos responden bien a este método. \cite{Kumar2012ClassificationAF}
+    \item \textbf{Agrupamiento}: también denominado \textit{clustering} trata de agrupar muestras que tengan características similares. A diferencia de la clasificación, aquí no tenemos una etiqueta o categoría a la que asignar las muestras, sino que las agrupamos \textit{a ciegas}, simplemente basándonos en alguna métrica para evaluar la distancia que haya entre un determinado par de muestras. \cite{Jain1999DataCA}
+    \item \textbf{Predicción}: la predicción nos ayuda a encontrar tendencias entre variables, generalmente en datos con una componente temporal fuerte. \cite{han2012mining} Es común poder predecir si un paciente sufrirá una determinada enfermedad conociendo su historial médico, por ejemplo.
+    \item \textbf{Identificación de patrones secuenciales}: Al igual que la predicción, se trabaja sobre datos con una componente temporal marcada. En este caso, se buscan patrones, es decir, conjuntos o cadenas de muestras que aparecen de forma frecuente en un orden concreto.
+\end{enumerate}
+
+
+\section{Minería de texto}
+En esta sección, discutiremos los diferentes aspectos a tener en cuenta en la minería de textos en concreto, tras haber abordado el concepto de minería de datos en un ámbito más general.
+
+
+\subsection{Términos}
+Definiremos algunos de los términos más utilizados en esta disciplina, guiándonos principalmente por el trabajo de Kamran Kowsari, \textit{Text Classification Algorithms: A Survey}~\cite{Kowsari2019TextCA}.
+
+\subsubsection{Tokens}
+El término más esencial en minería de textos es \textit{token}. Un token es la mínima unidad en la que dividiremos un cuerpo de texto a la hora de analizarlo. Este elemento suele corresponderse con una palabra, que en el contexto de la mayoría de los idiomas corresponde con un conjunto de letras separado por espacios anterior y posteriormente. Esto da lugar a la creación de \textit{Tokenizers}, algoritmos que toman un cuerpo de texto como una cadena de caracteres muy larga, y devuelven un vector de palabras. Estos \textit{tokenizers } no han de tomar el espacio en blanco necesariamente ni exclusivamente como criterio divisor, aunque suele ser lo más común. Algunos de los \textit{tokenizers} más famosos son:
+
+\begin{itemize}
+    
+    \item \textbf{Tokenizers de palabras}
+    \begin{itemize}
+        \item \textbf{Standard Tokenizer}: El Standard Tokenizer divide el texto en términos siguiendo los límites de las palabras según están definidos en el algoritmo \textit{Unicode Text Segmentation}. Funciona bien en general.
+        \item \textbf{Letter Tokenizer}: divide el texto en términos cada vez que encuentra un carácter que no es una letra.
+        \item \textbf{Whitespace Tokenizer}: Toma como criterio divisor el espacio en blanco.
+        \item \textbf{Language Tokenizer}: Otros tipos de tokenizers adaptados a diferentes idiomas, como el inglés, que es el idioma más estudiado con diferencia, pero también otros idiomas con caracteres y reglas diferentes a aquellos basados en reglas occidentales, como el tailandés, o el chino.
+    \end{itemize}
+    \item \textbf{Tokenizers de palabras parciales}
+    \begin{itemize}
+        \item \textbf{N-Gram Tokenizer}: Este tokenizador incluye un parámetro adicional. Primero divide el texto con alguna de las reglas mencionadas anteriormente, y posteriormente, divide cada término del vector resultante en una ventana deslizante de $n$ elementos, de ahí \textit{N-Gram.} Por ejemplo: \textit{quick fox} devolvería $[$qu, ui, ic, ck$]$, $[$fo, ox$]$, dado un $n = 2$. Estos tokenizers también pueden utilizarse a nivel de párrafo, por lo que se devolverían pares de palabras, algo que puede ser muy útil para el análisis de \textit{dichos} o expresiones.
+    \end{itemize}
+    \item \textbf{Tokenizers de texto estructurado}
+    \begin{itemize}
+        \item \textbf{Pattern Tokenizer}: este tokenizer utiliza el patrón provisto como parámetro para la división de texto, utilizando expresiones regulares.
+        \item \textbf{Simple Pattern Tokenizer}: este tokenizer utiliza el patrón provisto como parámetro para la división de texto, utilizando expresiones optimizadas para el patrón dado, lo que hace que funcione generalmente más rápido pero también será más específico.
+    \end{itemize}
+\end{itemize}
+
+
+\subsubsection{Palabras vacías}
+
+\subsubsection{Corrección ortográfica}
+
+\subsubsection{Stemming y Lematización}
+
+\subsubsection{Bolsas de palabras}
+
+\subsubsection{Frecuencias: TF, IDF}
+
+
+
+
+
+

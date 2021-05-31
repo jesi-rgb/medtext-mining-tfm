@@ -8,14 +8,15 @@
 
 %\usepackage{fontspec}
 %\setmainfont{Arial}
-
+\usepackage[table,xcdraw]{xcolor}
 \usepackage{listings}
-\usepackage{xcolor}
-\usepackage{minted}
-\usemintedstyle{pastie}
 
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
 
-\usepackage{svg}
+\usepackage{filecontents}
+
 \usepackage{wrapfig}
 
 \usepackage{csquotes}
@@ -31,8 +32,10 @@
 \usepackage[final]{pdfpages}
 \usepackage[all]{nowidow}
 \usepackage{multicol}
-\usepackage{multirow}
 \usepackage{booktabs}
+\usepackage{multirow}
+
+\usepackage[]{algorithm2e}
 
 \usepackage{titlesec}
 
@@ -61,7 +64,7 @@
 \input{title/title.tex}
 
 \begin{abstract}
-  En el ámbito de la medicina se almacena una gran cantidad de información relevante: desde valores numéricos correspondientes a signos vitales hasta texto plano que realiza un especialista para completar un informe. Muchas veces los datos guardados en el historial médico de un paciente, que no tiene una estructura determinada es ignorado. Este proyecto propone recuperar texto médico sin formato para extraer nuevo conociemiento que pueda utilizarse para complementar la información estructurada y mejorar en la clasificación y tratamiento de los pacientes.
+  En el ámbito de la medicina se almacena una gran cantidad de información relevante: desde valores numéricos correspondientes a signos vitales hasta texto plano que realiza un especialista para completar un informe. Muchas veces los datos guardados en el historial médico de un paciente, que no tiene una estructura determinada, son ignorados. Este proyecto propone recuperar texto médico sin formato para extraer nuevo conociemiento que pueda utilizarse para complementar la información estructurada y mejorar en la clasificación y tratamiento de los pacientes.
 \end{abstract}
 
 
@@ -72,7 +75,15 @@
 %\listoflistings
 
 
+
+% Contenido del documento
 \input{introduction/introduction.tex}
+
+\input{fundamentals/fundamentals.tex}
+
+
+
+
 
 % \input{appendix/appendix.tex}
 
