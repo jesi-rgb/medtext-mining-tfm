@@ -1,0 +1,83 @@
+\documentclass[12pt, a4paper, twoside]{report}
+
+\usepackage[spanish]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+
+% Para usar fuentes de letra distintas a la que viene por defecto es probable que te pida usar un compilador diferente a pdflatex, se puede cambiar fácilmente en el menú arriba a la izquierda.
+
+%\usepackage{fontspec}
+%\setmainfont{Arial}
+
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{minted}
+\usemintedstyle{pastie}
+
+
+\usepackage{svg}
+\usepackage{wrapfig}
+
+\usepackage{csquotes}
+\usepackage{epigraph}
+
+\usepackage{hyperref}
+\hypersetup{hypertexnames=false, colorlinks=true, urlcolor=blue, linkcolor=black, citecolor=blue}
+\usepackage{lscape}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[final]{pdfpages}
+\usepackage[all]{nowidow}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{booktabs}
+
+\usepackage{titlesec}
+
+\titleformat{\chapter}[block]
+  {\scshape\huge}{\thechapter.}{1em}{\Huge}
+\titlespacing*{\chapter}{0pt}{-19pt}{40pt}
+
+\definecolor{graybox}{RGB}{235, 235, 235}
+\newcommand{\jesitt}[1]{\colorbox{graybox}{\textcolor{red}{\texttt{#1}}}}
+
+\renewcommand{\baselinestretch}{1.2}
+\setlength{\parskip}{1em}
+\renewcommand{\mkbegdispquote}[2]{\itshape}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm,marginparwidth=1.75cm]{geometry}
+
+%Options: Sonny, Lenny, Glenn, Conny, Rejne, Bjarne, Bjornstrup
+% \usepackage[Sonny]{fncychap}
+
+\title{Análisis de textos médicos \\mediante NLP}
+\author{Jesús Enrique Cartas Rascón}
+% Puedes cambiar el profesor, la asignatura y demás en el archivo title/title.tex
+
+\begin{document}
+\input{title/title.tex}
+
+\begin{abstract}
+  En el ámbito de la medicina se almacena una gran cantidad de información relevante: desde valores numéricos correspondientes a signos vitales hasta texto plano que realiza un especialista para completar un informe. Muchas veces los datos guardados en el historial médico de un paciente, que no tiene una estructura determinada es ignorado. Este proyecto propone recuperar texto médico sin formato para extraer nuevo conociemiento que pueda utilizarse para complementar la información estructurada y mejorar en la clasificación y tratamiento de los pacientes.
+\end{abstract}
+
+
+% Descomentar aquellos que sean necesarios
+\tableofcontents
+%\listoffigures
+%\listoftables
+%\listoflistings
+
+
+\input{introduction/introduction.tex}
+
+% \input{appendix/appendix.tex}
+
+\bibliographystyle{unsrt}
+\bibliography{bibs/bibliography}
+\addcontentsline{toc}{chapter}{Bibliografía}
+
+\end{document}
