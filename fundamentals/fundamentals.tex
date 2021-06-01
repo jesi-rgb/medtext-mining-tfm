@@ -73,11 +73,39 @@ Uno de los datos más importantes a obtener de un texto es la frecuencia de pala
 Del campo de teoría de la información \cite{information2001} conocemos que aquellos términos que aparezcan con una frecuencia muy alta poseerán menos información que aquellos que aparezcan menos. Como vimos en la sección \ref{sec:stopwords}, eliminamos las palabras vacías porque aparecían mucho. Es decir, un artículo como \textit{el} o una preposición como \textit{de} tendrían una frecuencia desproporcionada, cuando en realidad no aportan ninguna información. 
 
 
-De forma similar, el valor \textit{Inverse Term Frequency}~\cite{Jones2004ASI} trata de abarcar esta frecuencia pero en un conjunto de documentos
+De forma similar, el valor \textit{Inverse Term Frequency}~\cite{Jones2004ASI} trata de abarcar esta frecuencia pero en un conjunto de documentos, añadiendo la inversa de la frecuencia por documento. Esta métrica se utiliza mucho en conjunción con la TF, resultando en la TF-IDF, que trata de medir la relevancia de un término en un conjunto de documentos. Esto resulta en un cálculo tal que así:
+
+\begin{equation}
+    W(d, t) = TF(d, t) * log(\frac{N}{df(t)})
+\end{equation}
+
+donde $d$ es un documento del conjunto de documentos con cardinalidad $N$, $t$ es el término en concreto y $df(t)$ es el número de documentos que contienen el término $t$.
 
 
 \subsubsection{Bolsas de palabras}
-Una bolsa de palabras es una versión reducida del documento procesado siguiendo algún criterio concreto, como la frecuencia de palabras.
+Conociendo el concepto de frecuencias de palabaras, una de las aplicaciones directas son las bolsas de palabras, que recogen en una estructura con forma de diccionario cada término y su frecuencia.
+
+De esta forma, tenemos un \textit{ranking} para cada término. Esto se utiliza extensivamente en sistemas de recomendación, en donde una consulta provista por un usuario se compara con la bolsa de palabras del posible conjunto de documentos, y este conjunto va afinándose conforme se van comparando los conjuntos de palabras. Esto resulta en una búsqueda más refinada que devuelve documentos más relevantes con respecto a la consulta realizada.
+
+
+\subsection{Técnicas}
+En esta sección discutiremos algunas de las técnicas avanzadas más utilizadas en procesamiento y análisis de texto que además utilizaremos en nuestra implementación directa o indirectamente.
+
+\subsubsection{\textit{Word Embeddings}}
+Esta técnica esencialmente trata de convertir los diferentes términos en vectores de números reales. Matemáticamente hablando corresponde con una representación de un espacio $n$-dimensional a un espacio vectorial continuo de menor tamaño, donde $n$ es el número total de términos presentes en todos los documentos.
+
+Esta técnica ha sido estudiada en profundidad en varios proyectos:
+
+\begin{itemize}
+    \item \textbf{Word2Vec}: esta técnica trata de representar las palabras como vectores utilizando una red neuronal con dos capas, haciendo uso de una bolsa de palabras continua (CBOW) y el modelo del Skip Gram. \cite{Mikolov2013Word2Vec}
+    \item \textbf{GloVe}: acrónimo de \textit{Global Vectors for Word Representation}, es una técnica muy similar a la \textit{Word2Vec}, con la particularidad de estar preentrenada en grandes corpus de texto, basados en Wikipedia y Gigaword. \cite{Pennington2014GloveGV}
+    \item \textbf{FastText}: es una técnica desarrollada por Facebook. Esta técnica hace uso de la técnica de los $n$-gramas para su entrenamiento, obteniendo una representación de los términos mucho más granular. \cite{Bojanowski2017EnrichingWV}
+    \item \textbf{Contextualized Word Representations}: esta técnica hace uso del contexto de las palabras para tratar de encontrar una representación y relación entre ellas. Esta técnica basa su funcionamiento en el uso de Long-Short Term Memory, un tipo de red neuronal recurrente muy utilizada en procesamiento de texto, en la que ahondaremos más en profundidad en secciones posteriores de este documento. \cite{Melamud2016context2vecLG}
+\end{itemize}
+
+\subsubsection{Reducción de dimensionalidad}
+
+\subsubsection{Clasificación de texto}
 
 
 
