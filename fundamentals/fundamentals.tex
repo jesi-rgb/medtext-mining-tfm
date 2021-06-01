@@ -47,16 +47,39 @@ El término más esencial en minería de textos es \textit{token}. Un token es l
     \end{itemize}
 \end{itemize}
 
+En resumen, un tokenizer es un algoritmo que divide el texto provisto siguiendo los criterios definidos por el usuario, devolviendo un vector con los elementos del texto divididos atendiendo a dichos criterios. Es una de las herramientas más esenciales en la minería de texto, ya que permite generar la mínima unidad de información a partir de la que se extraerá conocimiento.
 
 \subsubsection{Palabras vacías}
+\label{sec:stopwords}
+Las palabras vacías o \textit{stopwords} son términos presentes en un idioma que sirven de apoyo para la formulación de oraciones pero que no poseen información en sí. Nos referimos a los artículos, determinantes, preposiciones, etc.
 
-\subsubsection{Corrección ortográfica}
+Estos términos son considerados como \textit{ruido} en el procesamiento de texto, por lo que lo más usual es disponer de un diccionario de términos vacíos y filtrar el texto original, eliminando dichos términos. De esta forma, nos quedamos con las palabras más importantes. Los símbolos de puntuación también se suelen considerar como ruido; si bien son esenciales para la comprensión y estructuración de texto para los humanos, suponen un detrimento para algoritmos de clasificación.
+
+Sin embargo, esta operación es delicada y no siempre ofrecerá buenos resultados. Por ejemplo, si tratamos de inferir la intención de la oración \textit{No me gusta el fútbol} y pasamos previamente un filtro de palabras vacías, el texto resultante sería \textit{gusta fútbol}. Dados estos términos, se infiere que se está opinando de forma positiva acerca del tema \textit{fútbol}, cuando no es así.
+
+Este caso particular está descrito en la literatura como \textit{negation handling}, en trabajos como \cite{Farooq2017NegationHI} o \cite{Ali2020ConventionalAS}. Aún así, hay muchos factores que se deben tener en cuenta antes de eliminar términos de una oración.
+
+
 
 \subsubsection{Stemming y Lematización}
+Stemming hace referencia a la gestión de palabras con prefijos o sufijos para su integración en una frase, como plurales (casa, casa\textbf{s}). Se trata de eliminar los posibles complementos añadidos con objeto de normalizar las palabras y que todas tengan la misma forma. En este caso también han de tenerse en cuenta las negaciones (típico, \textbf{a}típico).
 
-\subsubsection{Bolsas de palabras}
+La lematización va un paso más y trata de encontrar la raíz de las palabras, obteniendo una normalización más estricta. Un buen ejemplo son la conjugación de los verbos: de \textit{estudiando}, \textit{estudiante} o \textit{estudio} obtenemos \textit{estudi-}. \cite{Lemmatization2014} 
+
 
 \subsubsection{Frecuencias: TF, IDF}
+Uno de los datos más importantes a obtener de un texto es la frecuencia de palabras. Esta operación es tan simple como suena: contar cuántas veces aparece cada palabra y anotarlo en una estructura similar a un diccionario. Este término se conoce como \textit{Term Frequency} o TF. Estos valores suelen representarse en una escala logarítmica, con objeto de que las palabras muy dominantes no eclipsen a las menos frecuentes.
+
+Del campo de teoría de la información \cite{information2001} conocemos que aquellos términos que aparezcan con una frecuencia muy alta poseerán menos información que aquellos que aparezcan menos. Como vimos en la sección \ref{sec:stopwords}, eliminamos las palabras vacías porque aparecían mucho. Es decir, un artículo como \textit{el} o una preposición como \textit{de} tendrían una frecuencia desproporcionada, cuando en realidad no aportan ninguna información. 
+
+
+De forma similar, el valor \textit{Inverse Term Frequency}~\cite{Jones2004ASI} trata de abarcar esta frecuencia pero en un conjunto de documentos
+
+
+\subsubsection{Bolsas de palabras}
+Una bolsa de palabras es una versión reducida del documento procesado siguiendo algún criterio concreto, como la frecuencia de palabras.
+
+
 
 
 
