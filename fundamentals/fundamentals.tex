@@ -64,7 +64,7 @@ Este caso particular está descrito en la literatura como \textit{negation handl
 \subsubsection{Stemming y Lematización}
 Stemming hace referencia a la gestión de palabras con prefijos o sufijos para su integración en una frase, como plurales (casa, casa\textbf{s}). Se trata de eliminar los posibles complementos añadidos con objeto de normalizar las palabras y que todas tengan la misma forma. En este caso también han de tenerse en cuenta las negaciones (típico, \textbf{a}típico).
 
-La lematización va un paso más y trata de encontrar la raíz de las palabras, obteniendo una normalización más estricta. Un buen ejemplo son la conjugación de los verbos: de \textit{estudiando}, \textit{estudiante} o \textit{estudio} obtenemos \textit{estudi-}. \cite{Lemmatization2014} 
+La lematización va un paso más allá y trata de encontrar la raíz de las palabras, obteniendo una normalización más estricta. Un buen ejemplo son la conjugación de los verbos: de \textit{estudiando}, \textit{estudiante} o \textit{estudio} obtenemos \textit{estudi-}. \cite{Lemmatization2014} 
 
 
 \subsubsection{Frecuencias: TF, IDF}
@@ -73,7 +73,7 @@ Uno de los datos más importantes a obtener de un texto es la frecuencia de pala
 Del campo de teoría de la información \cite{information2001} conocemos que aquellos términos que aparezcan con una frecuencia muy alta poseerán menos información que aquellos que aparezcan menos. Como vimos en la sección \ref{sec:stopwords}, eliminamos las palabras vacías porque aparecían mucho. Es decir, un artículo como \textit{el} o una preposición como \textit{de} tendrían una frecuencia desproporcionada, cuando en realidad no aportan ninguna información. 
 
 
-De forma similar, el valor \textit{Inverse Term Frequency}~\cite{Jones2004ASI} trata de abarcar esta frecuencia pero en un conjunto de documentos, añadiendo la inversa de la frecuencia por documento. Esta métrica se utiliza mucho en conjunción con la TF, resultando en la TF-IDF, que trata de medir la relevancia de un término en un conjunto de documentos. Esto resulta en un cálculo tal que así:
+De forma similar, el valor \textit{Inverse Document Frequency}~\cite{Jones2004ASI} trata de abarcar esta frecuencia pero en un conjunto de documentos, añadiendo la inversa de la frecuencia por documento. Esta métrica se utiliza mucho en conjunción con la TF, resultando en la TF-IDF, que trata de medir la relevancia de un término en un conjunto de documentos. Esto resulta en un cálculo tal que así:
 
 \begin{equation}
     W(d, t) = TF(d, t) * log(\frac{N}{df(t)})
@@ -85,14 +85,14 @@ donde $d$ es un documento del conjunto de documentos con cardinalidad $N$, $t$ e
 \subsubsection{Bolsas de palabras}
 Conociendo el concepto de frecuencias de palabaras, una de las aplicaciones directas son las bolsas de palabras, que recogen en una estructura con forma de diccionario cada término y su frecuencia.
 
-De esta forma, tenemos un \textit{ranking} para cada término. Esto se utiliza extensivamente en sistemas de recomendación, en donde una consulta provista por un usuario se compara con la bolsa de palabras del posible conjunto de documentos, y este conjunto va afinándose conforme se van comparando los conjuntos de palabras. Esto resulta en una búsqueda más refinada que devuelve documentos más relevantes con respecto a la consulta realizada.
+De esta forma, tenemos un \textit{ranking} para cada término. Esto se utiliza extensivamente en sistemas de recomendación, en donde una consulta provista por un usuario se compara con la bolsa de palabras del posible conjunto de documentos, y este conjunto va afinándose conforme se van comparando los conjuntos de palabras. El resultado es una búsqueda más refinada que devuelve documentos más relevantes con respecto a la consulta realizada.
 
 
 \subsection{Técnicas}
 En esta sección discutiremos algunas de las técnicas avanzadas más utilizadas en procesamiento y análisis de texto que además utilizaremos en nuestra implementación directa o indirectamente.
 
 \subsubsection{\textit{Word Embeddings}}
-Esta técnica esencialmente trata de convertir los diferentes términos en vectores de números reales. Matemáticamente hablando corresponde con una representación de un espacio $n$-dimensional a un espacio vectorial continuo de menor tamaño, donde $n$ es el número total de términos presentes en todos los documentos.
+Esta técnica esencialmente trata de convertir los diferentes términos en vectores de números reales, ya que esto los convierte en objetos matemáticos fáciles de comparar y procesar. Matemáticamente hablando corresponde con una representación de un espacio $n$-dimensional a un espacio vectorial continuo de menor tamaño, donde $n$ es el número total de términos presentes en todos los documentos.
 
 Esta técnica ha sido estudiada en profundidad en varios proyectos:
 
@@ -104,13 +104,30 @@ Esta técnica ha sido estudiada en profundidad en varios proyectos:
 \end{itemize}
 
 \subsubsection{Reducción de dimensionalidad}
+La reducción de dimensionalidad es una técnica que permite proyectar el espacio en el que se hallan nuestros datos en un subespacio de menor dimensionalidad, con objeto de facilitar el cálculo de las propiedades de dichos datos sin tener que utilizar todas sus características. Es común encontrar conjuntos de datos con un número de dimensiones muy alto, que hace inviable su estudio.
+
+Las principales técnicas desarrolladas para reducir la dimensionalidad incluyen:
+
+\begin{itemize}
+    \item \textbf{Principal Component Analysis (PCA)}: PCA o análisis de componentes principales trata de encontrar un subespacio latente que represente a los datos encontrando aquellas variables que estén menos relacionadas y que maximicen la varianza, para conservar la mayor cantidad de variabilidad posible. \cite{Jolliffe:1986} 
+    \item \textbf{Independent Component Analysis (ICA)}: es una técnica similar que trata de expresar los datos con transformaciones lineales. \cite{Hyvrinen2014TopographicIC}
+    \item \textbf{Linear Discriminant Analysis (LDA)}: es otro método muy utilizado cuando los datos son de caracter categórico y no tienen una proporcion uniforme intraclase. \cite{LDA2009}
+\end{itemize}
+
+Toda esta familia de algoritmos resulta muy conveniente para \textit{comprimir} datos de alta dimensionalidad y extraer solo las \textbf{características principales} de los mismos. Se suelen usar en etapas de preprocesamiento, donde los datos resultantes se pasan a los algoritmos a entrenar, consiguiendo un mejor resultado y rendimiento en comparación con los datos sin preprocesar.
 
 \subsubsection{Clasificación de texto}
+Por último, abordaremos las principales técnicas para clasficar texto, ámbito importante en nuestro proyecto, así como una breve explicación de las mismas. Al igual que en las secciones anteriores, no es nuestro objetivo estudiarlas en profundida, pero más bien ofrecer una vista general del panorama en cuanto a esta tecnología con objeto de que el lector se familiarice con los términos.
 
 
+Los principales algoritmos de clasificación de texto, entre otros, son los siguientes:
+
+\begin{itemize}
+    \item \textbf{Boosting y bagging}: boosting y bagging son dos algoritmos basados en lo que se denomina en la literatura como \textit{ensemble learning}. Esta técnica utiliza un gran número de modelos que funcionan muy bien para casos muy específicos pero no generalizan correctamente. La idea es que la respuesta conjunta de todos los modelos nos acerque a la respuesta correcta. Esta decisión puede hacerse mediante votos u otros métodos. \cite{Bauer2004AnEC}
+    \item \textbf{Regresión logística}: la regresión logística es uno de los métodos de aprendizaje más simples, junto con la regresión linear. La regresión logística es una especialización de la regresión lineal, de forma que se utiliza una función logística para predecir categorías discretas, no continuas. \cite{CoxLogit1989}
+    \item \textbf{Redes neuronales recurrentes}: por último, las redes neuronales recurrentes son una especialización de las redes neuronales en las que un subonjunto de las neuronas reciben su salida como una entrada, generándose ciclos de retroalimentación o \textit{feedback}. Estas redes funcionan especialmente bien con datos con patrones y componentes temporales, características especialmente destacables del lenguaje humano, así como de la música o vídeo. \cite{ZhouLSTM}
+\end{itemize}
 
 
-
-
-
+Existen otras muchas técnicas en clasificación de texto, como \textit{K Nearest Neighbours}~\cite{KNNXiao2007}, \textit{Naïve Bayes}~\cite{FrankNaive2006}, \textit{Support Vector Machines (SVM)}~\cite{SVMJoa1998}, árboles de decisión~\cite{DecisionTreeNoorman2018} o \textit{Random Forests}~\cite{breiman2001random}, entre muchas otras. 
 
