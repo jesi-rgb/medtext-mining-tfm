@@ -1,0 +1,27 @@
+\chapter{Experimentación: modelos \\ y entrenamiento}
+
+En este capítulo usaremos todos los conceptos vistos en los capítulos anteriores para justificar las elecciones de los diferentes modelos, hablaremos de las características principales de los mismos y finalmente entraremos en la fase del entrenamiento y los resultados de dichos modelos.
+
+
+
+\section{Transformers}
+En esta sección hablaremos del Transformer en más profundidad, sus características principales en contraste con las demás tecnologías y de la configuración escogida para nuestro problema.
+
+\subsection{Arquitectura y módulos de atención}
+El Transformer es un tipo de arquitectura de red neuronal creada por ingenieros de Google \cite{WolfEtal2020Transformers}. Se la presenta como \textit{estado del arte en procesamiento del lenguaje natural}, constituyendo un modelo mucho más potente y considerado que las anteriores LSTM.
+
+El transformer está princpalmente basado en redes recurrentes, redes cuya entrada está conectada a la salida y, generalmente, se las construye con un contexto temporal en mente. Esto quiere decir que dada una entrada en el momento $n$, predeciremos la salida en función de la salida que se obtuvo en el momento $n - 1$, además de la entrada del momento $n$ en sí.
+
+Esto es en sí el funcionamiento de una red recurrente estándar. El transformer añade varios conceptos clave a su implementación que lo hacen particularmente poderoso.
+
+\subsection{Atención}
+Uno de los principales conceptos que añade el transformer es de la \textbf{atención}. Este concepto trata de emular el concepto de atención con el que todos estamos familiarizados: el de ponderar y distrubir los recursos cognitivos de forma que aquellos estímulos más importantes reciban más recursos de cómputo por parte del sistema, de la misma forma que nuestro cerebro procesa de forma más potente aquello en lo que estamos concentrados, ignorando aquellos estímulos que sean menos importantes en un determinado instante.
+
+
+
+
+
+\section{Experimentación}
+
+
+\section{Resultados}
