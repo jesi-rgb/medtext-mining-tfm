@@ -1,2 +1,40 @@
 \appendix
-\chapter{First Appendix}
+\chapter{Apénice}
+
+Incluiremos en este apéndice todos los bloques de código o cualquier otro tipo de contenido necesario para comprender la estructura del documento, pero evitando que interfiera con la lectura del mismo.
+
+\begin{figure}[h]
+	\centering
+	
+	\begin{minted}[breaklines, linenos]{python}
+def regex_processing(text):
+    # Remove capital letters surrounded by 0 or more `,` and a colon, i.e. the titles
+    no_caps = re.sub(r',*([A-Z\s]+):', '', text)
+
+    # Remove weirdly positioned commas. Find commas that dont have any letter before and some space after them.
+    weird_commas = re.sub(r'(?<!\w),\s+', '', no_caps)
+    
+    # Remove commas that dont have spaces around them. (Commas should always have a trailing space after them)
+    more_commas = re.sub(r'(?<!\s),(?!\s)', ' ', weird_commas)
+
+    # Remove digits adyacent to dots or commas, as in enumerated lists.
+    no_digits = re.sub(r'[\.,]*\d[\.,]+', ' ', more_commas)
+
+    # Remove any other commas left behind the process. Particularly these cases: Hello. ,How are you?
+    trailing_commas = re.sub(r'\s,(?=[A-Z\d])', '', no_digits)
+
+    # Substitute any number of spaces for 1 single space.
+    no_double_spaces = re.sub(r'\s+', ' ', trailing_commas)
+
+    # Solve these problems: Hello .How are you? => Hello. How are you?
+    final_text = re.sub(r'(?<!\s)\.(?!\s)', '. ', no_double_spaces)
+
+    # Finally, strip the text from any trailing commas or white spaces.
+    # The result is hopefully a clean version of the text, ready to be tokenized
+    # and passed to the models.
+    return final_text.strip(', ')
+	\end{minted}
+
+	\caption{Pipeline para el procesamiento de los comentarios de Medical Transcriptions}
+	\label{code:pipeline-regex-mdtr}
+\end{figure}

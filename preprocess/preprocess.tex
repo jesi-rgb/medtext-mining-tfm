@@ -107,38 +107,9 @@ En el caso de las trancripciones médicas, la tarea es considerablemente más co
 
 Esto facilita las cosas, pero desde luego los comentarios deben ser profundamente esculpidos antes de pasarlos a cualquier modelo. Los trazos de formato HTML se dejan entrever en los comentarios con signos de puntuación o tabulaciones fuera de lugar, así que debemos arreglarlo previo entrenamiento.
 
-Para ello, se ha hecho un fuerte uso de expresiones regulares, y se ha creado un pequeño \textit{pipeline} para procesar todo el texto a la vez.
+Para ello, se ha hecho un fuerte uso de expresiones regulares, y se ha creado un \textit{pipeline} para procesar todo el texto a la vez.
 
-El pipeline elimina todas las posibles trazas o residuos que hubieran quedado del \textit{scraping}. Este es el pipeline:
-
-\begin{minted}[breaklines, linenos]{python}
-def regex_processing(text):
-    # Remove capital letters surrounded by 0 or more `,` and a colon, i.e. the titles
-    no_caps = re.sub(r',*([A-Z\s]+):', '', text)
-
-    # Remove weirdly positioned commas. Find commas that dont have any letter before and some space after them.
-    weird_commas = re.sub(r'(?<!\w),\s+', '', no_caps)
-    
-    # Remove commas that dont have spaces around them. (Commas should always have a trailing space after them)
-    more_commas = re.sub(r'(?<!\s),(?!\s)', ' ', weird_commas)
-
-    # Remove digits adyacent to dots or commas, as in enumerated lists.
-    no_digits = re.sub(r'[\.,]*\d[\.,]+', ' ', more_commas)
-
-    # Remove any other commas left behind the process. Particularly these cases: Hello. ,How are you?
-    trailing_commas = re.sub(r'\s,(?=[A-Z\d])', '', no_digits)
-
-    # Substitute any number of spaces for 1 single space.
-    no_double_spaces = re.sub(r'\s+', ' ', trailing_commas)
-
-    # Solve these problems: Hello .How are you? => Hello. How are you?
-    final_text = re.sub(r'(?<!\s)\.(?!\s)', '. ', no_double_spaces)
-
-    # Finally, strip the text from any trailing commas or white spaces.
-    # The result is hopefully a clean version of the text, ready to be tokenized
-    # and passed to the models.
-    return final_text.strip(', ')
-\end{minted}
+El pipeline elimina todas las posibles trazas o residuos que hubieran quedado del \textit{scraping}. Podemos ver el pipeline diseñado en la figura \ref{code:pipeline-regex-mdtr}.
 
 El resumen del proceso es eliminar signos de puntuación mal colocados, eliminar títulos o cabeceras de secciones de la página web, sustituir múltiples espacios por uno solo o eliminar los números de listas enumeradas (1., 2., etc).
 
