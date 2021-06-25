@@ -1,10 +1,19 @@
 \chapter{Datos: EDA y preprocesamiento}
-
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.9\textwidth]{media/general-diagram.pdf}
+	\caption{Diagrama de flujo general de todo el proyecto}
+	\label{fig:general-diagram}
+\end{figure}
 En este capítulo discutiremos los distintos detalles de la implementación de nuestro sistema: desde el preprocesamiento de los datos hasta la elección y entrenamiento del modelo.
+
+En la figura \ref{fig:general-diagram} podemos observar una vista general de los diferentes pasos de los que consta nuestro proyecto. En cada paso, cuando proceda, expandiremos el nodo concreto para ver de qué subtareas se compone cada una de estas tareas más generales.
 
 
 \section{Datos: fuente y forma}
 Los datos escogidos provienen del dataset \href{https://www.kaggle.com/chaitanyakck/medical-text}{Medical Text} publicado por Chaitanya Krishna Kasaraneni, y de \href{https://www.kaggle.com/tboyle10/medicaltranscriptions}{Medical Transcriptions}, publicado por Tara Boyle. La naturaleza de los mismos es ligeramente diferente así que explicaremos el proceso de preprocesamiento y unificación posteriormente.
+
+En la figura \ref{fig:preprocess-diagram} podemos ver un pequeño resumen del preprocesamiento que se acometerá a los datos. En la siguiente sección se detallan cada uno de estos pasos.
 
 \subsection{Medical Text}
 El dataset tiene formato \jesitt{.dat}, estructurado como un \jesitt{.tsv} (Tab Separated Values). La primera columna corresponde con una categoría determinada --ya que el dataset estaba diseñado para clasificación-- y la segunda columna contiene fragmentos de documentos médicos.
@@ -96,6 +105,13 @@ En este caso, como podemos apreciar en la figura \ref{fig:sum_mdtr}, las distrib
 
 \section{Preprocesamiento}
 En esta sección, describiremos el preprocesamiento acometido en cada uno de los datsets. Provienen de fuentes diferentes así que cada uno recibirá un trato diferente, con objeto de normalizar y unificar el formato de todos de cara al entrenamiento.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=.9\textwidth]{media/preprocess-diagram.pdf}
+	\caption{Diagrama resumen del preprocesamiento efectuado en los datos.}
+	\label{fig:preprocess-diagram}
+\end{figure}
 
 
 \subsection{Medical Text}
