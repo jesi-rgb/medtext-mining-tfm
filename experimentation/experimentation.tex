@@ -55,6 +55,16 @@ Como indicamos anteriomente, la carga del modelo es realmente sencilla gracias a
 \subsection{Sampling y otros métodos de generación de texto}
 Ahora que nuestro modelo está listo, podremos generar comentarios de la nada, casi como por \textit{arte de magia}. Aún así, este proceso no es trivial y merece ser aclarado.
 
+Debemos gran parte de esta sección a la magnífica explicación de Patrick von Platen en su publicación \href{https://huggingface.co/blog/how-to-generate}{How to generate text}. Precisamente es uno de los integrantes de Hugging Face, una empresa de código abierto que se dedica a la creación de los diferentes modelos de los que hemos hablado anteriormente, y que nos ha provisto con una manera fácil y accesible de poder utilizar estas herramientas tan potentes.
+
+Existen varias maneras de generar lo que en la jerga se denomina \textit{texto abierto}, es decir, texto libre sin restricciones. Muchos modelos son capaces de hacerlo, aunque nosotros nos centraremos en los métodos que conciernen al GPT2, que es un modelo autorregresivo.
+
+Los modelos autorregresivos asumen que la siguiente palabra a generar se calcula como una función de probabilidad de todas las palabras anteriores, dada una palabra de contexto inicial.
+
+\subsubsection{Greedy search}
+La búsqueda voraz obtiene la palabra con mayor probabilidad de todas las opciones dada una palabra inicial. 
+
+
 
 
 
