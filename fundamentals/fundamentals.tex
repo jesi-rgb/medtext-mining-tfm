@@ -139,7 +139,7 @@ Por último, mencionaremos brevemente los tres proyectos más grandes de lenguaj
 En esta sección hablaremos del Transformer en más profundidad, sus características principales en contraste con las demás tecnologías y de la configuración escogida para nuestro problema.
 
 \subsubsection{Arquitectura y módulos de atención}
-El Transformer es un tipo de arquitectura de red neuronal creada por ingenieros de Google \cite{WolfEtal2020Transformers}. Se la presenta como \textit{estado del arte en procesamiento del lenguaje natural}, constituyendo un modelo mucho más potente y considerado que las anteriores LSTM.
+El Transformer es un tipo de arquitectura de red neuronal creada por ingenieros de Google \cite{TransformerAshish2017}. Se la presenta como \textit{estado del arte en procesamiento del lenguaje natural}, constituyendo un modelo mucho más potente y \textbf{considerado} que las anteriores LSTM.
 
 El transformer está princpalmente basado en redes recurrentes, redes cuya entrada está conectada a la salida y, generalmente, se las construye con un contexto temporal en mente. Esto quiere decir que dada una entrada en el momento $n$, predeciremos la salida en función de la salida que se obtuvo en el momento $n - 1$, además de la entrada del momento $n$ en sí.
 
@@ -147,6 +147,14 @@ Esto es en sí el funcionamiento de una red recurrente estándar. El transformer
 
 \subsubsection{Atención}
 Uno de los principales conceptos que añade el transformer es de la \textbf{atención}. Este concepto trata de emular el concepto de atención con el que todos estamos familiarizados: el de ponderar y distrubir los recursos cognitivos de forma que aquellos estímulos más importantes reciban más recursos de cómputo por parte del sistema, de la misma forma que nuestro cerebro procesa de forma más potente aquello en lo que estamos concentrados, ignorando aquellos estímulos que sean menos importantes en un determinado instante.
+
+\subsubsection{Multi-Head Attention}
+Uno de los principales problemas de las redes neuronales recurrentes clásicas es ls imposibilidad de la paralelización de su ejecución, y el crecimiento de los términos a considerar conforme más avanzado es el análisis de la secuencia en concreto.
+
+La técnica de \textit{multi-head attention} soluciona estos problemas. En primer lugar, hace la paralelización del modelo no solo posible, sino muy fácil. Cada módulo calcula por separado la atención que le corresponda y posteriormente se concatenan y se transforman linealmente en la salida de la dimensión que se espera. 
+
+Por otro lado, los modelos tradicionales sufren de no considerar dependencias entre elementos si estos están distantes en la secuencia. Los diferentes módulos del cálculo paralelo calculan la atención en diferentes puntos de la secuencia de forma paralela, como comentamos. Las diferentes zonas pueden efectivamente considerar zonas muy distantes en tiempo constante, gracias a la paralelización. Esto efectivamente soluciona el problema de olvidar características importantes de puntos distantes, así como evitando tener que crear caminos de cálculo cada vez más largos conforme avanzamos en el análisis de la secuencia.
+
 
 \subsection{Modelos basados en transformers}
 Habiendo descrito brevemente la arquitectura de un transformer en general, veamos qué se ha desarrollado con esta nueva tecnología.
