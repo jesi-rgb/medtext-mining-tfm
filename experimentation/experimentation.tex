@@ -1,4 +1,4 @@
-\chapter{Experimentación: modelos \\ y entrenamiento}
+\chapter{Experimentación: modelos, \\entrenamiento y generación}
 
 En este capítulo usaremos todos los conceptos vistos en los capítulos anteriores para justificar las elecciones de los diferentes modelos, hablaremos de las características principales de los mismos y finalmente entraremos en la fase del entrenamiento y los resultados de dichos modelos.
 
@@ -53,13 +53,13 @@ En esta sección hablaremos de la generación de comentarios, una vez nuestro mo
 Como indicamos anteriomente, la carga del modelo es realmente sencilla gracias a las librerías que lo hacen posible. Con nuestro archivo con los pesos localizado, podemos cargar de vuelta los pesos relevantes en los parámetros correspondientes de la red, recuperando el estado original. Este estado es el que nos permitirá generar comentarios de forma automática.
 
 \subsection{Sampling y otros métodos de generación de texto}
-Ahora que nuestro modelo está listo, podremos generar comentarios de la nada, casi como por \textit{arte de magia}. Aún así, este proceso no es trivial y merece ser aclarado.
+Ahora que nuestro modelo está listo, podremos generar comentarios de la nada, casi como si estuviera improvisando. Aún así, este proceso no es trivial y merece ser aclarado.
 
-Debemos gran parte de esta sección a la magnífica explicación de Patrick von Platen en su publicación \href{https://huggingface.co/blog/how-to-generate}{How to generate text}. Precisamente es uno de los integrantes de Hugging Face, una empresa de código abierto que se dedica a la creación de los diferentes modelos de los que hemos hablado anteriormente, y que nos ha provisto con una manera fácil y accesible de poder utilizar estas herramientas tan potentes.
+Debemos gran parte de esta sección a la magnífica explicación de Patrick von Platen en su publicación \href{https://huggingface.co/blog/how-to-generate}{How to generate text}. Precisamente es uno de los integrantes de Hugging Face, una de las empresa de código abierto que se dedica a la creación de los diferentes modelos mencionados anteriormente, y que nos ha provisto con una manera fácil y accesible de poder utilizar estas herramientas tan potentes con su librería \jesitt{transformers} \cite{WolfEtal2020Transformers}.
 
-Existen varias maneras de generar lo que en la jerga se denomina \textit{texto abierto}, es decir, texto libre sin restricciones. Muchos modelos son capaces de hacerlo, aunque nosotros nos centraremos en los métodos que conciernen al GPT2, que es un modelo autorregresivo.
+Existen varias maneras de generar lo que en la jerga se denomina \textit{texto abierto}, es decir, generar texto de forma relativamente libre y sin restricciones. Muchos otros modelos son capaces de hacerlo, aunque nosotros nos centraremos en los métodos que conciernen a nuestro GPT2, que es un modelo autorregresivo.
 
-Los modelos autorregresivos asumen que la siguiente palabra a generar se calcula como una función de probabilidad de todas las palabras anteriores, dada una palabra de contexto inicial.
+Los modelos autorregresivos asumen que la siguiente palabra a generar se calcula como una función de probabilidad de todas las palabras anteriores, dada una palabra de contexto inicial. Dicho esto, existen varias maneras de \textit{decodificar} texto de un modelo de lenguaje. Veamos las más relevantes.
 
 \subsubsection{Greedy and beam search}
 La búsqueda voraz obtiene la palabra con mayor probabilidad de todas las opciones dada una palabra inicial. 
@@ -192,13 +192,13 @@ El algoritmo toma siempre la palabra más probable y esto funcionará bien, aunq
 
 Una solución planteada es la \textit{beam search}, que podemos visualizar en la figura \ref{tkz:beams}, algo así como una búsqueda distribuida. Dadas las probabilidades de cada palabra, el algoritmo calcula varios pasos en avanzadilla para varias alternativas, y devuelve aquella secuencia que más probabilidad general tenga. Esto soluciona algunos problemas, pero no termina de lidiar con el factor de repetitividad anterior. 
 
-Ari Holtzmann sugiere en \cite{holtzman2020curious} que la generación del lenguaje humano no se guía por la elección de las palabras más probables. El lenguaje humano real es mucho menos predecible, ya que de otra forma sería \textit{aburrido} de leer o escuchar.
+Por otro lado, Ari Holtzmann sugiere en \cite{holtzman2020curious} que la generación del lenguaje humano no se guía por la elección de las palabras más probables. El lenguaje humano real es mucho menos predecible, ya que de otra forma sería \textit{aburrido} de leer o escuchar.
 
-Es por ello que los métodos alternativos han de evitar las técnicas deterministas de generación de texto, y apostar por los métodos con gran influencia aleatoria.
+Es por ello que los métodos alternativos han de evitar las técnicas \textbf{deterministas} de generación de texto, y apostar por los métodos con gran influencia aleatoria.
 
 \subsubsection{Sampling}
 
-Sampling es una técnica de generación de lenguaje autorregresiva, que, como sabemos, asume la probabilidad de una palabra dada la anterior.
+Sampling es otra técnica de generación de lenguaje autorregresiva, que, como sabemos, asume la probabilidad de una palabra dada la anterior.
 
 En la forma más básica, el muestreo simplemente toma una palabra de forma aleatoria, ponderándolas con una distribución de probabilidad tal que:
 
@@ -215,9 +215,14 @@ es decir, la probabilidad de escoger la palabra $w_t$ depende de todas las palab
 	\label{fig:sampling}
 \end{figure}
 
-Podemos graduar la ponderación de la que hablamos con lo que los autores denominan la \textit{temperatura} de la función de activación softmax de la última capa del modelo.
+El hecho de que una palabra presente una gran probabilidad de ser escogida no corresponde con que al final se la acabe escogiendo, como vemos en el paso 1 de la figura \ref{fig:sampling}. En este caso, se escogió \textit{car} y posteriormente sí se escogió la palabra más probable. Este proceso nos ayuda a explorar más el espacio de búsqueda subyacente compuesto de todas las combinaciones de palabras posibles.
 
-Al bajar la temperatura por debajo de 1 (siendo 1 un ajuste nulo), las palabras más probables se saturan, es decir, se hacen más probables, y las menos probables se comprimen, haciéndolas menos probables. De ser el caso de ajustar la temperatura a límites muy cercanos a 0, nos encontraríamos con la búsqueda voraz de la que hablamos antes.
+\subsubsection{Temperatura}
+Podemos graduar la ponderación de la que hablamos con lo que los autores denominan la \textit{temperatura} de la función de activación \textit{softmax} de la última capa del modelo.
+
+Al bajar la temperatura por debajo de 1 (siendo 1 un ajuste nulo), las palabras más probables se saturan, es decir, se hacen más probables, y las menos probables se comprimen, haciéndolas menos probables. En el otro extremo, al ajustar la temperatura a límites muy cercanos a 0, nos encontraríamos con la búsqueda voraz de la que hablamos antes.
+
+Este factor nos ofrece una especie de regulador entre \textbf{máximo determinista} o \textbf{máximo aleatorio}.
 
 La adición de esta técnica ayuda a que la generación no sea \textit{extremadamente} aleatoria. Si bien en la sección anterior comentábamos que debíamos añadir aleatoriedad, todo en exceso es malo. Una generación completamente aleatoria es, en su mayoría, poco coherente. La bajada sutil de la temperatura del modelo provoca que se elijan, normalmente, palabras bastante probables, pero que de vez en cuando se escojan palabras poco probables. Dichas palabras ahora abren nuevos caminos por los que continuar generando, que no hubieran sido considerados de otra forma, pero continuamos eligiendo, por lo general, combinaciones de palabras más probables, para garantizar la coherencia del texto.
 
@@ -247,7 +252,7 @@ Finalmente, esta última técnica se denomina Top P nucleus, refiriéndose a un 
 
 En este caso, en lugar de tomar los K mejores términos, tomamos el conjunto más pequeño de términos cuya probabilidad acumulada supere el $p$ establecido por el usuario. Esto es, dado un $p = 0.9$, tomamos las $n$ mejores palabras que, dada la suma de su probabilidad, se supere el $p$ determinado. El proceso es básicamente idéntico al ilustrado en la figura \ref{fig:top-k}, solo que consideramos la probabilidad acumulada, no un número de términos.
 
-Esto provoca que en lugar de tomar un subconjunto de palabras de cardinalidad constante durante todo el proceso, ahora el tamaño varía.
+Esto provoca que en lugar de tomar un subconjunto de palabras de cardinalidad constante durante todo el proceso, ahora el tamaño varía. Se ha demostrado que esta flexibilidad ayuda y contribuye a una generación de texto más natural.
 
 Estos dos últimos métodos son los más utilizados en el estado del arte, y este último es el que \textbf{utilizamos nosotros concretamente} en nuestro proyecto a la hora de generar palabras. Como vemos, aun disponiendo de una red neuronal muy potente, no es trivial extraer información coherente y de calidad.
 
