@@ -24,7 +24,8 @@
 
 \usepackage{csquotes}
 \usepackage{epigraph}
-
+\usepackage[font={footnotesize, sf}]{caption}
+\usepackage{shadethm}
 \usepackage{hyperref}
 \hypersetup{hypertexnames=false, colorlinks=true, urlcolor=blue, linkcolor=black, citecolor=blue}
 \usepackage{lscape}
@@ -52,6 +53,13 @@
 \renewcommand{\baselinestretch}{1.2}
 \setlength{\parskip}{1em}
 \renewcommand{\mkbegdispquote}[2]{\itshape}
+
+\newshadetheorem{thm}{Comentario}
+\definecolor{shadethmcolor}{HTML}{EDF8FF}
+\definecolor{shaderulecolor}{HTML}{45CFFF}
+\fontfamily{ttfamily}
+\setlength{\shadeboxrule}{.4pt}
+
 
 %% Sets page size and margins
 \usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm,marginparwidth=1.75cm]{geometry}
