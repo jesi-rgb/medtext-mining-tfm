@@ -15,13 +15,13 @@ En la Figura \ref{fig:fine-tune-gpt} podemos ver un breve resumen de las diferen
 \section{Experimentación}
 En esta sección describiremos los diferentes pasos que fue necesario acometer para el entrenamiento del modelo del GPT2, el transformer que hemos utilizado para nuestro proyecto.
 
-\subsection{Entrada de los datos}
+\subsection{Datos de entrada}
 En primer lugar, debemos ofrecer los datos de entrada al modelo. Estos datos están previamente formateados y unificados, como vimos en la fase de preprocesamiento.
 
 Es importante la adición de las etiquetas \jesitt{<|BOS|>} y \jesitt{<|EOS|>}. Estas etiquetas son las siglas de \textit{begin of sentence} y \textit{end of sentence}. Son marcadores que indican el inicio y fin de una oración. Estas etiquetas son necesarias para que el modelo entienda cuál es el criterio a partir del cual empieza y acaba una oración.
 
 \subsection{Codificación de los tokens}
-Antes de pasar los datos al modelo, debemos codificarlos. Codificar significa obtener un código único en función del token que estemos considerando. La codificación es esencial para estos modelos, ya que ofrece una representación matemática de las palabras. La codificación de los tokens se efectúa mediante un diccionario preentrenado, de forma que la codificación decodificación sean consistentes, dado un modelo determinado.
+Antes de pasar los datos al modelo, debemos codificarlos. Codificar significa obtener un código único en función del token que estemos considerando. La codificación es esencial para estos modelos, ya que ofrece una representación matemática de las palabras. La codificación de los tokens se efectúa mediante un diccionario preentrenado, de forma que la codificación y decodificación sean consistentes, dado un modelo determinado.
 
 
 \subsection{Ajuste de los pesos}
@@ -190,7 +190,7 @@ El algoritmo toma siempre la palabra más probable y esto funcionará bien, aunq
 \end{figure}
 
 
-Una solución planteada es la \textit{beam search}, que podemos visualizar en la Figura \ref{tkz:beams}, algo así como una búsqueda distribuida. Dadas las probabilidades de cada palabra, el algoritmo calcula varios pasos en avanzadilla para varias alternativas, y devuelve aquella secuencia que más probabilidad general tenga. Esto soluciona algunos problemas, pero no termina de lidiar con el factor de repetitividad anterior. 
+Una solución planteada es el \textit{beam search}, que podemos visualizar en la Figura \ref{tkz:beams}, algo así como una búsqueda distribuida. Dadas las probabilidades de cada palabra, el algoritmo calcula varios pasos en avanzadilla para varias alternativas, y devuelve aquella secuencia que más probabilidad general tenga. Esto soluciona algunos problemas, pero no termina de lidiar con el factor de repetitividad anterior. 
 
 Por otro lado, Ari Holtzmann sugiere en \cite{holtzman2020curious} que la generación del lenguaje humano no se guía por la elección de las palabras más probables. El lenguaje humano real es mucho menos predecible, ya que de otra forma sería \textit{aburrido} de leer o escuchar.
 

@@ -4,7 +4,7 @@ En este capítulo discutiremos cómo hemos llevado a cabo la evaluación de las 
 
 Para ello se ha creado una web app disponible de forma muy accesible para que sea fácil ver el poder combinado de todas estas herramientas. Dicha herramienta se denomina \href{https://share.streamlit.io/jesi-rgb/medical-text-analysis/src/streamlit_gen_test.py}{MEDGEN}.
 
-\section{Análisis de texto no estructurado}
+\section{Estado del arte: análisis de textos médicos}
 
 Para el análisis y minería de texto no estructurado una de las técnicas más útiles es el \textbf{Named Entity Recognition (NER) Tagging}, es decir, el etiquetado de entidades. La idea es, dado un cuerpo de texto, extraer aquellas entidades que tengan un significado propio o relevante por sí mismas. En nuestro contexto, esto corresponde, por ejemplo, a nombres de enfermedades, partes del cuerpo, medicamentos, entre otras. Un NER Tagger entrenado sería capaz de detectar dichas entidades en el texto y devolver una lista de las mismas, automatizando la extracción de información y haciéndolo muy rápido.
 
@@ -13,7 +13,7 @@ La librería SciSpacy \cite{neumann-etal-2019-scispacy} nos provee con una selec
 Estos son los taggers que utilizaremos en nuestra aplicación, aunque resulta sencillo incluir algún otro más que pudiera ser de interés.
 
 \begin{itemize}
-	\item \textbf{Med7} \cite{med7}: El Med7 es un NER entrenado en datos clínicos capaz de detectar 7 entidades diferentes: nombres de medicamentos, vía de administración del medicamento, frecuencia, dosis, cantidad, el formato (pastilla, polvos, etc), y el tiempo total de medicación. 
+	\item \textbf{Med7} \cite{med7}: El Med7 es un NER entrenado en datos clínicos capaz de detectar 7 entidades diferentes: nombres de medicamentos (Aspirina, Advil), vía de administración del medicamento (oral, intravenosa, respiratoria), frecuencia (cada 8 horas), dosis (mg o ml), cantidad (número de pastillas), formato (pastilla, polvos, etc), y tiempo total de medicación (semanas, meses). 
 	\item \textbf{BC5CDR} \cite{bc5cdr}: Este tagger recibe su nombre del corpus en el que fue entrenado. Dicho corpus consta de 1500 artículos \textit{PubMed} con 4409 sustancias químicas etiquetadas, 5818 enfermedades y 3116 interacciones enfermedad-medicamento.
 	\item \textbf{BIONLP13CG} \cite{BIONLP13CG}: De igual forma, este tagger recibe su nombre del corpus que lo origina. Este tagger se especializa más en términos genéticos, cánceres, órganos y compuestos químicos como aminoácidos o proteínas, ligeramente mejor adecuado para prescripciones quirúrgicas.
 \end{itemize}
@@ -21,7 +21,7 @@ Estos son los taggers que utilizaremos en nuestra aplicación, aunque resulta se
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=.9\textwidth]{media/med7_example.png}
-	\caption{Ejemplo del Med7 en acción. Vemos cómo las entidades se han reconocido en diferentes colores, haciendo la extracción de información mucho más eficiente. bid viene del latin \textit{bis in die}, que se traduce por dos veces al día. PO viene de \textit{Per os}, vía oral. Suspension hace referencia a una disolución en agua.}
+	\caption{Ejemplo del Med7 en acción. Vemos cómo las entidades se han reconocido en diferentes colores, haciendo la extracción de información mucho más eficiente. bid viene del latin \textit{bis in die}, que se traduce por dos veces al día. PO viene de \textit{Per os}, vía oral. \textit{Suspension} hace referencia a una disolución en agua.}
 	\label{fig:med7}
 \end{figure}
 
@@ -32,9 +32,9 @@ Estos diccionarios pueden anexarse y guardarse en la base de datos correspondien
 
 \section{Despliegue de MEDGEN}
 
-Para hacer accesible todo el trabajo que se ha acometido, se ha elaborado una aplicación que permite hacer uso de todas las técnicas y herramientas discutidas a lo largo del documento. El framework utilizado ha sido \href{https://streamlit.io}{Streamlit}.
+Para hacer accesible todo el trabajo que se ha acometido, se ha elaborado una aplicación que permite hacer uso de todas las técnicas y herramientas discutidas a lo largo del documento. 
 
-Streamlit es un framework para Python diseñado para el prototipado ágil de aplicaciones web. Los creadores idearon esta herramienta para disminuir el esfuerzo que hay que acometer a la hora de desplegar una aplicación basada en inteligencia artificial, es decir, una aplicación que consta de sistemas de inferencia o similares, sistemas que no se encuentran en aplicaciones web usuales. 
+El framework utilizado ha sido \href{https://streamlit.io}{Streamlit}. Streamlit es un framework para Python diseñado para el prototipado ágil de aplicaciones web. Los creadores idearon esta herramienta para disminuir el esfuerzo que hay que acometer a la hora de desplegar una aplicación basada en inteligencia artificial, es decir, una aplicación que consta de sistemas de inferencia o similares, sistemas que no se encuentran en aplicaciones web usuales. 
 
 De esta forma, es muy accesible y sencillo diseñar una aplicación en Python, donde se puede integrar cualquier sistema de IA en desarrollo y habilitar un espacio para que otros miembros del equipo vean cómo funciona, ofreciendo la oportunidad de crear casos de uso reales.
 
