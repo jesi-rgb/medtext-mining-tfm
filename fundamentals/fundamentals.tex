@@ -31,14 +31,14 @@ El término más esencial en minería de textos es \textit{token}. Un token es l
     
     \item \textbf{Tokenizers de palabras}
     \begin{itemize}
-        \item \textbf{Standard Tokenizer}: El Standard Tokenizer divide el texto en términos siguiendo los límites de las palabras según están definidos en el algoritmo \textit{Unicode Text Segmentation}. Funciona bien en general.
-        \item \textbf{Letter Tokenizer}: divide el texto en términos cada vez que encuentra un carácter que no es una letra.
+        \item \textbf{Standard Tokenizer}: El Standard Tokenizer divide el texto en términos siguiendo los límites de las palabras según están definidos en el algoritmo \textit{Unicode Text Segmentation}. 
+        \item \textbf{Letter Tokenizer}: Divide el texto en términos cada vez que encuentra un carácter que no es una letra.
         \item \textbf{Whitespace Tokenizer}: Toma como criterio divisor el espacio en blanco.
-        \item \textbf{Language Tokenizer}: Otros tipos de tokenizers adaptados a diferentes idiomas, como el inglés, que es el idioma más estudiado con diferencia, pero también otros idiomas con caracteres y reglas diferentes a aquellos basados en reglas occidentales, como el tailandés, o el chino.
+        \item \textbf{Language Tokenizer}: Otros tipos de tokenizers adaptados a diferentes idiomas, como el inglés, que es el idioma más estudiado con diferencia, pero también otros idiomas con caracteres y reglas diferentes a aquellos basados en reglas occidentales, como el tailandés o el chino.
     \end{itemize}
     \item \textbf{Tokenizers de palabras parciales}
     \begin{itemize}
-        \item \textbf{N-Gram Tokenizer}: Este tokenizador incluye un parámetro adicional. Primero divide el texto con alguna de las reglas mencionadas anteriormente, y posteriormente, divide cada término del vector resultante en una ventana deslizante de $n$ elementos, de ahí \textit{N-Gram.} Por ejemplo: \textit{quick fox} devolvería $[$qu, ui, ic, ck$]$, $[$fo, ox$]$, dado un $n = 2$. Estos tokenizers también pueden utilizarse a nivel de párrafo, por lo que se devolverían pares de palabras, algo que puede ser muy útil para el análisis de \textit{dichos} o expresiones.
+        \item \textbf{N-Gram Tokenizer}: Este tokenizador incluye un parámetro adicional. Primero divide el texto con alguna de las reglas mencionadas anteriormente, y posteriormente, divide cada término del vector resultante en una ventana deslizante de $n$ elementos, (de ahí \textit{N-Gram}). Por ejemplo: \textit{quick fox} devolvería $[$qu, ui, ic, ck$]$, $[$fo, ox$]$, dado un $n = 2$. Estos tokenizers también pueden utilizarse a nivel de párrafo, por lo que se devolverían pares de palabras, algo que puede ser muy útil para el análisis de \textit{dichos} o expresiones.
     \end{itemize}
     \item \textbf{Tokenizers de texto estructurado}
     \begin{itemize}
@@ -47,7 +47,7 @@ El término más esencial en minería de textos es \textit{token}. Un token es l
     \end{itemize}
 \end{itemize}
 
-En resumen, un tokenizer es un algoritmo que divide el texto provisto siguiendo los criterios definidos por el usuario, devolviendo un vector con los elementos del texto divididos atendiendo a dichos criterios. Es una de las herramientas más esenciales en la minería de texto, ya que permite generar la mínima unidad de información a partir de la que se extraerá conocimiento.
+En resumen, un tokenizer es un algoritmo que divide el texto provisto siguiendo los criterios definidos por el usuario, devolviendo un vector con los elementos del texto divididos atendiendo a dichos criterios. Es una de las herramientas esenciales en la minería de texto, ya que permite generar la mínima unidad de información a partir de la que se extraerá conocimiento.
 
 \subsubsection{Palabras vacías}
 \label{sec:stopwords}
@@ -73,7 +73,7 @@ Uno de los datos más importantes a obtener de un texto es la frecuencia de pala
 Del campo de teoría de la información \cite{information2001} conocemos que aquellos términos que aparezcan con una frecuencia muy alta poseerán menos información que aquellos que aparezcan menos. Como vimos en la sección \ref{sec:stopwords}, eliminamos las palabras vacías porque aparecían mucho. Es decir, un artículo como \textit{el} o una preposición como \textit{de} tendrían una frecuencia desproporcionada, cuando en realidad no aportan ninguna información. 
 
 
-De forma similar, el valor \textit{Inverse Document Frequency}~\cite{Jones2004ASI} trata de abarcar esta frecuencia pero en un conjunto de documentos, añadiendo la inversa de la frecuencia por documento. Esta métrica se utiliza mucho en conjunción con la TF, resultando en la TF-IDF, que trata de medir la relevancia de un término en un conjunto de documentos. Esto resulta en un cálculo tal que así:
+De forma similar, el valor \textit{Inverse Document Frequency}~\cite{Jones2004ASI} trata de abarcar esta frecuencia pero en un conjunto de documentos, añadiendo la inversa de la frecuencia por documento. Esta métrica se utiliza mucho en conjunción con la TF, resultando en la TF-IDF, que trata de medir la relevancia de un término en un conjunto de documentos. Esto resulta en el cálculo:
 
 \begin{equation}
     W(d, t) = TF(d, t) * log(\frac{N}{df(t)})
@@ -87,6 +87,11 @@ Conociendo el concepto de frecuencias de palabaras, una de las aplicaciones dire
 
 De esta forma, tenemos un \textit{ranking} para cada término. Esto se utiliza extensivamente en sistemas de recomendación, en donde una consulta provista por un usuario se compara con la bolsa de palabras del posible conjunto de documentos, y este conjunto va afinándose conforme se van comparando los conjuntos de palabras. El resultado es una búsqueda más refinada que devuelve documentos más relevantes con respecto a la consulta realizada.
 
+\subsubsection{Word Clouds}
+Las nubes de palabras o \textit{Word Clouds} son un tipo de visualización especializada en conjuntos de datos de texto. Consisten en representar el conjunto de palabras más relevantes del texto que analicemos, disponiendo dicho conjunto de forma distrubida por la imagen. Por lo general, se suelen utilizar códigos de color o tamaño para aludir a factores como la frecuencia o la relevancia de dicha palabra en el texto.
+
+Dada una bolsa de palabras, podemos tomar los $n$ términos más presentes y escribirlos en una imagen, haciendo la fuente tanto más grande cuanto más aparezca dicha palabra. Esto ofrece una manera rápida e intuitiva de averiguar el tema del cuerpo del texto y sus términos más relevantes.
+
 
 \subsection{Técnicas}
 En esta sección discutiremos algunas de las técnicas avanzadas más utilizadas en procesamiento y análisis de texto que además utilizaremos en nuestra implementación directa o indirectamente.
@@ -99,7 +104,7 @@ Esta técnica ha sido estudiada en profundidad en varios proyectos:
 \begin{itemize}
     \item \textbf{Word2Vec}: esta técnica trata de representar las palabras como vectores utilizando una red neuronal con dos capas, haciendo uso de una bolsa de palabras continua (CBOW) y el modelo del Skip Gram. \cite{Mikolov2013Word2Vec}
     \item \textbf{GloVe}: acrónimo de \textit{Global Vectors for Word Representation}, es una técnica muy similar a la \textit{Word2Vec}, con la particularidad de estar preentrenada en grandes corpus de texto, basados en Wikipedia y Gigaword. \cite{Pennington2014GloveGV}
-    \item \textbf{FastText}: es una técnica desarrollada por Facebook. Esta técnica hace uso de la técnica de los $n$-gramas para su entrenamiento, obteniendo una representación de los términos mucho más granular. \cite{Bojanowski2017EnrichingWV}
+    \item \textbf{FastText}: es una técnica desarrollada por Facebook. Esta técnica hace uso de la técnica de los $n$-grams para su entrenamiento, obteniendo una representación de los términos mucho más granular. \cite{Bojanowski2017EnrichingWV}
     \item \textbf{Contextualized Word Representations}: esta técnica hace uso del contexto de las palabras para tratar de encontrar una representación y relación entre ellas. Esta técnica basa su funcionamiento en el uso de Long-Short Term Memory, un tipo de red neuronal recurrente muy utilizada en procesamiento de texto, en la que ahondaremos más en profundidad en secciones posteriores de este documento. \cite{Melamud2016context2vecLG}
 \end{itemize}
 
@@ -136,24 +141,30 @@ Existen otras muchas técnicas en clasificación de texto, como \textit{K Neares
 Por último, mencionaremos brevemente los tres proyectos más grandes de lenguaje generativo hasta la fecha, con objeto de entender qué es lo que hacen para poder integrar dichas técnicas en nuestro modelo.
 
 \subsection{Transformers}
-En esta sección hablaremos del Transformer en más profundidad, sus características principales en contraste con las demás tecnologías y de la configuración escogida para nuestro problema.
+En esta sección hablaremos del Transformer, un tipo de arquitectura de red neuronal creada por ingenieros de Google \cite{TransformerAshish2017}, en más profundidad, sus características principales en contraste con las demás tecnologías y de la configuración escogida para nuestro problema.
 
 \subsubsection{Arquitectura y módulos de atención}
-El Transformer es un tipo de arquitectura de red neuronal creada por ingenieros de Google \cite{TransformerAshish2017}. Se la presenta como \textit{estado del arte en procesamiento del lenguaje natural}, constituyendo un modelo mucho más potente y \textbf{considerado} que las anteriores LSTM.
+El Transformer corresponde con una de las técnicas más modernas de procesamiento de lenguaje natural, y una de las más relevantes del momento. Se la presenta como \textit{estado del arte en procesamiento del lenguaje natural}, constituyendo un modelo mucho más potente y \textbf{considerado} que las anteriores LSTM.
 
 El transformer está princpalmente basado en redes recurrentes, redes cuya entrada está conectada a la salida y, generalmente, se las construye con un contexto temporal en mente. Esto quiere decir que dada una entrada en el momento $n$, predeciremos la salida en función de la salida que se obtuvo en el momento $n - 1$, además de la entrada del momento $n$ en sí.
 
-Esto es en sí el funcionamiento de una red recurrente estándar. El transformer añade varios conceptos clave a su implementación que lo hacen particularmente poderoso.
+Esto es en sí el funcionamiento de una red recurrente estándar. El transformer añade varios conceptos clave a su implementación que lo hacen particularmente poderoso que serán detallados a continuación.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=.5\textwidth]{media/transformer.pdf}
+    \caption{Diagrama de un transformer [extraído de \cite{TransformerAshish2017}]}
+    \label{fig:transformer}
+\end{figure}
 
 \subsubsection{Atención}
 Uno de los principales conceptos que añade el transformer es de la \textbf{atención}. Este concepto trata de emular el concepto de atención con el que todos estamos familiarizados: el de ponderar y distrubir los recursos cognitivos de forma que aquellos estímulos más importantes reciban más recursos de cómputo por parte del sistema, de la misma forma que nuestro cerebro procesa de forma más potente aquello en lo que estamos concentrados, ignorando aquellos estímulos que sean menos importantes en un determinado instante.
 
-\subsubsection{Multi-Head Attention}
 Uno de los principales problemas de las redes neuronales recurrentes clásicas es ls imposibilidad de la paralelización de su ejecución, y el crecimiento de los términos a considerar conforme más avanzado es el análisis de la secuencia en concreto.
 
-La técnica de \textit{multi-head attention} soluciona estos problemas. En primer lugar, hace la paralelización del modelo no solo posible, sino muy fácil. Cada módulo calcula por separado la atención que le corresponda y posteriormente se concatenan y se transforman linealmente en la salida de la dimensión que se espera. 
+La técnica de \textit{multi-head attention}, que podemos apreciar en color en la Figura \ref{fig:transformer}, soluciona estos problemas. En primer lugar, hace la paralelización del modelo no solo posible, sino también muy fácil. Cada módulo calcula por separado la atención que le corresponda y posteriormente se concatenan y se transforman linealmente en la salida de la dimensión que se espera. 
 
-Por otro lado, los modelos tradicionales sufren de no considerar dependencias entre elementos si estos están distantes en la secuencia. Los diferentes módulos del cálculo paralelo calculan la atención en diferentes puntos de la secuencia de forma paralela, como comentamos. Las diferentes zonas pueden efectivamente considerar zonas muy distantes en tiempo constante, gracias a la paralelización. Esto efectivamente soluciona el problema de olvidar características importantes de puntos distantes, así como evitando tener que crear caminos de cálculo cada vez más largos conforme avanzamos en el análisis de la secuencia.
+Por otro lado, los modelos tradicionales sufren de no considerar dependencias entre elementos si estos están distantes en la secuencia. Los diferentes módulos calculan la atención en diferentes puntos de la secuencia de forma paralela, como comentamos. Las diferentes zonas pueden efectivamente considerar zonas muy distantes en tiempo constante, gracias a la paralelización. Esto efectivamente soluciona el problema de olvidar características importantes de puntos distantes, así como evitando tener que crear caminos de cálculo cada vez más largos conforme avanzamos en el análisis de la secuencia.
 
 
 \subsection{Modelos basados en transformers}
@@ -163,17 +174,17 @@ Habiendo descrito brevemente la arquitectura de un transformer en general, veamo
 BERT son las siglas en inglés de \textit{Bidirectional Encoder Representations from Transformers}~\cite{bertDevlin2019}. Es un modelo de lenguaje generativo basado en un encoder bidireccional como su nombre indica. Este modelo fue uno de los primeros en realmente conseguir una fluidez comunicativa convincente. Su arquitectura preentrenada permite, con una sola capa extra, craer modelos para tareas en casi cualquier ámbito, como responder preguntas o inferencia del lenguaje, sin necesidad de modificar particularmente su arquitectura interna.
 
 
+\subsubsection{LaMDA}
+LaMDA corresponde con las siglas de \textit{Language Model for Dialogue Applications}~\cite{LaMDAGoogle2020}, un proyecto de Google que compite de forma directa con los modelos antes mencionados. Al igual que los dos proyectos anteriores, LaMDA está basado en un transformer, una arquitectura de redes neuronales creada también por Google~\cite{TransformerAshish2017}, que explicaremos en más profundidad en los siguientes capítulos. Este proyecto se creó con una aplicación en concreto: un \textit{chatbot} automático lo más natural posible, al que llamaron \textit{Meena}. Según las estadísticas de Google, Meena tiene casi el doble de capacidad de predicción e inferencia que el antiguo GPT-2, y se entrenó en 8 veces más datos. Es el buque insignia de la empresa.
 
 \subsubsection{GPT-3 Open AI}
 GPT son las siglas de \textit{Generative Pre-trained Transformer}~\cite{GPT3openAI2020} y 3 indica la versión. Este modelo trata de abarcar los problemas que otros transformers solían tener, como es la habilidad de un humano para continuar una tarea lingüística dado muy poco contexto o instrucciones. Escalando los modelos se logra mejorar significativamente la generalización del mismo y se descubre que no es necesario afinar los parámetros de los modelos, sino que esto puede corresponderse más con un problema de meta-aprendizaje.
 
+Existen varias versiones del GPT-3, entrenadas en diferentes tamaños, desde 125 millones en la versión que denominan pequeña, hasta 175 mil millones, que es la versión que los investigadores denominan como ``GPT-3'' a secas. Jared Kaplan sugiere en \cite{kaplan2020scaling} que la función de pérdida en la etapa de validación debería corresponderse con la ley de potencia, (también conocida como el principio de Pareto) en función del tamaño de dicha red, de ahí que se probaran distintas configuraciones y tamaños.
 
+Para nuestro proyecto, hemos escogido el modelo GPT-2, de OpenAI. Concretamente usaremos la versión pequeña, que consta de 117M de parámetros. Este modelo fue entrenado en una base de datos de texto tomada de Wikipedia, constando de más de 60GB de datos de texto. 
 
-\subsubsection{LaMDA}
-LaMDA corresponde con las siglas de \textit{Language Model for Dialogue Applications}~\cite{LaMDAGoogle2020}, un proyecto de Google que compite de forma directa con los modelos antes mencionados. Al igual que los dos proyectos anteriores, LaMDA está basado en un transformer, una arquitectura de redes neuronales creada también por Google~\cite{TransformerAshish2017}, que explicaremos en más profundidad en los siguientes capítulos. Este proyecto se creó con una aplicación en concreto: un \textit{chatbot} automático lo más natural posible, al que llamaron \textit{Meena}. Según las estadísticas de Google, Meena tiene casi el doble de capacidad de predicción e inferencia que el antiguo GPT-2, y se entrenó en 8 veces más datos. Es el buque insignia de la empresa.
-
-
-Para nuestro proyecto, hemos escogido el modelo GPT-2, de OpenAI. Concretamente usaremos la versión \textit{pequeña}, que \textit{solo} consta de 117M de parámetros. Este modelo fue entrenado en una base de datos de texto tomada de Wikipedia, constando de más de 60GB de datos de texto. Utilizaremos el modelo preentrenado, que ya de por sí es capaz de hablar de forma genérica, y lo entrenaremos con nuestra base de datos para que aprenda a hablar tal y como lo haría un médico.
+Utilizaremos el modelo preentrenado, que ya de por sí es capaz de hablar de forma genérica, y lo entrenaremos con nuestra base de datos para que aprenda a hablar tal y como lo haría un médico.
 
 
 

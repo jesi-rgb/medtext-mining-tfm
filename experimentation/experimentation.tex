@@ -9,7 +9,7 @@ En este capítulo usaremos todos los conceptos vistos en los capítulos anterior
 	\label{fig:fine-tune-gpt}
 \end{figure}
 
-En la figura \ref{fig:fine-tune-gpt} podemos ver un breve resumen de las diferentes tareas de las que se compone el entrenamiento del modelo. Pasaremos a explicar en profundidad cada una de esas subtareas en las siguientes secciones.
+En la Figura \ref{fig:fine-tune-gpt} podemos ver un breve resumen de las diferentes tareas de las que se compone el entrenamiento del modelo. Pasaremos a explicar en profundidad cada una de esas subtareas en las siguientes secciones.
 
 
 \section{Experimentación}
@@ -18,7 +18,7 @@ En esta sección describiremos los diferentes pasos que fue necesario acometer p
 \subsection{Entrada de los datos}
 En primer lugar, debemos ofrecer los datos de entrada al modelo. Estos datos están previamente formateados y unificados, como vimos en la fase de preprocesamiento.
 
-Es importante la adición de las etiquetas \jesitt{<|BOS|>} y \jesitt{<|EOS|>}. Estas etiquetas son las siglas de \textit{begin of sentence} y \textit{end of sentence}. Son marcadores que indican, como es obvio, el inicio y fin de una oración. Estas etiquetas son necesarias para que el modelo entienda cuál es el criterio a partir del cual empieza y acaba una oración.
+Es importante la adición de las etiquetas \jesitt{<|BOS|>} y \jesitt{<|EOS|>}. Estas etiquetas son las siglas de \textit{begin of sentence} y \textit{end of sentence}. Son marcadores que indican el inicio y fin de una oración. Estas etiquetas son necesarias para que el modelo entienda cuál es el criterio a partir del cual empieza y acaba una oración.
 
 \subsection{Codificación de los tokens}
 Antes de pasar los datos al modelo, debemos codificarlos. Codificar significa obtener un código único en función del token que estemos considerando. La codificación es esencial para estos modelos, ya que ofrece una representación matemática de las palabras. La codificación de los tokens se efectúa mediante un diccionario preentrenado, de forma que la codificación decodificación sean consistentes, dado un modelo determinado.
@@ -53,9 +53,9 @@ En esta sección hablaremos de la generación de comentarios, una vez nuestro mo
 Como indicamos anteriomente, la carga del modelo es realmente sencilla gracias a las librerías que lo hacen posible. Con nuestro archivo con los pesos localizado, podemos cargar de vuelta los pesos relevantes en los parámetros correspondientes de la red, recuperando el estado original. Este estado es el que nos permitirá generar comentarios de forma automática.
 
 \subsection{Sampling y otros métodos de generación de texto}
-Ahora que nuestro modelo está listo, podremos generar comentarios de la nada, casi como si estuviera improvisando. Aún así, este proceso no es trivial y merece ser aclarado.
+Una vez entrenado el modelo y ajustados los pesos, ya tenemos un marco de trabajo sobre el que poder generar comentarios de texto libre. Aun así, el modelo no es capaz de ofrecernos inferencias como en modelos clásicos de predicción o clasificación. Para poder acometer el proceso de generación de palabras, debemos efectuar una \textit{decodificación} de las mismas, y existen varias formas para acometer esto. 
 
-Debemos gran parte de esta sección a la magnífica explicación de Patrick von Platen en su publicación \href{https://huggingface.co/blog/how-to-generate}{How to generate text}. Precisamente es uno de los integrantes de Hugging Face, una de las empresa de código abierto que se dedica a la creación de los diferentes modelos mencionados anteriormente, y que nos ha provisto con una manera fácil y accesible de poder utilizar estas herramientas tan potentes con su librería \jesitt{transformers} \cite{WolfEtal2020Transformers}.
+Los métodos de decodificación aquí mencionados aparecen en la publicación \href{https://huggingface.co/blog/how-to-generate}{How to generate text} de Patrick von Platen. Es uno de los integrantes de Hugging Face, una de las empresa de código abierto que se dedica a la creación de los diferentes modelos mencionados anteriormente, y que nos ha provisto con una manera fácil y accesible de poder utilizar estas herramientas tan potentes con su librería \jesitt{transformers}~\cite{WolfEtal2020Transformers}.
 
 Existen varias maneras de generar lo que en la jerga se denomina \textit{texto abierto}, es decir, generar texto de forma relativamente libre y sin restricciones. Muchos otros modelos son capaces de hacerlo, aunque nosotros nos centraremos en los métodos que conciernen a nuestro GPT2, que es un modelo autorregresivo.
 
@@ -123,7 +123,7 @@ La búsqueda voraz obtiene la palabra con mayor probabilidad de todas las opcion
 	\label{tkz:greedy}
 \end{figure}
 
-Dada una palabra inicial que tomamos del usuario, por ejemplo, siempre tomaremos aquella palabra de todas las posibles opciones que más probabilidad tenga de aparecer, dada la palabra anterior. Dichas probabilidades se calculan en el entrenamiento del modelo. Podemos ver un ejemplo de este comportamiento en la figura \ref{tkz:greedy}.
+Dada una palabra inicial que tomamos del usuario, por ejemplo, siempre tomaremos aquella palabra de todas las posibles opciones que más probabilidad tenga de aparecer, dada la palabra anterior. Dichas probabilidades se calculan en el entrenamiento del modelo. Podemos ver un ejemplo de este comportamiento en la Figura \ref{tkz:greedy}.
 
 El algoritmo toma siempre la palabra más probable y esto funcionará bien, aunque este algoritmo peca de empezar a repetirse bastante pronto. Esto es, generará secuencias que contienen palabras finales e iniciales similares, por lo que el ciclo empieza de nuevo al escogerse siempre la palabra más probable.
 
@@ -190,7 +190,7 @@ El algoritmo toma siempre la palabra más probable y esto funcionará bien, aunq
 \end{figure}
 
 
-Una solución planteada es la \textit{beam search}, que podemos visualizar en la figura \ref{tkz:beams}, algo así como una búsqueda distribuida. Dadas las probabilidades de cada palabra, el algoritmo calcula varios pasos en avanzadilla para varias alternativas, y devuelve aquella secuencia que más probabilidad general tenga. Esto soluciona algunos problemas, pero no termina de lidiar con el factor de repetitividad anterior. 
+Una solución planteada es la \textit{beam search}, que podemos visualizar en la Figura \ref{tkz:beams}, algo así como una búsqueda distribuida. Dadas las probabilidades de cada palabra, el algoritmo calcula varios pasos en avanzadilla para varias alternativas, y devuelve aquella secuencia que más probabilidad general tenga. Esto soluciona algunos problemas, pero no termina de lidiar con el factor de repetitividad anterior. 
 
 Por otro lado, Ari Holtzmann sugiere en \cite{holtzman2020curious} que la generación del lenguaje humano no se guía por la elección de las palabras más probables. El lenguaje humano real es mucho menos predecible, ya que de otra forma sería \textit{aburrido} de leer o escuchar.
 
@@ -215,7 +215,7 @@ es decir, la probabilidad de escoger la palabra $w_t$ depende de todas las palab
 	\label{fig:sampling}
 \end{figure}
 
-El hecho de que una palabra presente una gran probabilidad de ser escogida no corresponde con que al final se la acabe escogiendo, como vemos en el paso 1 de la figura \ref{fig:sampling}. En este caso, se escogió \textit{car} y posteriormente sí se escogió la palabra más probable. Este proceso nos ayuda a explorar más el espacio de búsqueda subyacente compuesto de todas las combinaciones de palabras posibles.
+El hecho de que una palabra presente una gran probabilidad de ser escogida no corresponde con que al final se la acabe escogiendo, como vemos en el paso 1 de la Figura \ref{fig:sampling}. En este caso, se escogió \textit{car} y posteriormente sí se escogió la palabra más probable. Este proceso nos ayuda a explorar más el espacio de búsqueda subyacente compuesto de todas las combinaciones de palabras posibles.
 
 \subsubsection{Temperatura}
 Podemos graduar la ponderación de la que hablamos con lo que los autores denominan la \textit{temperatura} de la función de activación \textit{softmax} de la última capa del modelo.
@@ -232,7 +232,7 @@ En esencia, el proceso es un gran compromiso entre coherencia y predecibilidad, 
 
 Dadas las premisas anteriores, las siguientes técnicas son mejoras incrementales que tratan de solucionar algunos otros problemas existentes.
 
-El muestreo de los K mejores, tal y como su nombre indica, solo considera las K mejores opciones de toda la batería de palabras posibles. Dado este subconjunto K, se muestrea una palabra como en el Sampling original, tomándola aleatoriamente de forma ponderada. Puede verse claramente en la figura \ref{fig:top-k} 
+El muestreo de los K mejores, tal y como su nombre indica, solo considera las K mejores opciones de toda la batería de palabras posibles. Dado este subconjunto K, se muestrea una palabra como en el Sampling original, tomándola aleatoriamente de forma ponderada. Puede verse claramente en la Figura \ref{fig:top-k} 
 
 
 \begin{figure}[h]
@@ -250,7 +250,7 @@ Tomando solo aquellas K mejores, se elimina dicha cola y se redistribuye la prob
 
 Finalmente, esta última técnica se denomina Top P nucleus, refiriéndose a un valor diferente al K anterior.
 
-En este caso, en lugar de tomar los K mejores términos, tomamos el conjunto más pequeño de términos cuya probabilidad acumulada supere el $p$ establecido por el usuario. Esto es, dado un $p = 0.9$, tomamos las $n$ mejores palabras que, dada la suma de su probabilidad, se supere el $p$ determinado. El proceso es básicamente idéntico al ilustrado en la figura \ref{fig:top-k}, solo que consideramos la probabilidad acumulada, no un número de términos.
+En este caso, en lugar de tomar los K mejores términos, tomamos el conjunto más pequeño de términos cuya probabilidad acumulada supere el $p$ establecido por el usuario. Esto es, dado un $p = 0.9$, tomamos las $n$ mejores palabras que, dada la suma de su probabilidad, se supere el $p$ determinado. El proceso es básicamente idéntico al ilustrado en la Figura \ref{fig:top-k}, solo que consideramos la probabilidad acumulada, no un número de términos.
 
 Esto provoca que en lugar de tomar un subconjunto de palabras de cardinalidad constante durante todo el proceso, ahora el tamaño varía. Se ha demostrado que esta flexibilidad ayuda y contribuye a una generación de texto más natural.
 

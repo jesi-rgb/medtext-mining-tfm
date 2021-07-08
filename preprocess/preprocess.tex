@@ -7,16 +7,31 @@
 \end{figure}
 En este capítulo discutiremos los distintos detalles de la implementación de nuestro sistema: desde el preprocesamiento de los datos hasta la elección y entrenamiento del modelo.
 
-En la figura \ref{fig:general-diagram} podemos observar una vista general de los diferentes pasos de los que consta nuestro proyecto. En cada paso, cuando proceda, expandiremos el nodo concreto para ver de qué subtareas se compone cada una de estas tareas más generales.
+En la Figura \ref{fig:general-diagram} podemos observar una vista general de los diferentes pasos de los que consta nuestro proyecto. En cada paso, cuando proceda, expandiremos el nodo concreto para ver de qué subtareas se compone cada una de estas tareas más generales.
 
 
 \section{Datos: fuente y forma}
 Los datos escogidos provienen del dataset \href{https://www.kaggle.com/chaitanyakck/medical-text}{Medical Text} publicado por Chaitanya Krishna Kasaraneni, y de \href{https://www.kaggle.com/tboyle10/medicaltranscriptions}{Medical Transcriptions}, publicado por Tara Boyle. La naturaleza de los mismos es ligeramente diferente así que explicaremos el proceso de preprocesamiento y unificación posteriormente.
 
-En la figura \ref{fig:preprocess-diagram} podemos ver un pequeño resumen del preprocesamiento que se acometerá a los datos. En la siguiente sección se detallan cada uno de estos pasos.
+En la Figura \ref{fig:preprocess-diagram} podemos ver un pequeño resumen del preprocesamiento que se acometerá a los datos. En la siguiente sección se detallan cada uno de estos pasos.
 
-\subsection{Medical Text}
+\subsection{Dataset: \textit{Medical Text}}
 El dataset tiene formato \jesitt{.dat}, estructurado como un \jesitt{.tsv} (Tab Separated Values). La primera columna corresponde con una categoría determinada --ya que el dataset estaba diseñado para clasificación-- y la segunda columna contiene fragmentos de documentos médicos.
+
+El dataset es en inglés, está anonimizado y los comentarios principalmente consisten en descripciones quirúrjicas o relacionadas con operaciones complejas. Podemos ver los dos primeros de nuestro conjunto de datos en los Comentarios \ref{com:com1} y \ref{com:com2}.
+
+\begin{thm}
+	\sffamily{
+		Excision of limbal dermoids. We reviewed the clinical files of 10 patients who had undergone excision of unilateral epibulbar limbal dermoids. Preoperatively, all of the affected eyes had worse visual acuity (P less than .02) and more astigmatism (P less than .01) than the contralateral eyes. Postoperatively, every patient was cosmetically improved. Of the eight patients for whom both preoperative and postoperative visual acuity measurements had been obtained, in six it had changed minimally (less than or equal to 1 line), and in two it had improved (less than or equal to 2 lines). Surgical complications included persistent epithelial defects (40\%) and peripheral corneal vascularization and opacity (70\%). These complications do not outweigh the cosmetic and visual benefits of dermoid excision in selected patients. 
+	}
+	\label{com:com1}
+\end{thm}
+\begin{thm}
+	\sffamily{
+		Retained endobronchial foreign body removal facilitated by steroid therapy of an obstructing, inflammatory polyp. Oral and topical steroids were used to induce regression in an inflammatory, obstructing endobronchial polyp caused by a retained foreign body. The FB (a peanut half), which had been present for over six months, was then able to be easily and bloodlessly retrieved with fiberoptic bronchoscopy. 
+	}
+	\label{com:com2}
+\end{thm}
 
 El dataset está descompuesto en un archivo \jesitt{train.dat} y otro \jesitt{test.dat}. El archivo de entrenamiento contiene 14438 comentarios, y el de evaluación, 14442. En total, disponemos de 28880 comentarios.
 
@@ -77,10 +92,12 @@ Se pueden apreciar, aún así, algunos valores atípicos de comentarios particul
 Una media de casi 200 palabras por comentario con comentarios alcanzando las 500 corresponde con comentarios relativamente largos. Esto nos vendrá bien de cara al entrenamiento de nuestro modelo, para poder formar oraciones con más sentido.
 
 
-\subsection{Medical Transcriptions}
-Este dataset es en realidad una extracción de la página web \url{mtsamples.com}, donde se halla una respetable cantidad de trasncripciones médicas. La autora extrajo todos los comentarios, así como los diferentes metadatos que los acompañaban mediante \textit{web scraping} y los provee en la columna \jesitt{trasncription}. 
+\subsection{Dataset: \textit{Medical Transcriptions}}
+Este dataset es en realidad una extracción de la página web \url{mtsamples.com}, donde se halla una respetable cantidad de trasncripciones médicas. La autora extrajo todos los comentarios, así como los diferentes metadatos que los acompañaban mediante \textit{web scraping} y los provee en la columna \jesitt{trasncription}.
 
-En este caso, como podemos apreciar en la figura \ref{fig:sum_mdtr}, las distribuciones son ligeramente asimétricas, predominando comentarios más cortos. Aún así, disponemos de comentarios excepcionalmente largos, con alrededor de 18000 caracteres.
+Al igual que el anterior, este conjunto de datos se corresponde con informes de operaciones quirúrjicas en inglés, y de igual forma anonimizado.
+
+En este caso, como podemos apreciar en la Figura \ref{fig:sum_mdtr}, las distribuciones son ligeramente asimétricas, predominando comentarios más cortos. Aún así, disponemos de comentarios excepcionalmente largos, con alrededor de 18000 caracteres.
 
 \begin{figure}[h!]
 	\centering
@@ -119,14 +136,53 @@ Este conjunto de datos, siendo específicamente texto, el formato, ortografía y
 
 
 \subsection{Medical Transcriptions}
-En el caso de las trancripciones médicas, la tarea es considerablemente más compleja. El conjunto de datos proviene de la página web \url{mtsamples.com}, como especificamos anteriomente. La autora efectuó un proceso de \textit{scraping} para obtener toda la información y recogerla en el archivo \jesitt{.csv}. 
+En el caso de las trancripciones médicas, la tarea es considerablemente más compleja. El conjunto de datos proviene de la página web \url{mtsamples.com}, como especificamos anteriomente. La autora efectuó un proceso de \textit{web scraping} para obtener toda la información y recogerla en el archivo \jesitt{.csv}. 
 
-Esto facilita las cosas, pero desde luego los comentarios deben ser profundamente esculpidos antes de pasarlos a cualquier modelo. Los trazos de formato HTML se dejan entrever en los comentarios con signos de puntuación o tabulaciones fuera de lugar, así que debemos arreglarlo previo entrenamiento.
+Esto facilita las cosas, pero desde luego los comentarios deben ser tratados en profundidad antes de poder pasarlos a cualquier modelo. Los trazos de formato en HTML se dejan entrever en los comentarios con signos de puntuación o tabulaciones fuera de lugar, apreciables en el Comentario \ref{com:mt-before}, así que debemos arreglarlo previo entrenamiento.
 
 Para ello, se ha hecho un fuerte uso de expresiones regulares, y se ha creado un \textit{pipeline} para procesar todo el texto a la vez.
 
-El pipeline elimina todas las posibles trazas o residuos que hubieran quedado del \textit{scraping}. Podemos ver el pipeline diseñado en la figura \ref{code:pipeline-regex-mdtr}.
+El pipeline elimina todas las posibles trazas o residuos que hubieran quedado del \textit{web scraping}. Podemos ver el pipeline diseñado en la Figura \ref{code:pipeline-regex-mdtr} del Apéndice.
 
-El resumen del proceso es eliminar signos de puntuación mal colocados, eliminar títulos o cabeceras de secciones de la página web, sustituir múltiples espacios por uno solo o eliminar los números de listas enumeradas (1., 2., etc). Finalmente, se añaden las etiquetas que vemos en la figura. Se explicará su funcionamiento en la sección de la experimentación.
+El resumen del proceso es eliminar signos de puntuación mal colocados, eliminar títulos o cabeceras de secciones de la página web, sustituir múltiples espacios por uno solo o eliminar los números de listas enumeradas (1., 2., etc). Finalmente, se añaden las etiquetas que vemos en la Figura \ref{fig:preprocess-diagram}. Se explicará su funcionamiento en la sección de la experimentación.
 
 El resultado es un texto muy limpio y claro, mucho más apto para la fase de entrenamiento.
+
+Podemos ver una comparativa del antes (Comentario \ref{com:mt-before}) y el después (Comentario \ref{com:mt-after}) del preprocesamiento de un determinado comentario:
+
+
+\begin{thm}
+	\sffamily{
+		\small{
+		SUBJECTIVE:,  This 23-year-old white female presents with complaint of allergies.  She used to have allergies when she lived in Seattle but she thinks they are worse here.  In the past, she has tried Claritin, and Zyrtec.  Both worked for short time but then seemed to lose effectiveness.  She has used Allegra also.  She used that last summer and she began using it again two weeks ago.  It does not appear to be working very well.  She has used over-the-counter sprays but no prescription nasal sprays.  She does have asthma but doest not require daily medication for this and does not think it is flaring up.,MEDICATIONS: , Her only medication currently is Ortho Tri-Cyclen and the Allegra.,ALLERGIES: , She has no known medicine allergies.,OBJECTIVE:,Vitals:  Weight was 130 pounds and blood pressure 124/78.,HEENT:  Her throat was mildly erythematous without exudate.  Nasal mucosa was erythematous and swollen.  Only clear drainage was seen.  TMs were clear.,Neck:  Supple without adenopathy.,Lungs:  Clear.,ASSESSMENT:,  Allergic rhinitis.,PLAN:,1.  She will try Zyrtec instead of Allegra again.  Another option will be to use loratadine.  She does not think she has prescription coverage so that might be cheaper.,2.  Samples of Nasonex two sprays in each nostril given for three weeks.  A prescription was written as well.
+		}
+	}
+	\label{com:mt-before}
+\end{thm}
+
+
+\begin{thm}
+	\sffamily{
+		\small{
+		This 23-year-old white female presents with complaint of allergies. She used to have allergies when she lived in Seattle but she thinks they are worse here. In the past, she has tried Claritin, and Zyrtec. Both worked for short time but then seemed to lose effectiveness. She has used Allegra also. She used that last summer and she began using it again two weeks ago. It does not appear to be working very well. She has used over-the-counter sprays but no prescription nasal sprays. She does have asthma but doest not require daily medication for this and does not think it is flaring up. Her only medication currently is Ortho Tri-Cyclen and the Allegra. She has no known medicine allergies. Vitals: Weight was 130 pounds and blood pressure 124/7 Her throat was mildly erythematous without exudate. Nasal mucosa was erythematous and swollen. Only clear drainage was seen. TMs were clear. Neck: Supple without adenopathy. Lungs: Clear. Allergic rhinitis. She will try Zyrtec instead of Allegra again. Another option will be to use loratadine. She does not think she has prescription coverage so that might be cheaper. Samples of Nasonex two sprays in each nostril given for three weeks. A prescription was written as well.
+		}
+	}
+	\label{com:mt-after}
+\end{thm}
+
+\section{Resultados del preprocesamiento}
+
+Tras haber preprocesado y cribado todos los elementos que pudieran suponer un problema a la hora de entrenar nuestro modelo, lo que obtenemos es un dataset unificado con un total de 33846 comentarios, sumando un total de 7537697 palabras con una media de 222 tokens y 1482 caracteres por comentario. 
+
+Disponiendo de este dataset, estamos listos para poder entrenar y ajustar nuestro modelo para que genere comentarios muy similares a los presentes en nuestro conjunto de datos.
+
+Vemos además, en la Figura \ref{fig:wordcloud} una nube de palabras de todo el conjunto de datos.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.9\textwidth]{media/wordcloud_full_data.png}
+	\caption{Wordcloud de todo el conjunto de datos}
+	\label{fig:wordcloud}
+\end{figure}
+
+Se aprecia que las palabras más comunes son \textit{patient}, \textit{case}, o \textit{treatment}, junto con \textit{study} o \textit{performed}.

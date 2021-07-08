@@ -1,16 +1,16 @@
-\chapter{Análisis y Despliegue}
+\chapter{Análisis y evaluación de \\herramientas de textos médicos}
 
 En este capítulo discutiremos cómo hemos llevado a cabo la evaluación de las herramientas disponibles en el estado del arte para la extracción de información en texto no estructurado de carácter médico.
 
-Para ello se ha creado una web app disponible de forma muy accesible para que sea fácil ver el poder combinado de todas estas herramientas.
+Para ello se ha creado una web app disponible de forma muy accesible para que sea fácil ver el poder combinado de todas estas herramientas. Dicha herramienta se denomina \href{https://share.streamlit.io/jesi-rgb/medical-text-analysis/src/streamlit_gen_test.py}{MEDGEN}.
 
 \section{Análisis de texto no estructurado}
 
-Para el análisis y minería de texto no estructurado una de las técnicas más útiles es el \textbf{Named Entity Recognition (NER) Tagging}, es decir, el etiquetado de entidades. La idea es, dado un cuerpo de texto, extraer aquellas entidades que tengan un significado propio o relevante por sí solas. En nuestro contexto, esto corresponde, por ejemplo, a nombres de enfermedades, partes del cuerpo, medicamentos, entre otras. Un NER Tagger entrenado sería capaz de detectar dichas entidades en el texto y devolver una lista de las mismas, automatizando la extracción de información y haciéndolo muy rápido.
+Para el análisis y minería de texto no estructurado una de las técnicas más útiles es el \textbf{Named Entity Recognition (NER) Tagging}, es decir, el etiquetado de entidades. La idea es, dado un cuerpo de texto, extraer aquellas entidades que tengan un significado propio o relevante por sí mismas. En nuestro contexto, esto corresponde, por ejemplo, a nombres de enfermedades, partes del cuerpo, medicamentos, entre otras. Un NER Tagger entrenado sería capaz de detectar dichas entidades en el texto y devolver una lista de las mismas, automatizando la extracción de información y haciéndolo muy rápido.
 
 La librería SciSpacy \cite{neumann-etal-2019-scispacy} nos provee con una selección de NER Taggers preentrenados en diferentes corpus de caracter biomédico y los hace disponibles mediante la famosa librería Spacy \cite{spacy}, que se ha convertido en el estándar de la industria para el análisis del lenguaje natural.
 
-Estos son los taggers que utilizaremos en nuestra aplicación, aunque la inclusión de algún otro más que pudiera ser interesante es trivial. 
+Estos son los taggers que utilizaremos en nuestra aplicación, aunque resulta sencillo incluir algún otro más que pudiera ser de interés.
 
 \begin{itemize}
 	\item \textbf{Med7} \cite{med7}: El Med7 es un NER entrenado en datos clínicos capaz de detectar 7 entidades diferentes: nombres de medicamentos, vía de administración del medicamento, frecuencia, dosis, cantidad, el formato (pastilla, polvos, etc), y el tiempo total de medicación. 
@@ -25,14 +25,18 @@ Estos son los taggers que utilizaremos en nuestra aplicación, aunque la inclusi
 	\label{fig:med7}
 \end{figure}
 
-En la figura \ref{fig:med7} vemos un ejemplo de cómo una de estas herramientas puede ayudar al análisis del texto, destacando con diferentes colores las entidades encontradas. Esto es, sin embargo, solo una aplicación de demostración. El verdadero poder reside en que dichas entidades están internamente representadas en forma de diccionario, asociando cada término encontrado en el texto con la entidad correspondiente. 
+En la Figura \ref{fig:med7} vemos un ejemplo de cómo una de estas herramientas puede ayudar al análisis del texto, destacando con diferentes colores las entidades encontradas. Esto es, sin embargo, solo una aplicación de demostración. El verdadero poder reside en que dichas entidades están internamente representadas en forma de diccionario, asociando cada término encontrado en el texto con la entidad correspondiente. 
 
 Estos diccionarios pueden anexarse y guardarse en la base de datos correspondiente, haciendo su búsqueda y análisis muchísimo más rápidos, además de habilitando comparativas que no serían posibles de otra forma.
 
 
-\section{Despliegue de la aplicación}
+\section{Despliegue de MEDGEN}
 
 Para hacer accesible todo el trabajo que se ha acometido, se ha elaborado una aplicación que permite hacer uso de todas las técnicas y herramientas discutidas a lo largo del documento. El framework utilizado ha sido \href{https://streamlit.io}{Streamlit}.
+
+Streamlit es un framework para Python diseñado para el prototipado ágil de aplicaciones web. Los creadores idearon esta herramienta para disminuir el esfuerzo que hay que acometer a la hora de desplegar una aplicación basada en inteligencia artificial, es decir, una aplicación que consta de sistemas de inferencia o similares, sistemas que no se encuentran en aplicaciones web usuales. 
+
+De esta forma, es muy accesible y sencillo diseñar una aplicación en Python, donde se puede integrar cualquier sistema de IA en desarrollo y habilitar un espacio para que otros miembros del equipo vean cómo funciona, ofreciendo la oportunidad de crear casos de uso reales.
 
 La aplicación permite generar comentarios utilizando el modelo generativo, y permite analizar dichos comentarios, así como importar desde distintas fuentes. La aplicación efectúa un pequeño análisis del texto y utiliza el tagger que el usuario seleccione.
 
@@ -40,11 +44,9 @@ La aplicación permite generar comentarios utilizando el modelo generativo, y pe
 \section{Instalación y modo de uso}
 La aplicación puede compilarse desde el código fuente siguiendo el \href{https://github.com/jesi-rgb/medical-text-analysis}{enlace al repositorio}, descargándolo y ejecutando los siguientes comandos:
 
-Suponiendo que estamos en el directorio que nos interesa...
-
 \jesitt{git clone https://github.com/jesi-rgb/medical-text-analysis}
 
-Activamos el environment que más nos guste, ya sea de python o conda...
+Activamos el entorno que más nos guste, ya sea de python o conda.
 
 \jesitt{cd medical-text-analysis}
 
@@ -56,7 +58,7 @@ Una vez finalizado,
 
 se nos abrirá una ventana en el navegador y la aplicación estará lista para funcionar.
 
-La primera ejecución tarda un poco más, ya que ha de descargar el modelo de internet y cargar los modelos en memoria. Tras eso, los modelos se guardan en caché y la ejecución es mucho más rápida.
+La primera ejecución tarda un poco más, ya que ha de descargar el modelo de Internet y cargarlo en memoria. Tras eso, los modelos se guardan en caché y la ejecución es mucho más rápida.
 
 \section{Conclusiones finales}
 
