@@ -129,17 +129,38 @@ Por último, abordaremos las principales técnicas para clasficar texto, ámbito
 Los principales algoritmos de clasificación de texto, entre otros, son los siguientes:
 
 \begin{itemize}
-    \item \textbf{Boosting y bagging}: boosting y bagging son dos algoritmos basados en lo que se denomina en la literatura como \textit{ensemble learning}. Esta técnica utiliza un gran número de modelos que funcionan muy bien para casos muy específicos pero no generalizan correctamente. La idea es que la respuesta conjunta de todos los modelos nos acerque a la respuesta correcta. Esta decisión puede hacerse mediante votos u otros métodos. \cite{Bauer2004AnEC}
-    \item \textbf{Regresión logística}: la regresión logística es uno de los métodos de aprendizaje más simples, junto con la regresión linear. La regresión logística es una especialización de la regresión lineal, de forma que se utiliza una función logística para predecir categorías discretas, no continuas. \cite{CoxLogit1989}
-    \item \textbf{Redes neuronales recurrentes}: por último, las redes neuronales recurrentes son una especialización de las redes neuronales en las que un subonjunto de las neuronas reciben su salida como una entrada, generándose ciclos de retroalimentación o \textit{feedback}. Estas redes funcionan especialmente bien con datos con patrones y componentes temporales, características especialmente destacables del lenguaje humano, así como de la música o vídeo. \cite{ZhouLSTM}
+    \item \textbf{Boosting y bagging}: boosting y bagging son dos métodos basados en lo que se denomina en la literatura como \textit{ensemble learning}. Estos métodos no son algoritmos de clasificación en sí, sino que son métodos aplicables a cualquier modelo de clasificación. Esta técnica utiliza un gran número de modelos que funcionan muy bien para casos muy específicos pero no generalizan correctamente. La idea es que la respuesta conjunta de todos los modelos provea la respuesta correcta de forma más probable. \cite{Bauer2004AnEC}
+    
+    \item \textbf{Naïve Bayes}: estos modelos utilizan el poder de inferencia del cálculo de probabilidades condicionales para la categorización, más en concreto, la categorización de texto. Esta familia de modelos se ha demostrado que funcionan particularmente bien para esta tarea, además de ser muy rápidos. \cite{FrankNaive2006}
+
+    \item \textbf{Regresión logística}: la regresión logística es uno de los métodos de aprendizaje más simples, junto con la regresión linear. La regresión logística es una especialización de la regresión lineal, de forma que se utiliza una función logística para predecir categorías discretas, no continuas. \cite{logitText}
+
+    \item \textbf{Redes neuronales recurrentes}: las redes neuronales recurrentes son una especialización de las redes neuronales en las que un subonjunto de las neuronas reciben su salida como una entrada, generándose ciclos de retroalimentación o \textit{feedback}. Estas redes funcionan especialmente bien con datos con patrones y componentes temporales, características especialmente destacables del lenguaje humano, así como de la música o vídeo. \cite{ZhouLSTM}
+
+
+    \item \textbf{Máquinas de Soporte Vectorial}: Las Support Vector Machines (SVM) son modelos muy conocidos de aprendizaje supervisado para clasificación y regresión. Su funcionamiento en clasificación de texto ha sido demostara
 \end{itemize}
 
 
-Existen otras muchas técnicas en clasificación de texto, como \textit{K Nearest Neighbours}~\cite{KNNXiao2007}, \textit{Naïve Bayes}~\cite{FrankNaive2006}, \textit{Support Vector Machines (SVM)}~\cite{SVMJoa1998}, árboles de decisión~\cite{DecisionTreeNoorman2018} o \textit{Random Forests}~\cite{breiman2001random}, entre muchas otras. 
+Existen otras técnicas en clasificación de texto, como \textit{K Nearest Neighbours}~\cite{KNNXiao2007}, árboles de decisión~\cite{DecisionTreeNoorman2018} o \textit{Random Forests}~\cite{breiman2001random}, entre muchas otras. 
 
 \section{Estado del arte}
 
-Por último, mencionaremos brevemente los tres proyectos más grandes de lenguaje generativo hasta la fecha, con objeto de entender qué es lo que hacen para poder integrar dichas técnicas en nuestro modelo.
+Por último, hablaremos de los diferentes lenguajes y vocabularios médicos disponibles en el estado del arte que ayudan a extraer conocimiento de la terminología médica.
+
+Además, mencionaremos brevemente los tres proyectos más grandes de lenguaje generativo hasta la fecha, con objeto de entender qué es lo que hacen para poder integrar dichas técnicas en nuestro modelo.
+
+\subsection{Terminología médica}
+
+Debido al vocabulario y términos tan específicos con los que se tratan en el ámbito de la medicina, si deseamos automatizar cualquier proceso de extracción de conocimento debemos tener en cuenta este factor. Es por ello que en 1999 se creó el Systemized Nomenclature of Medicine -– Clinical Terms (SNOMED). 
+
+El SNOMED es una colección de términos sistemáticamente organizada, que provee códigos, términos, sinónimos y definiciones utilizadas en el ámbito de la medicina.
+
+A raíz del SNOMED aparecen vocabularios más específicos que matizan aspectos que pudieran no haberse considerado en el sistema inicial. Todas estas colecciones se aglomeran en el Unified Medical Language System (UMLS), que incluye al SNOMED.
+
+Estos vocabularios son de vital importancia para modelos de lenguaje médico, ya que proveen un sistema rápido y accesible para el etiquetado y clasificación, resumen o extracción de palabras clave de extractos médicos o similares. Los \textbf{reconocedores de entidades} hacen un especial uso de este sistema, como veremos en capítulos poasteriores.
+
+
 
 \subsection{Transformers}
 En esta sección hablaremos del Transformer, un tipo de arquitectura de red neuronal creada por ingenieros de Google \cite{TransformerAshish2017}, en más profundidad, sus características principales en contraste con las demás tecnologías y de la configuración escogida para nuestro problema.
