@@ -41,6 +41,31 @@ De esta forma, es muy accesible y sencillo diseñar una aplicación en Python, d
 La aplicación permite generar comentarios utilizando el modelo generativo, y permite analizar dichos comentarios, así como importar desde distintas fuentes. La aplicación efectúa un pequeño análisis del texto y utiliza el tagger que el usuario seleccione.
 
 
+Como vemos en las Figuras \ref{fig:app-demo} y \ref{fig:analysis-comment}, podemos efectuar nuestro análisis de diferentes formas.
+
+Podemos, en caso de no disponer de un conjunto de datos, generar comentarios usando nuestro modelo generativo. Una vez generados, podemos analizarlos con el NER Tagger que deseemos. Aquí el desarrollador estaría desarrollando el suyo propio y podría integrarlo al sistema fácilmente para testearlo de forma apropiada. 
+
+El análisis nos ofrece una versión etiquetada del texto original, así como unas estadísticas del comentario en concreto.
+
+Además de ello, podemos importar nuestros propios comentarios desde un archivo o copiarlos y pegarlos en el campo de texto, con tal de maximizar la comodidad de uso de la aplicación.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.9\textwidth]{media/app_demo.jpeg}
+	\caption{Captura de pantalla de la aplicación elaborada. A la izquierda podemos generar comentarios y a la derecha, analizarlos.}
+	\label{fig:app-demo}
+\end{figure}
+
+
+\begin{figure}[b]
+	\centering
+	\includegraphics[width=.62\textwidth]{media/analysis_comment.jpeg}
+	\caption{Captura de pantalla del análisis que ofrece la aplicación acerca de un determinado comentario.}
+	\label{fig:analysis-comment}
+\end{figure}
+
+
+
 \section{Instalación y modo de uso}
 La aplicación puede compilarse desde el código fuente siguiendo el \href{https://github.com/jesi-rgb/medical-text-analysis}{enlace al repositorio}, descargándolo y ejecutando los siguientes comandos:
 
@@ -59,33 +84,3 @@ Una vez finalizado,
 se nos abrirá una ventana en el navegador y la aplicación estará lista para funcionar.
 
 La primera ejecución tarda un poco más, ya que ha de descargar el modelo de Internet y cargarlo en memoria. Tras eso, los modelos se guardan en caché y la ejecución es mucho más rápida.
-
-\section{Conclusiones finales}
-
-Como vemos en las figuras \ref{fig:app-demo} y \ref{fig:analysis-comment}, la aplicación hace accesibles la generación y el análisis de los comentarios. Está pensada para que sea utilizada por desarrolladores de NER Taggers, o herramientas similares, de forma que fácilmente puedan incluir el modelo que están desarrollando y probarlo con los comentarios que nuestra aplicación genera.
-
-Esto hace el desarrollo de dichos modelos más fácil para todos, contribuyendo a una mayor y mejor producción de herramientas de asistencia médica, clave para cualquier complejo hospitalario medianamente grande, ya que se manejan volúmenes de datos, a menudo, insostenibles.
-
-La asistencia que estas herramientas ofrecen puede suponer una mejora en la calidad de la atención que cada paciente recibe, además de la reducción de carga cognitiva que los correspondientes profesionales deben soportar, mejorando la calidad de vida de ambas partes. Con todo ello, se apunta a una mejora del sistema médico del que disponemos, del que ya de por sí podemos estar orgullosos siendo uno de los mejores en el mundo.
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=.9\textwidth]{media/app_demo.jpeg}
-	\caption{Captura de pantalla de la aplicación elaborada. A la izquierda podemos generar comentarios y a la derecha, analizarlos.}
-	\label{fig:app-demo}
-\end{figure}
-
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=.62\textwidth]{media/analysis_comment.jpeg}
-	\caption{Captura de pantalla del análisis que ofrece la aplicación acerca de un determinado comentario.}
-	\label{fig:analysis-comment}
-\end{figure}
-
-
-
-
-
-
-
