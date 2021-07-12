@@ -1,13 +1,15 @@
 \section{EDA y preprocesamiento}
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=.9\textwidth]{media/general-diagram.pdf}
-	\caption{Diagrama de flujo general de todo el proyecto}
-	\label{fig:general-diagram}
-\end{figure}
-En este capítulo discutiremos los distintos detalles de la implementación de nuestro sistema: desde el preprocesamiento de los datos hasta la elección y entrenamiento del modelo.
 
-En la Figura \ref{fig:general-diagram} podemos observar una vista general de los diferentes pasos de los que consta nuestro proyecto. En cada paso, cuando proceda, expandiremos el nodo concreto para ver de qué subtareas se compone cada una de estas tareas más generales.
+En esta sección expondremos los diferentes métodos y técnicas utilizadas de preprocesamiento de texto para darle una forma apropiada y unificada al conjunto de datos, antes de poder introducirlos en el modelo.
+
+En la figura \ref{fig:preprocess-diagram} se ilustra un esquema de los pasos a seguir en esta fase del proyecto. Explicaremos cada paso desde el punto de vista de los dos conjuntos de datos a unificar, ya que cada uno necesitará de un tratamiento particular en función de su etado inicial.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=.9\textwidth]{media/preprocess-diagram.pdf}
+	\caption{Diagrama resumen del preprocesamiento efectuado en los datos.}
+	\label{fig:preprocess-diagram}
+\end{figure}
 
 
 \subsection{Datos: fuente y forma}
@@ -123,12 +125,7 @@ En este caso, como podemos apreciar en la Figura \ref{fig:sum_mdtr}, las distrib
 \subsection{Preprocesamiento}
 En esta sección, describiremos el preprocesamiento acometido en cada uno de los datsets. Provienen de fuentes diferentes así que cada uno recibirá un trato diferente, con objeto de normalizar y unificar el formato de todos de cara al entrenamiento.
 
-\begin{figure}[h!]
-	\centering
-	\includegraphics[width=.9\textwidth]{media/preprocess-diagram.pdf}
-	\caption{Diagrama resumen del preprocesamiento efectuado en los datos.}
-	\label{fig:preprocess-diagram}
-\end{figure}
+
 
 
 \subsubsection{Medical Text}
@@ -148,13 +145,13 @@ El resumen del proceso es eliminar signos de puntuación mal colocados, eliminar
 
 El resultado es un texto muy limpio y claro, mucho más apto para la fase de entrenamiento.
 
-Podemos ver una comparativa del antes (Comentario \ref{com:mt-before}) y el después (Comentario \ref{com:mt-after}) del preprocesamiento de un determinado comentario:
+Podemos ver una comparativa del antes (Comentario \ref{com:mt-before}) y el después (Comentario \ref{com:mt-after}) del preprocesamiento de un determinado comentario de nuestro dataset. Los comentarios han sido truncados debido a su longitud.
 
 
 \begin{thm}
 	\sffamily{
 		\small{
-		SUBJECTIVE:,  This 23-year-old white female presents with complaint of allergies.  She used to have allergies when she lived in Seattle but she thinks they are worse here.  In the past, she has tried Claritin, and Zyrtec.  Both worked for short time but then seemed to lose effectiveness.  She has used Allegra also.  She used that last summer and she began using it again two weeks ago.  It does not appear to be working very well.  She has used over-the-counter sprays but no prescription nasal sprays.  She does have asthma but doest not require daily medication for this and does not think it is flaring up.,MEDICATIONS: , Her only medication currently is Ortho Tri-Cyclen and the Allegra.,ALLERGIES: , She has no known medicine allergies.,OBJECTIVE:,Vitals:  Weight was 130 pounds and blood pressure 124/78.,HEENT:  Her throat was mildly erythematous without exudate.  Nasal mucosa was erythematous and swollen.  Only clear drainage was seen.  TMs were clear.,Neck:  Supple without adenopathy.,Lungs:  Clear.,ASSESSMENT:,  Allergic rhinitis.,PLAN:,1.  She will try Zyrtec instead of Allegra again.  Another option will be to use loratadine.  She does not think she has prescription coverage so that might be cheaper.,2.  Samples of Nasonex two sprays in each nostril given for three weeks.  A prescription was written as well.
+		SUBJECTIVE:,  This 23-year-old white female presents with complaint of allergies.  She used to have allergies when she lived in Seattle but she thinks they are worse here.  In the past, she has tried Claritin, and Zyrtec.  Both worked for short time but then seemed to lose effectiveness.  She has used Allegra also.  She used that last summer and she began using it again two weeks ago. [...]
 		}
 	}
 	\label{com:mt-before}
@@ -164,8 +161,7 @@ Podemos ver una comparativa del antes (Comentario \ref{com:mt-before}) y el desp
 \begin{thm}
 	\sffamily{
 		\small{
-		This 23-year-old white female presents with complaint of allergies. She used to have allergies when she lived in Seattle but she thinks they are worse here. In the past, she has tried Claritin, and Zyrtec. Both worked for short time but then seemed to lose effectiveness. She has used Allegra also. She used that last summer and she began using it again two weeks ago. It does not appear to be working very well. She has used over-the-counter sprays but no prescription nasal sprays. She does have asthma but doest not require daily medication for this and does not think it is flaring up. Her only medication currently is Ortho Tri-Cyclen and the Allegra. She has no known medicine allergies. Vitals: Weight was 130 pounds and blood pressure 124/7 Her throat was mildly erythematous without exudate. Nasal mucosa was erythematous and swollen. Only clear drainage was seen. TMs were clear. Neck: Supple without adenopathy. Lungs: Clear. Allergic rhinitis. She will try Zyrtec instead of Allegra again. Another option will be to use loratadine. She does not think she has prescription coverage so that might be cheaper. Samples of Nasonex two sprays in each nostril given for three weeks. A prescription was written as well.
-		}
+		$<|$ BOS $|>$This 23-year-old white female presents with complaint of allergies. She used to have allergies when she lived in Seattle but she thinks they are worse here. In the past, she has tried Claritin, and Zyrtec. Both worked for short time but then seemed to lose effectiveness. She has used Allegra also. She used that last summer and she began using it again two weeks ago. [...] $<|$ EOS $|>$}
 	}
 	\label{com:mt-after}
 \end{thm}
@@ -174,7 +170,6 @@ Podemos ver una comparativa del antes (Comentario \ref{com:mt-before}) y el desp
 
 Tras haber preprocesado y cribado todos los elementos que pudieran suponer un problema a la hora de entrenar nuestro modelo, lo que obtenemos es un dataset unificado con un total de 33846 comentarios, sumando un total de 7537697 palabras con una media de 222 tokens y 1482 caracteres por comentario. 
 
-Disponiendo de este dataset, estamos listos para poder entrenar y ajustar nuestro modelo para que genere comentarios muy similares a los presentes en nuestro conjunto de datos.
 
 Vemos además, en la Figura \ref{fig:wordcloud} una nube de palabras de todo el conjunto de datos.
 
@@ -186,3 +181,5 @@ Vemos además, en la Figura \ref{fig:wordcloud} una nube de palabras de todo el 
 \end{figure}
 
 Se aprecia que las palabras más comunes son \textit{patient}, \textit{case}, o \textit{treatment}, junto con \textit{study} o \textit{performed}.
+
+Disponiendo de este dataset, estamos listos para poder entrenar y ajustar nuestro modelo para que genere comentarios muy similares a los presentes en nuestro conjunto de datos.

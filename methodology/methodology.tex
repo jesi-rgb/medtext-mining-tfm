@@ -29,6 +29,13 @@ Una vez procesado, el modelo nos devolverá una secuencia de números, de los qu
 
 
 \section{Ajuste de los pesos}
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.9\textwidth]{media/gpt-fine-tune.pdf}
+	\caption{Diagrama resumen del ajuste de los pesos del GPT2}
+	\label{fig:fine-tune-gpt}
+\end{figure}
+
 Nuestro modelo ya está construido. Esto es, los diseñadores ya han decidido las distintas capas y el orden de estas según hemos visto en las secciones anteriores. Este modelo se nos ofrece preentrenado de forma bastante simple. Tal y como viene en el paquete, es capaz de generar frases con relativo sentido, es decir, de algún modo \textit{sabe hablar}. 
 
 El ajuste se efectúa como un proceso de aprendizaje no supervisado, en la que exponemos a la red a un conjunto de comentarios de forma que ésta podrá generar nuevos comentarios de la nada que caigan bajo la función de distribución de los comentarios de entrada. 
