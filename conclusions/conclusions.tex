@@ -1,10 +1,50 @@
-\chapter{Conclusiones finales}
+\chapter{Conclusiones}
+En este último capítulo abordaremos todos los problemas y objetivos propuestos a lo largo de este proyecto con objeto de refrescarlos, y finalmente se ofrecerá una evaluación acerca de cómo estos objetivos se han cumplido. Finalmente se reflexionará acerca de cómo podría extrapolarse este proyecto de cara al futuro.
 
-Como vemos en las figuras \ref{fig:app-demo} y \ref{fig:analysis-comment}, la aplicación hace accesibles la generación y el análisis de los comentarios. Está pensada para que sea utilizada por desarrolladores de NER Taggers, o herramientas similares, de forma que fácilmente puedan incluir el modelo que están desarrollando y probarlo con los comentarios que nuestra aplicación genera.
+\section{Problemática inicial}
+Para empezar, hablaremos del problema inicial que nos ha motivado en la elaboración de esta herramienta.
 
-Esto hace el desarrollo de dichos modelos más fácil para todos, contribuyendo a una mayor y mejor producción de herramientas de asistencia médica, clave para cualquier complejo hospitalario medianamente grande, ya que se manejan volúmenes de datos, a menudo, insostenibles.
+Los informes médicos ofrecen grandes cantidades de información clave para los profesionales de cara al tratamiento de los pacientes, y gran parte de esta información se almacena en cuerpos de texto libre. Dichos extractos usualmente no se utilizan de cara a la extracción de información automática debido a la naturaleza no estructurada de los mismos, que hace su análisis muy complicado.
+
+Aún así, en estas secciones se puede encontrar mucha información muy valiosa y relevante, por lo que tratar de encontrar un sistema automático que pueda ofrecer información estructurada dado un conjunto de información no estructurada puede ser de gran utilidad en el ámbito médico profesional.
+
+\section{Objetivos propuestos}
+Dada la problemática inicial, el objetivo es crear una herramienta que pueda ofrecer información estructurada. Una de las herramientas más útiles en este caso es un reconocedor de entidades, o, en inglés, un NER Tagger. Dado un texto, es capaz de reconocer entidades importantes automáticamente.
+
+En el contexto médico, debemos atender a las entidades más importantes como los medicamentos, enfermedades, partes del cuerpo, etc. Para ello, existe un vocabulario unificado, denomidando SNOMED. Gracias a esto, podemos averiguar con precisión dónde se hallan los datos más importantes.
+
+Si bien se han creado varios reconocedores de entidades, cada uno construido para diferentes tareas dentro del ámbito médico (desde recetas de medicamentos hasta informes quirúrjicos), se pretendía crear un sistema con el que el desarrollo de nuevos reconocedores fuera más fácil. Esto implica disponer de ingentes cantidades de datos que, por su delicada corte, pueden no estar fácilmente disponibles.
+
+Es por ello, que en pos de alcanzar este primer objetivo de facilitar el desarrollo de reconocedores de entidades (o cualquier otro tipo de herramienta relacionada), se plantea un segundo objetivo: un generador de comentarios automático.
+
+Un generador de comentarios automático elimina la necesidad de inspeccionar en busca de conjuntos de datos, ya que se podrán generar cuantos se deseen, de cara al desarrollo de las herramientas. Esto es además viable gracias al destacable avance acometido en los campos de inteligencia artificial, donde se han creado modelos de lenguaje muy competentes.
+
+
+\section{Metogología y resultados}
+Es por ello que disponemos de dos objetivos: 
+\begin{enumerate}
+	\item Crear un modelo de lenguaje generativo que sea capaz de generar comentarios de forma automática.
+	\item Disponiendo de un conjunto de datos \textit{infinito}, habilitar un sencillo desarrollo de herramientas de extracción de conocimiento de texto.
+\end{enumerate}
+
+Para ello, se han utilizado modelos generativos de lenguaje preentrenados, como el GPT-2. El GPT-2 es un \textit{transformer}, un tipo de arquitectura de red neuronal especializada en procesamiento de texto de forma paralela. El GPT-2 es un modelo preentrenado y abierto, lo que nos habilita a poder crear una herramienta que genere comentarios de forma automática.
+
+Se ha observado que el modelo es capaz de crear comentarios de forma bastante competente con un entrenamiento previo en un conjunto de datos preprocesado y unificado manualmente, lo que los creadores denominan como \textit{fine-tuning} de la red. 
+
+Esto hace el desarrollo de dichos modelos más fácil para todos, contribuyendo a una mayor y mejor producción de herramientas de asistencia médica, clave para cualquier complejo hospitalario medianamente grande, donde se manejan volúmenes de datos, a menudo, insostenibles.
 
 La asistencia que estas herramientas ofrecen puede suponer una mejora en la calidad de la atención que cada paciente recibe, además de la reducción de carga cognitiva que los correspondientes profesionales deben soportar, mejorando la calidad de vida de ambas partes. Con todo ello, se apunta a una mejora del sistema médico del que disponemos, del que ya de por sí podemos estar orgullosos siendo uno de los mejores en el mundo.
+
+\section{Posibles trabajos futuros}
+
+Partiendo del punto en el que nos encontramos, podemos dirigir el proyecto en varias direcciones.
+
+Podemos centrarnos en desarrollar un sistema de reconocimiento de entidades que unifique todos los existentes y los mejore, con ayuda del SNOMED y de los datos públicos disponibles.
+
+Por otro lado, podemos centrarnos en el ámbito de la red neuronal que hemos construido. El GPT-2 no solo puede generar comentarios, puede resumir y puede clasificar texto. Esto permite que, con la correcta configuración, obtengamos, por ejemplo, un resumen de un informe médico de forma que no tengamos que leer todo el contenido para obtener toda la información.
+
+Con ayuda del clasificador, se puede crear un sistema de recomendación y búsqueda para una base de datos muy poderoso. Buscando términos relativamente ambiguos, tal y como un humano preguntaría de forma natural, el sistema es capaz de devolver todos aquellos documentos relacionados, de forma que el acceso a los documentos en la base de datos es ahora mucho más fácil y natural.
+
 
 
 
