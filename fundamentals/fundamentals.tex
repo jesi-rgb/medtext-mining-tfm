@@ -69,6 +69,7 @@ La lematización va un paso más allá y trata de encontrar la raíz de las pala
 
 
 \subsubsection{Frecuencias: TF, IDF}
+\label{sec:tfidf}
 Uno de los datos más importantes a obtener de un texto es la frecuencia de palabras. Esta operación es tan simple como suena: contar cuántas veces aparece cada palabra y anotarlo en una estructura similar a un diccionario. Este término se conoce como \textit{Term Frequency} o TF. Estos valores suelen representarse en una escala logarítmica, con objeto de que las palabras muy dominantes no eclipsen a las menos frecuentes.
 
 Del campo de teoría de la información \cite{information2001} conocemos que aquellos términos que aparezcan con una frecuencia muy alta poseerán menos información que aquellos que aparezcan menos. Como vimos en la sección \ref{sec:stopwords}, eliminamos las palabras vacías porque aparecían mucho. Es decir, un artículo como \textit{el} o una preposición como \textit{de} tendrían una frecuencia desproporcionada, cuando en realidad no aportan ninguna información. 
