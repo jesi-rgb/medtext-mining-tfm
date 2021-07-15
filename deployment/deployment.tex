@@ -6,7 +6,7 @@ Para ello se ha creado una web app disponible de forma muy accesible para que se
 
 \section{Estado del arte: análisis de textos médicos}
 
-Para el análisis y minería de texto no estructurado una de las técnicas más útiles es el \textbf{Named Entity Recognition (NER) Tagging}, es decir, el etiquetado de entidades. La idea es, dado un cuerpo de texto, extraer aquellas entidades que tengan un significado propio o relevante por sí mismas. En nuestro contexto, esto corresponde, por ejemplo, a nombres de enfermedades, partes del cuerpo, medicamentos, entre otras. Un NER Tagger entrenado sería capaz de detectar dichas entidades en el texto y devolver una lista de las mismas, automatizando la extracción de información y haciéndolo muy rápido.
+Para el análisis y minería de texto no estructurado una de las técnicas más útiles es el \textbf{Named Entity Recognition (NER) Tagging}, es decir, el etiquetado de entidades. La idea es, dado un cuerpo de texto, extraer aquellas entidades que tengan un significado propio o relevante por sí mismas. En nuestro contexto, esto corresponde, por ejemplo, a nombres de enfermedades, partes del cuerpo, medicamentos, entre otras. Un NER Tagger entrenado sería capaz de detectar dichas entidades en el texto y devolver una lista de las mismas, automatizando la extracción de información.
 
 La librería SciSpacy \cite{neumann-etal-2019-scispacy} nos provee con una selección de NER Taggers preentrenados en diferentes corpus de caracter biomédico y los hace disponibles mediante la famosa librería Spacy \cite{spacy}, que se ha convertido en el estándar de la industria para el análisis del lenguaje natural.
 
@@ -36,7 +36,7 @@ Para hacer accesible todo el trabajo que se ha acometido, se ha elaborado una ap
 
 El framework utilizado ha sido \href{https://streamlit.io}{Streamlit}. Streamlit es un framework para Python diseñado para el prototipado ágil de aplicaciones web. Los creadores idearon esta herramienta para disminuir el esfuerzo que hay que acometer a la hora de desplegar una aplicación basada en inteligencia artificial, es decir, una aplicación que consta de sistemas de inferencia o similares, sistemas que no se encuentran en aplicaciones web usuales. 
 
-De esta forma, es muy accesible y sencillo diseñar una aplicación en Python, donde se puede integrar cualquier sistema de IA en desarrollo y habilitar un espacio para que otros miembros del equipo vean cómo funciona, ofreciendo la oportunidad de crear casos de uso reales.
+De esta forma, es muy accesible y sencillo diseñar una aplicación en Python, donde se puede integrar cualquier sistema de IA en desarrollo y habilitar un espacio para que personas ajenas al desarrollo experimenten de primera mano cómo funciona, ofreciendo la oportunidad de crear casos de uso reales.
 
 La aplicación permite generar comentarios utilizando el modelo generativo, y permite analizar dichos comentarios, así como importar desde distintas fuentes. La aplicación efectúa un pequeño análisis del texto y utiliza el tagger que el usuario seleccione.
 

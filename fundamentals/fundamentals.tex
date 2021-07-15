@@ -130,7 +130,7 @@ Por último, abordaremos las principales técnicas para clasficar texto, ámbito
 Los principales algoritmos de clasificación de texto, entre otros, son los siguientes:
 
 \begin{itemize}
-    \item \textbf{Boosting y bagging}: boosting y bagging son dos métodos basados en lo que se denomina en la literatura como \textit{ensemble learning}. Estos métodos no son algoritmos de clasificación en sí, sino que son métodos aplicables a cualquier modelo de clasificación. Esta técnica utiliza un gran número de modelos que funcionan muy bien para casos muy específicos pero no generalizan correctamente. La idea es que la respuesta conjunta de todos los modelos provea la respuesta correcta de forma más probable. \cite{Bauer2004AnEC}
+    \item \textbf{Boosting y bagging}: boosting y bagging son dos métodos basados en lo que se denomina en la literatura como \textit{ensemble learning}. Estos métodos no son algoritmos de clasificación en sí, sino que son métodos aplicables a cualquier modelo. Esta técnica utiliza un gran número de modelos que funcionan muy bien para casos muy específicos pero no generalizan correctamente. La idea es que la respuesta conjunta de todos los modelos provea la respuesta correcta de forma más probable. \cite{Bauer2004AnEC}
     
     \item \textbf{Naïve Bayes}: estos modelos utilizan el poder de inferencia del cálculo de probabilidades condicionales para la categorización, más en concreto, la categorización de texto. Esta familia de modelos se ha demostrado que funcionan particularmente bien para esta tarea, además de ser muy rápidos. \cite{FrankNaive2006}
 
@@ -158,14 +158,14 @@ El SNOMED es una colección de términos sistemáticamente organizada, que prove
 
 A raíz del SNOMED aparecen vocabularios más específicos que matizan aspectos que pudieran no haberse considerado en el sistema inicial. Todas estas colecciones se aglomeran en el Unified Medical Language System (UMLS), que incluye al SNOMED.
 
-Estos vocabularios son de vital importancia para modelos de lenguaje médico, ya que proveen un sistema rápido y accesible para el etiquetado y clasificación, resumen o extracción de palabras clave de extractos médicos o similares. Los \textbf{reconocedores de entidades} hacen un especial uso de este sistema, como veremos en capítulos poasteriores.
+Estos vocabularios son de vital importancia para modelos de lenguaje médico, ya que proveen un sistema rápido y accesible para el etiquetado y clasificación, resumen o extracción de palabras clave de extractos médicos o similares. Los \textbf{reconocedores de entidades} hacen un especial uso de este sistema, como veremos en capítulos posteriores.
 
 
 
 \subsection{Transformers}
 En esta sección hablaremos del Transformer, un tipo de arquitectura de red neuronal creada por ingenieros de Google \cite{TransformerAshish2017}, en más profundidad, sus características principales en contraste con las demás tecnologías y de la configuración escogida para nuestro problema.
 
-\subsubsection{Arquitectura y módulos de atención}
+\subsubsection{Arquitectura}
 El Transformer corresponde con una de las técnicas más modernas de procesamiento de lenguaje natural, y una de las más relevantes del momento. Se la presenta como \textit{estado del arte en procesamiento del lenguaje natural}, constituyendo un modelo mucho más potente y \textbf{considerado} que las anteriores LSTM.
 
 El transformer está princpalmente basado en redes recurrentes, redes cuya entrada está conectada a la salida y, generalmente, se las construye con un contexto temporal en mente. Esto quiere decir que dada una entrada en el momento $n$, predeciremos la salida en función de la salida que se obtuvo en el momento $n - 1$, además de la entrada del momento $n$ en sí.
@@ -182,11 +182,11 @@ Esto es en sí el funcionamiento de una red recurrente estándar. El transformer
 \subsubsection{Atención}
 Uno de los principales conceptos que añade el transformer es de la \textbf{atención}. Este concepto trata de emular el concepto de atención con el que todos estamos familiarizados: el de ponderar y distrubir los recursos cognitivos de forma que aquellos estímulos más importantes reciban más recursos de cómputo por parte del sistema, de la misma forma que nuestro cerebro procesa de forma más potente aquello en lo que estamos concentrados, ignorando aquellos estímulos que sean menos importantes en un determinado instante.
 
-Uno de los principales problemas de las redes neuronales recurrentes clásicas es ls imposibilidad de la paralelización de su ejecución, y el crecimiento de los términos a considerar conforme más avanzado es el análisis de la secuencia en concreto.
+Uno de los principales problemas de las redes neuronales recurrentes clásicas es la imposibilidad de la paralelización de su ejecución, y el crecimiento de los términos a considerar conforme más avanzado es el análisis de la secuencia en concreto.
 
 La técnica de \textit{multi-head attention}, que podemos apreciar en color en la Figura \ref{fig:transformer}, soluciona estos problemas. En primer lugar, hace la paralelización del modelo no solo posible, sino también muy fácil. Cada módulo calcula por separado la atención que le corresponda y posteriormente se concatenan y se transforman linealmente en la salida de la dimensión que se espera. 
 
-Por otro lado, los modelos tradicionales sufren de no considerar dependencias entre elementos si estos están distantes en la secuencia. Los diferentes módulos calculan la atención en diferentes puntos de la secuencia de forma paralela, como comentamos. Las diferentes zonas pueden efectivamente considerar zonas muy distantes en tiempo constante, gracias a la paralelización. Esto efectivamente soluciona el problema de olvidar características importantes de puntos distantes, así como evitando tener que crear caminos de cálculo cada vez más largos conforme avanzamos en el análisis de la secuencia.
+Por otro lado, los modelos tradicionales sufren de no considerar dependencias entre elementos si estos están distantes en la secuencia. Los diferentes módulos calculan la atención en diferentes puntos de la secuencia de forma paralela. Las diferentes zonas pueden efectivamente considerar zonas muy distantes en tiempo constante, gracias a la paralelización. Esto efectivamente soluciona el problema de olvidar características importantes de puntos distantes, así como evitando tener que crear caminos de cálculo cada vez más largos conforme avanzamos en el análisis de la secuencia.
 
 
 \subsection{Modelos basados en transformers}

@@ -61,16 +61,16 @@ Hay que tener en cuenta que es una medida de \textbf{solapamiento} especialmente
 \subsubsection{Rouge}
 La métrica Recall-Oriented Understudy for Gisting Evaluation (Rouge) funciona de una manera muy similar, calculando el solapamiento de las palabras en los textos a comparar y haciendo especial énfasis en las diferencias entre el número de tokens, ya que es una métrica especialmente diseñada para la evaluación de resúmenes. En esta métrica se obtuvo un valor de 0.0669, indicando un supuestamente mal resumen del texto. 
 
-Como vemos, no son medidas muy útiles para nuestro propósito, pero lo cierto es que no existen muchas otras alternativas para la evaluación automática del lenguaje generativo libre, ya que es una tarea tan intrínsecamente subjetiva, como mencionábamos antes. Existe una opción en \cite{yuan2021bartscore}, pero el código no ha sido desvelado a día de hoy ya que continúa en desarrollo. 
+Como vemos, no son medidas muy útiles para nuestro propósito, pero lo cierto es que no existen muchas otras alternativas para la evaluación automática del lenguaje generativo libre, ya que es una tarea tan intrínsecamente subjetiva, como mencionábamos antes. Existe una opción en \cite{yuan2021bartscore}, pero el código no ha sido publicado a día de hoy ya que continúa en desarrollo. 
 
-Las medidas utilizadas anteriormente puede que no nos ofrezcan un valor objetivo de la calidad de los comentarios, pero sí nos ofrecen información acerca de su solapamiento, lo que nos lleva a la evaluación de similitud de los mismos.
+Las medidas utilizadas anteriormente puede que no nos ofrezcan un valor objetivo de la calidad de los comentarios, pero sí nos ofrecen información acerca de su solapamiento.
 
 \subsubsection{Similitud}
-Esto nos lleva a otra métrica a utilizar: la distancia en los comentarios. Un factor que sí podemos determinar de forma sencilla es si los comentarios son muy similares entre sí. Idealmente, se desearía que el generador pudiera proporcionar comentarios que no estuvieran relacionados entre sí, ya que no se explora lo suficiente en el espacio de todas las posibles combinaciones de entidades que pudiésemos encontrar. En esencia, deseamos simular casos específicos y poco relacionados entre sí.
+Esto nos lleva a otra métrica a utilizar: la distancia en los comentarios. Un factor que sí podemos determinar de forma sencilla es si los comentarios son muy similares entre sí. Idealmente, se desearía que el generador pudiera proporcionar comentarios que no estuvieran relacionados entre sí, ya que no se exploraría lo suficiente en el espacio de todas las posibles combinaciones de entidades que pudiésemos encontrar. En esencia, deseamos simular casos específicos y poco relacionados entre sí.
 
-Para ello, podemos utilizar la medida de la distancia del coseno del valor TF-IDF mencionado en la sección \ref{sec:tfidf}. Calculando el valor TF-IDF de todos los comentarios generados y multiplicándolo por su traspuesta, generamos una matriz que nos define cómo de \textit{cerca} se encuentra cada comentario en el espacio latente. Podemos apreciar dicha matriz en la figura \ref{fig:conf-tfidf}. 
+Para ello, podemos utilizar la medida de la distancia del coseno del valor TF-IDF mencionado en la sección \ref{sec:tfidf}. Calculando el valor TF-IDF de todos los comentarios generados y multiplicándolo por su traspuesta, generamos una matriz que nos define cómo de \textit{cerca} se encuentra cada comentario de todos los demás en el espacio latente. Podemos apreciar dicha matriz en la figura \ref{fig:conf-tfidf}.
 
-Se aprecia que la diagonal principal tiene un valor de 1, ya que se compara un comentario consigo mismo, por lo que la similitud es máxima (o la distancia 0).
+Se aprecia que la diagonal principal tiene un valor de 1, ya al comparar un comentario consigo mismo, estamos lo más cerca que se puede estar, o lo que es lo mismo, la distancia es 0.
 
 Por lo general, todos los comentarios ofrecen valores de similitud muy bajos, que se intuye por la gran predominancia del color morado en la figura, que corresponde con valores cercanos a 0.
 
