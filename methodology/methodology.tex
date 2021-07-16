@@ -14,7 +14,7 @@ Antes de pasar los datos al modelo, debemos codificarlos. Codificar significa ob
 
 Este proceso es relativamente simple: para cada palabra que encontremos en el texto, le asociamos un índice y guardamos la entrada en un diccionario. De esta forma, cada vez que queramos que la red procese un extracto de texto, sustituimos cada término por su correspondiente número en el diccionario. De esta tarea también se suele encargar el Tokenizer. 
 
-Como vimos en la sección \ref{sec:tokens}, estos algoritmos solo se encargan de transformar el texto en vectores, pero al ser una tarea perteneciente a la fase de preprocesamiento, las librerías suelen ofrecer esta funcionalidad de forma conjunta. Es el caso particular en \jesitt{transformers}. Esto también garantiza que el tokenizer utilizado para un determinado modelo sea el mismo de una ejecución a otra, ya que de otra forma habría problemas con la codificación.
+Como vimos en la  Sección \ref{sec:tokens}, estos algoritmos solo se encargan de transformar el texto en vectores, pero al ser una tarea perteneciente a la fase de preprocesamiento, las librerías suelen ofrecer esta funcionalidad de forma conjunta. Es el caso particular en \jesitt{transformers}. Esto también garantiza que el tokenizer utilizado para un determinado modelo sea el mismo de una ejecución a otra, ya que de otra forma habría problemas con la codificación.
 
 \begin{figure}[h]
 	\centering
@@ -32,7 +32,7 @@ Una vez procesado, el modelo nos devolverá una secuencia de números, de los qu
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=.9\textwidth]{media/gpt-fine-tune.pdf}
-	\caption{Diagrama resumen del ajuste de los pesos del GPT2}
+	\caption{Diagrama resumen del ajuste de los pesos del GPT-2}
 	\label{fig:fine-tune-gpt}
 \end{figure}
 
@@ -80,7 +80,7 @@ Una vez entrenado el modelo y ajustados los pesos, ya tenemos un marco de trabaj
 
 Los métodos de decodificación aquí mencionados aparecen en la publicación \href{https://huggingface.co/blog/how-to-generate}{How to generate text} de Patrick von Platen. Es uno de los integrantes de Hugging Face, una de las empresa de código abierto que se dedica a la creación de los diferentes modelos mencionados anteriormente, y que nos ha provisto con una manera fácil y accesible de poder utilizar estas herramientas tan potentes con su librería \jesitt{transformers}~\cite{WolfEtal2020Transformers}.
 
-Existen varias maneras de generar lo que en la jerga se denomina \textit{texto abierto}, es decir, generar texto de forma relativamente libre y sin restricciones. Muchos otros modelos son capaces de hacerlo, aunque nosotros nos centraremos en los métodos que conciernen a nuestro GPT2, que es un modelo autorregresivo.
+Existen varias maneras de generar lo que en la jerga se denomina \textit{texto abierto}, es decir, generar texto de forma relativamente libre y sin restricciones. Muchos otros modelos son capaces de hacerlo, aunque nosotros nos centraremos en los métodos que conciernen a nuestro GPT-2, que es un modelo autorregresivo.
 
 Los modelos autorregresivos asumen que la siguiente palabra a generar se calcula como una función de probabilidad de todas las palabras anteriores, dada una palabra de contexto inicial. Dicho esto, existen varias maneras de \textit{decodificar} texto de un modelo de lenguaje. Veamos las más relevantes.
 

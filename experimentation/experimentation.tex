@@ -24,7 +24,7 @@ Habiendo preprocesado los datos, entrenado el modelo, guardado su estado y decid
 	}
 \end{thm}
 
-Esto es solo una pequeña muestra. En la sección \ref{sec:comments} del apéndice se exponen alguno más, por si su inspección resultase de interés. 
+Esto es solo una pequeña muestra. En la  Sección \ref{sec:comments} del Apéndice se exponen alguno más, por si su inspección resultase de interés. 
 
 Se puede apreciar que, a veces, los comentarios son muy cortos, como el comentario \ref{com:short}. En contadas ocasiones el generador ha devuelto una línea vacía. 
 
@@ -68,7 +68,7 @@ Las medidas utilizadas anteriormente puede que no nos ofrezcan un valor objetivo
 \subsubsection{Similitud}
 Esto nos lleva a otra métrica a utilizar: la distancia en los comentarios. Un factor que sí podemos determinar de forma sencilla es si los comentarios son muy similares entre sí. Idealmente, se desearía que el generador pudiera proporcionar comentarios que no estuvieran relacionados entre sí, ya que no se exploraría lo suficiente en el espacio de todas las posibles combinaciones de entidades que pudiésemos encontrar. En esencia, deseamos simular casos específicos y poco relacionados entre sí.
 
-Para ello, podemos utilizar la medida de la distancia del coseno del valor TF-IDF mencionado en la sección \ref{sec:tfidf}. Calculando el valor TF-IDF de todos los comentarios generados y multiplicándolo por su traspuesta, generamos una matriz que nos define cómo de \textit{cerca} se encuentra cada comentario de todos los demás en el espacio latente. Podemos apreciar dicha matriz en la figura \ref{fig:conf-tfidf}.
+Para ello, podemos utilizar la medida de la distancia del coseno del valor TF-IDF mencionado en la  Sección \ref{sec:tfidf}. Calculando el valor TF-IDF de todos los comentarios generados y multiplicándolo por su traspuesta, generamos una matriz que nos define cómo de \textit{cerca} se encuentra cada comentario de todos los demás en el espacio latente. Podemos apreciar dicha matriz en la Figura \ref{fig:conf-tfidf}.
 
 Se aprecia que la diagonal principal tiene un valor de 1, ya al comparar un comentario consigo mismo, estamos lo más cerca que se puede estar, o lo que es lo mismo, la distancia es 0.
 

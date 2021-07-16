@@ -10,9 +10,11 @@ En estos documentos suele haber una sección en la que el o la profesional en cu
 
 La medicina personalizada trata de acercar los tratamientos al paciente lo máximo posible, de forma que los profesionales sanitarios puedan hacer un seguimiento en profundidad de los pacientes sin tener que ello conllevar una enorme carga cognitiva de recordar cada paso en el tratamiento. Esto, entre otras cosas, involucra bases de datos en las que guardar toda esta información, así como el análisis de la taxonomía de dichos documentos. Esto facilita su posterior búsqueda para poder retomar el punto en el que se acabó anteriormente.
 
-Para facilitar esta tarea, se creó un una colección de términos fácilmente procesables por un ordenador, el SNOMED \cite{snomed}. Este conjunto de términos fácilmente indexables ayudan en la informatización y el procesamiento automático de los documentos médicos. Ahondaremos en las características de este vocabulario en los siguientes capítulos.
+Dados estos datos, se pueden efectuar una serie de análisis y minería de datos que nos provean con muchos tipos de información. Podemos encontrar patrones de distintas enfermedades dados los síntomas, llevando un seguimiento de todos los pacientes y acometiendo técnicas 
 
 El objetivo es centrar nuestra atención en esas secciones de texto sin formato anteriormente mencionadas, con objeto de obtener la mayor cantidad de información posible y anexarla, ahora con formato, al documento del que provienen, enriqueciendo el informe y habilitando nuevas claves de búsqueda, así como mejorando el indexado de los documentos.
+
+Para facilitar esta tarea, se han creado un una colección de términos fácilmente procesables por un ordenador, siendo uno de los ejemplos más destacables el denominado Systemized Nomenclature of Medicine -– Clinical Terms (SNOMED) \cite{snomed}. Este conjunto de términos fácilmente indexables ayudan en la informatización y el procesamiento automático de los documentos médicos.
 
 
 \section{Datos delicados y escasos}
@@ -41,7 +43,7 @@ Si bien los comentarios son sintéticos, deben ser lo suficientemente convincent
 
 \section{Esquema general del proyecto}
 
-La figura \ref{fig:general-diagram} representa el esquema general del proyecto, como un diagrama de flujo.
+La Figura \ref{fig:general-diagram} representa el esquema general del proyecto, como un diagrama de flujo.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=.9\textwidth]{media/general-diagram.pdf}
@@ -49,5 +51,5 @@ La figura \ref{fig:general-diagram} representa el esquema general del proyecto, 
 	\label{fig:general-diagram}
 \end{figure}
 
-En cada uno de los capítulos siguientes ahondaremos en cada uno de los nodos, respectivamente, explicando en profundidad en qué consisten, cual es su entrada, su salida y su objetivo.
+En cada uno de los capítulos siguientes ahondaremos en cada uno de las fases, respectivamente, explicando en profundidad en qué consisten, cual es su entrada, su salida y su objetivo.
 
