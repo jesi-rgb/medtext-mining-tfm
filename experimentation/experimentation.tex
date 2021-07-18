@@ -49,7 +49,7 @@ La métrica \textbf{B}i\textbf{L}ingual \textbf{E}valuation \textbf{U}nderstudy 
 
 Dicho eso, disponer de, al menos, una medida que pueda servir de forma orientativa para evaluar la calidad de un traductor automático es, cuanto menos, conveniente.
 
-El algoritmo en cuestión toma un conjunto de oraciones de referencia y otro conjunto de oraciones generadas que deseemos evaluar, y calcula un \textit{score} en función de cómo de probable es que una de las frases generadas pertenezca al conjunto de oraciones de referencia. Esta métrica también se utiliza extensivamente en evaluación de modelos generativos de lenguaje, como el nuestro, ya que la naturaleza de la evaluación se corresponde directamente con la nuestro caso de uso.
+El algoritmo en cuestión toma un conjunto de oraciones de referencia y otro conjunto de oraciones generadas que deseemos evaluar, y calcula un \textit{score} en función de cómo de probable es que una de las frases generadas pertenezca al conjunto de oraciones de referencia. Esta métrica también se utiliza extensamente en evaluación de modelos generativos de lenguaje, como el nuestro, ya que la naturaleza de la evaluación se corresponde directamente con la nuestro caso de uso.
 
 
 Para evaluar el modelo, tomamos 100 oraciones aleatorias de nuestro conjunto de datos, y generamos 100 oraciones con nuestro modelo. El valor obtenido es de 0.0036. 
@@ -72,7 +72,7 @@ Para ello, podemos utilizar la medida de la distancia del coseno del valor TF-ID
 
 Se aprecia que la diagonal principal tiene un valor de 1, ya al comparar un comentario consigo mismo, estamos lo más cerca que se puede estar, o lo que es lo mismo, la distancia es 0.
 
-Por lo general, todos los comentarios ofrecen valores de similitud muy bajos, que se intuye por la gran predominancia del color morado en la figura, que corresponde con valores cercanos a 0.
+Por lo general, todos los comentarios ofrecen valores de similitud muy bajos, que se intuye por la gran predominancia del color morado en la imagen, que corresponde con valores cercanos a 0.
 
 \begin{figure}[h]
 	\centering

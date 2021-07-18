@@ -32,7 +32,7 @@ El término más esencial en minería de textos es \textit{token}. Un token es l
     
     \item \textbf{Tokenizers de palabras}
     \begin{itemize}
-        \item \textbf{Standard Tokenizer}: El Standard Tokenizer divide el texto en términos siguiendo los límites de las palabras según están definidos en el algoritmo \textit{Unicode Text Segmentation}. 
+        \item \textbf{Standard Tokenizer}: El Standard Tokenizer divide el texto en términos siguiendo los límites de las palabras según están definidos en el algoritmo \textit{Unicode Text Segmentation} \cite{unicodeTextSegm}. 
         \item \textbf{Letter Tokenizer}: Divide el texto en términos cada vez que encuentra un carácter que no es una letra.
         \item \textbf{Whitespace Tokenizer}: Toma como criterio divisor el espacio en blanco.
         \item \textbf{Language Tokenizer}: Otros tipos de tokenizers adaptados a diferentes idiomas, como el inglés, que es el idioma más estudiado con diferencia, pero también otros idiomas con caracteres y reglas diferentes a aquellos basados en reglas occidentales, como el tailandés o el chino.
@@ -83,11 +83,10 @@ De forma similar, el valor \textit{Inverse Document Frequency}~\cite{Jones2004AS
 
 donde $d$ es un documento del conjunto de documentos con cardinalidad $N$, $t$ es el término en concreto y $df(t)$ es el número de documentos que contienen el término $t$.
 
-
 \subsubsection{Bolsas de palabras}
 Conociendo el concepto de frecuencias de palabaras, una de las aplicaciones directas son las bolsas de palabras, que recogen en una estructura con forma de diccionario cada término y su frecuencia.
 
-De esta forma, tenemos un \textit{ranking} para cada término. Esto se utiliza extensivamente en sistemas de recomendación, en donde una consulta provista por un usuario se compara con la bolsa de palabras del posible conjunto de documentos, y este conjunto va afinándose conforme se van comparando los conjuntos de palabras. El resultado es una búsqueda más refinada que devuelve documentos más relevantes con respecto a la consulta realizada.
+De esta forma, tenemos un \textit{ranking} para cada término. Esto se utiliza extensamente en sistemas de recomendación, en donde una consulta provista por un usuario se compara con la bolsa de palabras del posible conjunto de documentos, y este conjunto va afinándose conforme se van comparando los conjuntos de palabras. El resultado es una búsqueda más refinada que devuelve documentos más relevantes con respecto a la consulta realizada.
 
 \subsubsection{Word Clouds}
 Las nubes de palabras o \textit{Word Clouds} son un tipo de visualización especializada en conjuntos de datos de texto. Consisten en representar el conjunto de palabras más relevantes del texto que analicemos, disponiendo dicho conjunto de forma distrubida por la imagen. Por lo general, se suelen utilizar códigos de color o tamaño para aludir a factores como la frecuencia o la relevancia de dicha palabra en el texto.
@@ -130,15 +129,17 @@ Por último, abordaremos las principales técnicas para clasficar texto, ámbito
 Los principales algoritmos de clasificación de texto, entre otros, son los siguientes:
 
 \begin{itemize}
-    \item \textbf{Boosting y bagging}: boosting y bagging son dos métodos basados en lo que se denomina en la literatura como \textit{ensemble learning}. Estos métodos no son algoritmos de clasificación en sí, sino que son métodos aplicables a cualquier modelo. Esta técnica utiliza un gran número de modelos que funcionan muy bien para casos muy específicos pero no generalizan correctamente. La idea es que la respuesta conjunta de todos los modelos provea la respuesta correcta de forma más probable. \cite{Bauer2004AnEC}
     
     \item \textbf{Naïve Bayes}: estos modelos utilizan el poder de inferencia del cálculo de probabilidades condicionales para la categorización, más en concreto, la categorización de texto. Esta familia de modelos se ha demostrado que funcionan particularmente bien para esta tarea, además de ser muy rápidos. \cite{FrankNaive2006}
-
+    
     \item \textbf{Regresión logística}: la regresión logística es uno de los métodos de aprendizaje más simples, junto con la regresión linear. La regresión logística es una especialización de la regresión lineal, de forma que se utiliza una función logística para predecir categorías discretas, no continuas. \cite{logitText}
-
-    \item \textbf{Redes neuronales recurrentes}: las redes neuronales recurrentes son una especialización de las redes neuronales en las que un subonjunto de las neuronas reciben su salida como una entrada, generándose ciclos de retroalimentación o \textit{feedback}. Estas redes funcionan especialmente bien con datos con patrones y componentes temporales, características especialmente destacables del lenguaje humano, así como de la música o vídeo. \cite{ZhouLSTM}
-
+    
     \item \textbf{Máquinas de Soporte Vectorial}: Las Support Vector Machines (SVM) son modelos muy conocidos de aprendizaje supervisado para clasificación y regresión. Aunque originalmente se concibieron como modelos de separación lineal entre las clases a clasificar, se pueden modificar sus \textit{kernels} para obtener clasificadores no lineales. El funcionamiento de estos modelos en clasificación de texto es muy bueno como se sugiere en \cite{SVMJoa1998}.
+
+    \item \textbf{Redes neuronales recurrentes}: las redes neuronales recurrentes son una especialización de las redes neuronales en las que un subonjunto de las neuronas reciben su salida como una entrada, generándose ciclos de retroalimentación o \textit{feedback}. Estas redes funcionan especialmente bien con datos con patrones y componentes temporales, características especialmente destacables del lenguaje humano, así como de la música o vídeo. \cite{ZhouLSTM}. Profundizaremos en este tema en las secciones siguientes.
+    
+    \item \textbf{Boosting y bagging}: boosting y bagging son dos métodos basados en lo que se denomina en la literatura como \textit{ensemble learning}. Estos métodos no son algoritmos de clasificación en sí, sino que son métodos aplicables a cualquier modelo. Esta técnica utiliza un gran número de modelos que funcionan muy bien para casos muy específicos pero no generalizan correctamente. La idea es que la respuesta conjunta de todos los modelos provea la respuesta correcta de forma más probable. \cite{Bauer2004AnEC}
+
 \end{itemize}
 
 
@@ -148,22 +149,82 @@ Existen otras técnicas en clasificación de texto, como \textit{K Nearest Neigh
 
 Por último, hablaremos de los diferentes lenguajes y vocabularios médicos disponibles en el estado del arte que ayudan a extraer conocimiento de la terminología médica.
 
-Además, mencionaremos brevemente los tres proyectos más grandes de lenguaje generativo hasta la fecha, con objeto de entender qué es lo que hacen para poder integrar dichas técnicas en nuestro modelo.
+Además, mencionaremos brevemente los tres proyectos más grandes de lenguaje generativo hasta la fecha, con objeto de entender qué es lo que hacen para poder integrar dichas técnicas en nuestra metodología.
 
 \subsection{Terminología médica}
 
-Debido al vocabulario y términos tan específicos con los que se tratan en el ámbito de la medicina, si deseamos automatizar cualquier proceso de extracción de conocimento debemos tener en cuenta este factor. Es por ello que en 1999 se creó el Systemized Nomenclature of Medicine -– Clinical Terms (SNOMED). 
+Debido al vocabulario y términos tan específicos con los que se tratan en el ámbito de la medicina, si deseamos automatizar cualquier proceso de extracción de conocimento debemos tener en cuenta este factor. Es por ello que en 1999 se creó el Systemized Nomenclature of Medicine -– Clinical Terms (SNOMED) \cite{snomed}. 
 
-El SNOMED es una colección de términos sistemáticamente organizada, que provee códigos, términos, sinónimos y definiciones utilizadas en el ámbito de la medicina.
+El SNOMED es una colección de términos sistemáticamente organizada, que provee códigos, términos, sinónimos y definiciones utilizadas en el ámbito de la medicina. Podemos ver un pequeño ejemplo de las estadísticas que nos ofrece la web de SNOMED en la Tabla \ref{tab:snomed-example}. Se muestran los códigos generales, el nombre colectivo de todos los términos que caen bajo dicha categoría y cuántos términos exactamente pertenecen a dicha categoría. Esta tabla es solo un extracto, se pueden consultar el resto de términos en la \href{https://www.nlm.nih.gov/research/umls/sourcereleasedocs/current/SCTSPA/stats.html}{web del SNOMED}.
 
-A raíz del SNOMED aparecen vocabularios más específicos que matizan aspectos que pudieran no haberse considerado en el sistema inicial. Todas estas colecciones se aglomeran en el Unified Medical Language System (UMLS), que incluye al SNOMED.
+% Please add the following required packages to your document preamble:
+% \usepackage{booktabs}
+\begin{table}[h]
+    \centering
+    \begin{tabular}{@{}lll@{}}
+    \toprule
+    \textbf{Semantic Type ID} & \textbf{Semantic Type Name}          & \textbf{Count} \\ \midrule
+    T047                      & Disease or Syndrome                  & 42225          \\
+    T033                      & Finding                              & 41837          \\
+    T061                      & Therapeutic or Preventive Procedure  & 41496          \\
+    T037                      & Injury or Poisoning                  & 27635          \\
+    T023                      & Body Part, Organ, or Organ Component & 25149          \\
+    T121                      & Pharmacologic Substance              & 19557          \\
+    T074                      & Medical Device                       & 14109          \\ \bottomrule
+    \end{tabular}
+    \caption{Ejemplo de los tipos de entidades más comunes en el SNOMED junto con el número de términos en total.}
+    \label{tab:snomed-example}
+    \end{table}
+
+
+A raíz del SNOMED aparecen vocabularios más específicos que matizan aspectos que pudieran no haberse considerado en el sistema inicial. Todas estas colecciones se aglomeran en el Unified Medical Language System (UMLS) \cite{UMLS}, que incluye al SNOMED.
 
 Estos vocabularios son de vital importancia para modelos de lenguaje médico, ya que proveen un sistema rápido y accesible para el etiquetado y clasificación, resumen o extracción de palabras clave de extractos médicos o similares. Los \textbf{reconocedores de entidades} hacen un especial uso de este sistema, como veremos en capítulos posteriores.
 
+Como vemos, el SNOMED trata de unificar y sistematizar el lenguaje médico, por lo que la cuestión de cómo esto afecta al personal sanitario real empieza a ser relevante. Como en muchas otras disciplinas, se habla de que las \textit{máquinas sustituyen a las personas}, cuando el trabajo en cuestión es altamente automatizable. Esto es solo parcialmente cierto, ya que sí se requiere de un personal cualificado capaz de comprender y utilizar este sistema y más aún si queremos extraer conocimiento automáticamente del mismo. Se requiere de personal más especializado y formado, pero este sistema no va a sustituir a dichos expertos, al menos en los años venideros.
 
 
 \subsection{Transformers}
 En esta sección hablaremos del Transformer, un tipo de arquitectura de red neuronal creada por ingenieros de Google \cite{TransformerAshish2017}, en más profundidad, sus características principales en contraste con las demás tecnologías y de la configuración escogida para nuestro problema.
+
+\subsubsection{Redes neuronales}
+Para entender lo que es un Transformer, debemos primero comprender lo que es una red neuronal y lo que es una red neuronal recurrente.
+
+Una red neuronal es un modelo algorítmico y matemático que trata de modelar el funcionamiento del cerebro en tareas de aprendizaje, de forma que el objetivo principal de estos modelos es ser capaz de aprender automáticamente la solución a la tarea en cuestión simplemente exponiéndose a ejemplos de dicha tarea.
+
+Estos modelos se estructuran de forma muy similar a la de un cerebro real, constando de \textbf{neuronas} unidas y agrupadas en capas que desempeñan diferentes roles en esta tarea de aprendizaje. Podemos apreciar un ejemplo de una red neuronal en la Figura \ref{fig:neural-net}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=.7\textwidth]{media/neural-net.pdf}
+    \caption{Ilustración de una red neuronal clásica, donde se pueden apreciar las neuronas, interconectadas.}
+    \label{fig:neural-net}
+\end{figure}
+
+Aunque a primera vista parezca ser una tecnología muy nueva, ya que es en los últimos años cuando más hemos visto la integración de estos sistemas en problemas reales, es un campo que lleva en desarrollo desde los años 40. Podemos atribuir los inicios más determinantes a McCulloc y Pitts, que crearon el primer modelo computacional de una red neuronal en \cite{mcculloch43a}, y a Donald Hebb, considerado el padre de las redes neuronales tras desarrollar el concepto de \textit{aprendizaje hebbiano} \cite{hebb-organization-of-behavior-1949}, uno de las claves para el desarrollo de estos sistemas.
+
+\subsubsection{Redes Neuronales Recurrentes}
+El auge en la investigación de este campo llevó a crear diferentes categorías de redes neuronales. Dichas categorías se correspondían con la arquitectura de la misma, que, en gran medida, define el propósito para el que estaba diseñada. Esto dio lugar a las redes neuronales convolucionales, cuyo principal elemento era la capa de convolución, que se utiliza ampliamente en tareas de procesamiento de imágenes, o los autoencoders, que se utilizan principalmente en tareas de detección de anomalías.
+
+Una de estas arquitecturas es la red neuronal recurrente, cuya particularidad es que las distintas neuronas no solo están conectadas con neuronas adyacentes, sino consigo mismas. Es decir, su salida depende directamente de su entrada. De esta forma, estos modelos se suelen concebir con una componente temporal, y siempre hablamos de la salida en el momento $n$, que dependerá de la entrada en el momento $n$ y de la salida en el momento $n - 1$. Podemos ver este comportamiento en la Figura \ref{fig:rnn-unrolled}, donde la neurona inicial se \textit{desenrolla} en el tiempo para visualizar las salidas y las entradas en cada instante.
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=.9\textwidth]{media/rnn-graph.pdf}
+    \caption{Ilustración de una red neuronal recurrente.}
+    \label{fig:rnn-unrolled}
+\end{figure}
+
+
+Esta arquitectura cíclica, recurrente, convierte a esta familia de redes en sistemas muy potentes de procesamiento del lenguaje, vídeo o música, tipos de datos que tienen una componente temporal muy importante. Los modelos más relevantes son las redes recurrentes (RNN), las Long-Short Term Memory (LSTM), ambas estudiadas en \cite{sherstinsky2018fundamentals} y, finalmente, los muy nuevos Transformers.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=.5\textwidth]{media/lstm-cell.pdf}
+    \caption{Ilustración de una neurona en una red LSTM}
+    \label{fig:lstm-cell}
+\end{figure}
 
 \subsubsection{Arquitectura}
 El Transformer corresponde con una de las técnicas más modernas de procesamiento de lenguaje natural, y una de las más relevantes del momento. Se la presenta como \textit{estado del arte en procesamiento del lenguaje natural}, constituyendo un modelo mucho más potente y \textbf{considerado} que las anteriores LSTM.
@@ -197,10 +258,10 @@ BERT son las siglas en inglés de \textit{Bidirectional Encoder Representations 
 
 
 \subsubsection{LaMDA}
-LaMDA corresponde con las siglas de \textit{Language Model for Dialogue Applications}~\cite{LaMDAGoogle2020}, un proyecto de Google que compite de forma directa con los modelos antes mencionados. Al igual que los dos proyectos anteriores, LaMDA está basado en un transformer, una arquitectura de redes neuronales creada también por Google~\cite{TransformerAshish2017}, que explicaremos en más profundidad en los siguientes capítulos. Este proyecto se creó con una aplicación en concreto: un \textit{chatbot} automático lo más natural posible, al que llamaron \textit{Meena}. Según las estadísticas de Google, Meena tiene casi el doble de capacidad de predicción e inferencia que el antiguo GPT-2, y se entrenó en 8 veces más datos. Es el buque insignia de la empresa.
+LaMDA corresponde con las siglas de \textit{Language Model for Dialogue Applications}~\cite{LaMDAGoogle2020}, un proyecto de Google que compite de forma directa con los modelos antes mencionados. Este proyecto se creó con una aplicación en concreto: un \textit{chatbot} automático lo más natural posible, al que llamaron \textit{Meena}. Según las estadísticas de Google, Meena tiene casi el doble de capacidad de predicción e inferencia que el antiguo GPT-2, y se entrenó en 8 veces más datos. Es el buque insignia de la empresa.
 
 \subsubsection{GPT-3 Open AI}
-GPT son las siglas de \textit{Generative Pre-trained Transformer}~\cite{GPT3openAI2020} y 3 indica la versión. Este modelo trata de abarcar los problemas que otros transformers solían tener, como es la habilidad de un humano para continuar una tarea lingüística dado muy poco contexto o instrucciones. Escalando los modelos se logra mejorar significativamente la generalización del mismo y se descubre que no es necesario afinar los parámetros de los modelos, sino que esto puede corresponderse más con un problema de meta-aprendizaje.
+GPT son las siglas de \textit{Generative Pre-trained Transformer}~\cite{GPT3openAI2020}. Este modelo trata de abarcar los problemas que otros transformers solían tener, como es la habilidad de un humano para continuar una tarea lingüística dado muy poco contexto o instrucciones. Escalando los modelos se logra mejorar significativamente la generalización del mismo y se descubre que no es necesario afinar los parámetros de los modelos, sino que esto puede corresponderse más con un problema de meta-aprendizaje.
 
 Existen varias versiones del GPT-3, entrenadas en diferentes tamaños, desde 125 millones en la versión que denominan pequeña, hasta 175 mil millones, que es la versión que los investigadores denominan como ``GPT-3'' a secas. Jared Kaplan sugiere en \cite{kaplan2020scaling} que la función de pérdida en la etapa de validación debería corresponderse con la ley de potencia, (también conocida como el principio de Pareto) en función del tamaño de dicha red, de ahí que se probaran distintas configuraciones y tamaños.
 
