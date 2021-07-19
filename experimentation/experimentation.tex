@@ -9,9 +9,77 @@ En este capítulo usaremos todos los conceptos vistos en los capítulos anterior
 
 
 \section{Resultados}
+Habiendo preprocesado los datos, entrenado el modelo, guardado su estado y decidido el método de decodificación, estamos listos para poder generar comentarios. 
 
-Habiendo preprocesado los datos, entrenado el modelo, guardado su estado y decidido el método de decodificación, estamos listos para poder generar comentarios. Se presentan aquí dos ejemplos generados al azar:
+La generación, como vimos en las secciones anteriores, viene determinada por dos parámetros clave en nuestro caso: la temperatura y el valor de $p$ para el Top P Nucleus. Veamos cómo estos valores afectan en la generación de los comentarios. Generaremos un par de comentarios por cada combinación de valores y estudiaremos lo que ocurre.
 
+
+
+
+\subsubsection{Temp: 0.1, Top p: 0.2}
+
+\begin{thm}
+	\sffamily{
+		The effect of a high-dose of aspirin on the incidence of coronary artery disease in a prospective study of the elderly. A prospective study of the incidence of coronary artery disease in a prospective study of the elderly was conducted in a large population of elderly men and women. \textcolor{blue}{The incidence of coronary artery disease was studied in a large population of elderly men and women.} \textcolor{red}{The incidence of coronary artery disease was studied in a large population of elderly men and women. The incidence of coronary artery disease was studied in a large}
+	}
+\end{thm}
+
+\begin{thm}
+	\sffamily{
+		The effect of a high-dose of aspirin on the incidence of coronary artery disease in a prospective study of the elderly. A prospective study of the incidence of coronary artery disease in a prospective study of the elderly was conducted in a large population of elderly men and women. \textcolor{blue}{The incidence of coronary artery disease was studied in a large population of elderly men and women.} \textcolor{red}{The incidence of coronary artery disease was studied in a large population of elderly men and women. The incidence of coronary artery disease was studied in a large}
+	}
+\end{thm}
+
+Vemos que en este caso, se han generado dos comentarios exactamente iguales. Esto es debido al alto grado determinista del generador en este caso. En azul se ha indicado la frase que inicia el ciclo, y en rojo el bucle infinito que obtendríamos de seguir generando dicho comentario. Esta combinación de parámetros no es trabajable.
+
+\subsubsection{Temp: 0.4, Top p: 0.4}
+\begin{thm}
+	\sffamily{
+		\textcolor{OliveGreen}{The effect of a high-dose of aspirin on the incidence of coronary artery disease in a prospective study of the elderly. A prospective study of the incidence of coronary artery disease in a prospective study of the elderly was conducted in a large population of elderly men and women.} \textcolor{blue}{The incidence of coronary artery disease was studied in a cohort of 5,000 men and women aged 65 to 74 years.} \textcolor{red}{The incidence of coronary artery disease was studied in a cohort of 5,000 men and women aged 65 to 74 years}
+	}
+\end{thm}
+\begin{thm}
+	\sffamily{
+		\textcolor{OliveGreen}{The effect of a high-dose of aspirin on the incidence of coronary artery disease in a prospective study of the elderly. A prospective study of the incidence of coronary artery disease in a prospective study of the elderly was conducted in a large population} of patients with acute myocardial infarction. The incidence of acute myocardial infarction was significantly higher \textcolor{blue}{in patients with a single dose of a selective serotonin reuptake inhibitor than} \textcolor{red}{in patients with a single dose of a selective serotonin reuptake inhibitor}.
+	}
+\end{thm}
+
+En este caso, vemos que el inicio, marcado en verde, es exacatamente igual que la generación anterior. En este caso, al aumentar la temperatura, obtenemos unos caminos ligeramente distintos al final del comentario, pero continuan apareciendo ciclos.
+
+\subsubsection{Temp: 0.6, Top p: 0.6}
+\begin{thm}
+	\sffamily{
+
+		Treatment of chronic pain in patients with chronic pain. A prospective study. A retrospective study of patients with chronic pain in whom treatment was discontinued or discontinued for chronic pain was conducted. \textcolor{blue}{Patients were randomly assigned to receive either a placebo (n = 14) or a sham (n = 14) treatment.} \textcolor{red}{Patients were treated with either a placebo (n = 14) or sham (n = 14) for 2 months. Patients were treated with either a placebo (n = 14) or sham (n = 14)}
+	}
+\end{thm}
+
+\begin{thm}
+	\sffamily{
+		The effects of a variety of drugs on the central nervous system. \textcolor{blue}{We report the effects of a variety of drugs on the central nervous system.} \textcolor{red}{We report the effects of a variety of drugs on the central nervous system. We report the effects of a variety of drugs on the central nervous system. We report the effects of a variety of drugs on the central nervous system. We report the effects of a variety of drugs on the central nervous system. We report the effects of a variety of drugs on the central}
+
+	}
+\end{thm}
+
+En este caso, a pesar de haber aumentado la temperatura, hemos tenido un caso particular en el que los ciclos infinitos empezaron particularmente pronto.
+
+\subsubsection{Temp: 0.9, Top p: 0.8}
+
+\begin{thm}
+	\sffamily{
+		Optimal effect of systemic and local opioid administration on serum glucose levels in patients with preoperative seizures. Fourteen patients (8\%) had an abnormal serum glucose level (mean +/- SEM) measured by intraperitoneal glucose measurements. The mean serum glucose level of the patients with preoperative seizures was markedly elevated (P = 0.002), compared with baseline values (P = 0.003) (Figure 2 A). Glucose plasma concentrations decreased with treatment and did not change after the initial systemic
+	}
+\end{thm}
+
+\begin{thm}
+	\sffamily{
+		A case of cardiac arrhythmia in 14 patients with coronary artery disease. The risk of arrhythmia was evaluated by using clinical hemodynamic and pulmonary blood pressure measurements. Patients underwent standardized coronary artery bypass grafts and intraoperative radiculograms (ICGs). The history of the disease and the follow-up of patients with an early arrhythmia were compared with those with a later arrhythmia. Arterial pressure was significantly higher in the more severe patients.
+	}
+\end{thm}
+
+Conforme aumentamos el valor de la temperatura y estrechamos el rango de palabras que tendemos a escoger, los resultados se aproximan mucho más a lo que esperábamos del modelo: comentarios que no se repiten y con una coherencia mucho más visible. Es más complicado sacar defectos de estos comentarios, lo cual es buena señal.
+
+\subsubsection{Temp: 1, Top p: 0.8}
 \begin{thm}
 	\sffamily{
 		Paediatric invasive immunosuppression (IPIS) in the treatment of recurrent kidney disease. Epidemiologic evidence suggests a association between immunosuppression and recurrence of recurrent kidney disease. Acute renal injury is a major risk factor for recurrent kidney disease. As the patient develops a family history of recurrence, his status will likely be monitored to determine whether he may benefit from continued immunosuppression.
@@ -23,13 +91,13 @@ Habiendo preprocesado los datos, entrenado el modelo, guardado su estado y decid
 	}
 \end{thm}
 
-Esto es solo una pequeña muestra. En la  Sección \ref{sec:comments} del Apéndice se exponen alguno más, por si su inspección resultase de interés. 
+En la Sección \ref{sec:comments} del Apéndice se exponen alguno más, por si su inspección resultase de interés. 
 
 Se puede apreciar que, a veces, los comentarios son muy cortos, como el comentario \ref{com:short}. En contadas ocasiones el generador ha devuelto una línea vacía. 
 
 En ocasiones, los comentarios pueden no ser rigurosos médicamente hablando, pero esto, de cara al análisis de las herramientas disponibles para el procesamiento de los comentarios, no es estrictamente necesario. Necesitamos que los comentarios incluyan conceptos que sean importantes y destacables, como tipos de enfermedades, medicaciones, etc. De esta forma, podremos analizar cómo las herramientas detectan diferentes tipos de información y cómo de fiables son. 
 
-Es por ello que poseer un generador de comentarios nos resulta conveniente, ya que se pueden considerar muchos más casos, prácticamente de forma ilimitada.
+Es por ello que poseer un generador de comentarios nos resulta conveniente, ya que se pueden considerar muchos más casos, prácticamente de forma ilimitada. Dados los resultados, el valor finalmente obtenido para los parámetros es de \textbf{0.9 para la temperatura} y \textbf{0.8 para el valor de p}.
 
 \subsection{Métricas y calidad de los comentarios}
 
