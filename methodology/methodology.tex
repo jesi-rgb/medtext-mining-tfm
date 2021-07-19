@@ -4,8 +4,20 @@ En este capítulo ahondaremos en los conceptos más importantes que hemos de ent
 
 
 
-\section{Datos de entrada}
-En primer lugar, debemos ofrecer los datos de entrada al modelo. Estos datos están previamente formateados y unificados, como vimos en la fase de preprocesamiento.
+\section{Datos de entrada y preprocesamiento}
+En primer lugar, debemos ofrecer los datos de entrada al modelo. Estos datos deben estar previamente formateados y unificados. Veamos cómo se ha acometido dicho preprocesamiento.
+
+En la sección \ref{sec:preprocess} expondremos los diferentes métodos y técnicas utilizadas de preprocesamiento de texto para darle una forma apropiada y unificada al conjunto de datos, antes de poder introducirlos en el modelo.
+
+En la Figura \ref{fig:preprocess-diagram} se ilustra un esquema de los pasos a seguir en dicha fase del proyecto. Explicaremos cada paso desde el punto de vista de los dos conjuntos de datos a unificar, ya que cada uno necesitará de un tratamiento particular en función de su etado inicial.
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=.9\textwidth]{media/preprocess.pdf}
+	\caption{Diagrama resumen del preprocesamiento efectuado en los datos.}
+	\label{fig:preprocess-diagram}
+\end{figure}
+
 
 Es importante la adición de las etiquetas \jesitt{<|BOS|>} y \jesitt{<|EOS|>}. Estas etiquetas son las siglas de \textit{begin of sentence} y \textit{end of sentence}. Son marcadores que indican el inicio y fin de una oración. Estas etiquetas son necesarias para que el modelo entienda cuál es el criterio a partir del cual empieza y acaba una oración.
 
@@ -14,7 +26,7 @@ Antes de pasar los datos al modelo, debemos codificarlos. Codificar significa ob
 
 Este proceso es relativamente simple: para cada palabra que encontremos en el texto, le asociamos un índice y guardamos la entrada en un diccionario. De esta forma, cada vez que queramos que la red procese un extracto de texto, sustituimos cada término por su correspondiente número en el diccionario. De esta tarea también se suele encargar el Tokenizer. 
 
-Como vimos en la  Sección \ref{sec:tokens}, estos algoritmos solo se encargan de transformar el texto en vectores, pero al ser una tarea perteneciente a la fase de preprocesamiento, las librerías suelen ofrecer esta funcionalidad de forma conjunta. Es el caso particular en \jesitt{transformers}. Esto también garantiza que el tokenizer utilizado para un determinado modelo sea el mismo de una ejecución a otra, ya que de otra forma habría problemas con la codificación.
+Como vimos en la Sección \ref{sec:tokens}, estos algoritmos solo se encargan de transformar el texto en vectores, pero al ser una tarea perteneciente a la fase de preprocesamiento, las librerías suelen ofrecer esta funcionalidad de forma conjunta. Esto también garantiza que el tokenizer utilizado para un determinado modelo sea el mismo de una ejecución a otra, ya que de otra forma habría problemas con la codificación.
 
 \begin{figure}[h]
 	\centering
@@ -52,14 +64,16 @@ Dichos equipos pueden ser muy caros. Para ello, hicimos uso del servicio de clú
 	\item \textbf{Gráfica}: 8 $\times$ GPU NVIDIA Tesla V100 32GB 
 \end{itemize}
 
-Es sencillo enviar nuestros datos mediante \jesitt{ssh}, entrenamos el modelo, obtenemos los pesos y los descargamos de vuelta de la misma forma.
+Mediante \jesitt{ssh}, nos conectamos a la máquina que el equipo nos haya asignado y enviamos nuestros archivos usando \jesitt{scp}. Una vez nuestros archivos están en la máquina de destino, entrenamos el modelo, obtenemos los pesos y los descargamos de vuelta de la misma forma.
 
-Gracias a \jesitt{pytorch} y \jesitt{transformers}, es también muy fácil reentrenar el GPT-2 con nuestros datos.
+Gracias a \jesitt{pytorch}\cite{pytorch} y \jesitt{transformers}\cite{WolfEtal2020Transformers}, podemos reentrenar nuestro modelo GPT-2 con nuestros datos, como se puede ver en \href{https://huggingface.co/transformers/custom_datasets.html}{Fine-tuning with custom datasets}. 
 
 \subsection{Guardado del estado del modelo}
-Finalmente, una vez entrenado el modelo, lo más importante es guardar su estado. Esto es muy fácil gracias a los métodos provistos por \jesitt{pytorch} y \jesitt{transformers}. Este estado se guarda en un archivo, que, generalmente, consta de un diccionario en el que las claves corresponden a los nodos de las capas en sí, es decir, a sus parámetros entrenables, y cuyo valor es el peso de dicho nodo. 
+Finalmente, una vez entrenado el modelo, lo más importante es guardar su estado. Mediante la función \jesitt{torch.save()}, podemos determinar el lugar en el que el estado del modelo se guardará. Este estado se guarda en un archivo, que, generalmente, consta de un diccionario en el que las claves corresponden a los nodos de las capas en sí, es decir, a sus parámetros entrenables, y cuyo valor es el peso de dicho nodo. 
 
-De esta forma, es fácil cargar un modelo \textit{vacío}, un modelo inicializado con pesos nulos o no relevantes, y sustituir dichos valores por los incluidos en el archivo. Esto nos permite volver al estado en el que dejamos al modelo tras el costoso entrenamiento.
+De la misma forma, mediante \jesitt{torch.load()}, podemos cargar un modelo \textit{vacío} con los pesos del archivo que especifiquemos, sobreescribiendo los valores por defecto y efectivamente recuperando el estado en el que dejamos el modelo tras el entrenamiento.
+
+
 
 \section{Generación de comentarios}
 
@@ -73,18 +87,19 @@ De esta forma, es fácil cargar un modelo \textit{vacío}, un modelo inicializad
 En esta sección hablaremos de la generación de comentarios, una vez nuestro modelo está entrenado y listo para funcionar. 
 
 \subsection{Carga del modelo}
-Como indicamos anteriomente, la carga del modelo es realmente sencilla gracias a las librerías que lo hacen posible. Con nuestro archivo con los pesos localizado, podemos cargar de vuelta los pesos relevantes en los parámetros correspondientes de la red, recuperando el estado original. Este estado es el que nos permitirá generar comentarios de forma automática.
+Con nuestro archivo con los pesos localizado, podemos cargar de vuelta los pesos relevantes en los parámetros correspondientes de la red, recuperando el estado original. Este estado es el que nos permitirá generar comentarios de forma automática.
 
 \subsection{Sampling y otros métodos de generación de texto}
 Una vez entrenado el modelo y ajustados los pesos, ya tenemos un marco de trabajo sobre el que poder generar comentarios de texto libre. Aun así, el modelo no es capaz de ofrecernos inferencias como en modelos clásicos de predicción o clasificación. Para poder acometer el proceso de generación de palabras, debemos efectuar una \textit{decodificación} de las mismas, y existen varias formas para acometer esto. 
 
-Los métodos de decodificación aquí mencionados aparecen en la publicación \href{https://huggingface.co/blog/how-to-generate}{How to generate text} de Patrick von Platen. Es uno de los integrantes de Hugging Face, una de las empresa de código abierto que se dedica a la creación de los diferentes modelos mencionados anteriormente, y que nos ha provisto con una manera fácil y accesible de poder utilizar estas herramientas tan potentes con su librería \jesitt{transformers}~\cite{WolfEtal2020Transformers}.
 
 Existen varias maneras de generar lo que en la jerga se denomina \textit{texto abierto}, es decir, generar texto de forma relativamente libre y sin restricciones. Muchos otros modelos son capaces de hacerlo, aunque nosotros nos centraremos en los métodos que conciernen a nuestro GPT-2, que es un modelo autorregresivo.
 
 Los modelos autorregresivos asumen que la siguiente palabra a generar se calcula como una función de probabilidad de todas las palabras anteriores, dada una palabra de contexto inicial. Dicho esto, existen varias maneras de \textit{decodificar} texto de un modelo de lenguaje. Veamos las más relevantes.
 
-\subsubsection{Greedy and beam search}
+Los métodos de decodificación aquí mencionados aparecen en la publicación \href{https://huggingface.co/blog/how-to-generate}{How to generate text} de Patrick von Platen. Es uno de los integrantes de Hugging Face, una de las empresa de código abierto que se dedica a la creación de los diferentes modelos mencionados anteriormente, desarrolladores de la librería \jesitt{transformers}, entre otras.
+
+\subsubsection{Greedy search and beam search}
 La búsqueda voraz obtiene la palabra con mayor probabilidad de todas las opciones dada una palabra inicial. 
 
 
@@ -142,7 +157,7 @@ La búsqueda voraz obtiene la palabra con mayor probabilidad de todas las opcion
 	node[tag, anchor=east] {The};
 \end{tikzpicture}
 
-	\caption{Ilustración de los pasos que daría el algoritmo greedy, tomando siempre la posibilidad más alta}
+	\caption{Ilustración de los pasos que daría el algoritmo greedy, tomando siempre la posibilidad más alta. Se muestra en rojo el camino que el algoritmo tomaría en este particular ejemplo, ya que \textit{nice} supera a los otros dos términos en la probabilidad de ser elegido.}
 	\label{tkz:greedy}
 \end{figure}
 
@@ -208,7 +223,7 @@ El algoritmo toma siempre la palabra más probable y esto funcionará bien, aunq
 	
 \end{tikzpicture}
 
-	\caption{Ilustración demostrando el funcionamiento del \textit{beam search}, con 2 beams en este caso. Vemos como se toma un camino que a priori es menos probable pero resulta en una probabilidad más alta al final.}
+	\caption{Ilustración demostrando el funcionamiento del \textit{beam search}, con 2 beams en este caso. Vemos como se toman dos caminos, en línea continua el camino definitivo y en línea discontinua la otra alternativa. La probabilidad conjunta del camino elegido es $0.4 \times 0.9 = 0.36$, en contraste con el camino alternativo cuya probabilidad es de $0.5 \times 0.4 = 0.2$. Se toma un camino que a priori no es tan probable pero que a largo plazo, sí.}
 	\label{tkz:beams}
 \end{figure}
 
@@ -221,9 +236,7 @@ Es por ello que los métodos alternativos han de evitar las técnicas \textbf{de
 
 \subsubsection{Sampling}
 
-Sampling es otra técnica de generación de lenguaje autorregresiva, que, como sabemos, asume la probabilidad de una palabra dada la anterior.
-
-En la forma más básica, el muestreo simplemente toma una palabra de forma aleatoria, ponderándolas con una distribución de probabilidad tal que:
+Sampling es otra técnica de generación de lenguaje autorregresiva. En la forma más básica, el muestreo simplemente toma una palabra de forma aleatoria, ponderándolas con una distribución de probabilidad tal que:
 
 \begin{equation}
 	w_t = P(w | w_{1, t-1})
@@ -255,7 +268,7 @@ En esencia, el proceso es un gran compromiso entre coherencia y predecibilidad, 
 
 Dadas las premisas anteriores, las siguientes técnicas son mejoras incrementales que tratan de solucionar algunos otros problemas existentes.
 
-El muestreo de los K mejores, tal y como su nombre indica, solo considera las K mejores opciones de toda la batería de palabras posibles. Dado este subconjunto K, se muestrea una palabra como en el Sampling original, tomándola aleatoriamente de forma ponderada. Puede verse claramente en la Figura \ref{fig:top-k} 
+El muestreo de los K mejores, tal y como su nombre indica, solo considera las K mejores opciones de toda la batería de palabras posibles. Dado este subconjunto K, se muestrea una palabra como en el Sampling original, tomándola aleatoriamente de forma ponderada. Puede verse en la Figura \ref{fig:top-k} 
 
 
 \begin{figure}[h]
@@ -265,7 +278,7 @@ El muestreo de los K mejores, tal y como su nombre indica, solo considera las K 
 	\label{fig:top-k}
 \end{figure}
 
-Esta técnica elimina posibles elecciones bastante malas, lo que Holtzmann denomina como "\textit{the unreliable tail}", que podemos acuñar como \textit{la cola traicionera}, fácilmente apreciable en la ilustración. Holtzmann afirma que existe una enorme cantidad de palabras con muy baja probabilidad en cada elección que, en realidad, están sobrerepresentadas cuando hablamos de términos agregados. Es decir, la \textbf{probabilidad agregada} de todas esas palabras con una bajísima probabilidad puede corresponder a \textbf{grandes proporciones de la distribución de probabilidad}, lo que, efectivamente, va en contra de nuestro objetivo.
+Esta técnica elimina posibles elecciones bastante malas, lo que Holtzmann denomina como "\textit{the unreliable tail}", que podemos acuñar como \textit{la cola traicionera}, que puede observarse en la ilustración. Holtzmann afirma que existe una enorme cantidad de palabras con muy baja probabilidad en cada elección que, en realidad, están sobrerepresentadas cuando hablamos de términos agregados. Es decir, la \textbf{probabilidad agregada} de todas esas palabras con una bajísima probabilidad puede corresponder a \textbf{grandes proporciones de la distribución de probabilidad}, lo que, efectivamente, va en contra de nuestro objetivo.
 
 Tomando solo aquellas K mejores, se elimina dicha cola y se redistribuye la probabilidad de los términos elegidos de forma oportuna, creando un modelo de decodificación mucho más natural que los otros.
 

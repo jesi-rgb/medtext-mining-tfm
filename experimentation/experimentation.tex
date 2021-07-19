@@ -4,9 +4,8 @@ En este capítulo usaremos todos los conceptos vistos en los capítulos anterior
 
 
 
-
-
 \input{preprocess/preprocess.tex}
+
 
 
 \section{Resultados}
@@ -45,6 +44,11 @@ La pregunta que nos hacemos realmente es: ?`cómo de buenos son los comentarios 
 Para solucionar estos problemas, se han inventado algunas técnicas, anuque las más relevantes son la métrica BLEU \cite{BLEU} y la métrica Rouge \cite{lin2004rouge}.
 
 \subsubsection{BLEU}
+
+\begin{equation}
+	BLEU = min\left( 1, exp\left( 1 - \frac{ref_{length}}{output_{length}} \right) \right) \left( \prod^{4}_{i=1} precision_i \right)^{\frac{1}{4}}
+\end{equation}
+
 La métrica \textbf{B}i\textbf{L}ingual \textbf{E}valuation \textbf{U}nderstudy (BLEU) se ideó originalmente con objeto de evaluar traducciones automáticas. Dado un texto en un idioma y la traducción automática a otro, poder ofrecer un valor objetivo de cómo de bien se corresponden dichas oraciones. Esta tarea, como decíamos anteriormente, se compone de un importante carácter subjetivo, y es la razón por la que existen intérpretes y traductores que se encargan de este trabajo. La traducción de texto no es un mapeo directo de un conjunto de palabras de un idioma al de otro, ya que han de considerarse expresiones y valores culturales.
 
 Dicho eso, disponer de, al menos, una medida que pueda servir de forma orientativa para evaluar la calidad de un traductor automático es, cuanto menos, conveniente.
@@ -61,6 +65,7 @@ Hay que tener en cuenta que es una medida de \textbf{solapamiento} especialmente
 \subsubsection{Rouge}
 La métrica Recall-Oriented Understudy for Gisting Evaluation (Rouge) funciona de una manera muy similar, calculando el solapamiento de las palabras en los textos a comparar y haciendo especial énfasis en las diferencias entre el número de tokens, ya que es una métrica especialmente diseñada para la evaluación de resúmenes. En esta métrica se obtuvo un valor de 0.0669, indicando un supuestamente mal resumen del texto. 
 
+\vspace{15mm}
 Como vemos, no son medidas muy útiles para nuestro propósito, pero lo cierto es que no existen muchas otras alternativas para la evaluación automática del lenguaje generativo libre, ya que es una tarea tan intrínsecamente subjetiva, como mencionábamos antes. Existe una opción en \cite{yuan2021bartscore}, pero el código no ha sido publicado a día de hoy ya que continúa en desarrollo. 
 
 Las medidas utilizadas anteriormente puede que no nos ofrezcan un valor objetivo de la calidad de los comentarios, pero sí nos ofrecen información acerca de su solapamiento.

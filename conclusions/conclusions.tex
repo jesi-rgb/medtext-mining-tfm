@@ -11,7 +11,7 @@ Aún así, en estas secciones se puede encontrar mucha información muy valiosa 
 \section{Objetivos propuestos}
 Dada la problemática inicial, el objetivo es crear una herramienta que pueda ofrecer información estructurada. Una de las herramientas más útiles en este caso es un reconocedor de entidades, o, en inglés, un NER Tagger. Dado un texto, es capaz de reconocer entidades importantes automáticamente.
 
-En el contexto médico, debemos atender a las entidades más importantes como los medicamentos, enfermedades, partes del cuerpo, etc. Para ello, existe un vocabulario unificado, denomidando SNOMED. Gracias a esto, podemos averiguar con precisión dónde se hallan los datos más importantes.
+En el contexto médico, debemos atender a las entidades más importantes como los medicamentos, enfermedades, partes del cuerpo, etc. Para ello, existe un vocabulario unificado, denominado SNOMED. Gracias a esto, podemos averiguar con precisión dónde se hallan los datos más importantes.
 
 Si bien se han creado varios reconocedores de entidades, cada uno construido para diferentes tareas dentro del ámbito médico (desde recetas de medicamentos hasta informes quirúrjicos), se pretendía crear un sistema con el que el desarrollo de nuevos reconocedores fuera más fácil. Esto implica disponer de ingentes cantidades de datos que, por su delicada corte, pueden no estar fácilmente disponibles.
 
@@ -21,8 +21,9 @@ Un generador de comentarios automático elimina la necesidad de inspeccionar en 
 
 
 \section{Metogología y resultados}
-Es por ello que disponemos de dos objetivos: 
+Es por ello que tenemos varios objetivos: 
 \begin{enumerate}
+	\item Recopilar todas las fuentes de información públicas que nos provean con datos de comentarios médicos listos para su análisis.
 	\item Crear un modelo de lenguaje generativo que sea capaz de generar comentarios de forma automática.
 	\item Disponiendo de un conjunto de datos \textit{infinito}, habilitar un sencillo desarrollo de herramientas de extracción de conocimiento de texto.
 \end{enumerate}

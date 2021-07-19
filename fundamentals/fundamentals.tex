@@ -183,6 +183,30 @@ Estos vocabularios son de vital importancia para modelos de lenguaje médico, ya
 
 Como vemos, el SNOMED trata de unificar y sistematizar el lenguaje médico, por lo que la cuestión de cómo esto afecta al personal sanitario real empieza a ser relevante. Como en muchas otras disciplinas, se habla de que las \textit{máquinas sustituyen a las personas}, cuando el trabajo en cuestión es altamente automatizable. Esto es solo parcialmente cierto, ya que sí se requiere de un personal cualificado capaz de comprender y utilizar este sistema y más aún si queremos extraer conocimiento automáticamente del mismo. Se requiere de personal más especializado y formado, pero este sistema no va a sustituir a dichos expertos, al menos en los años venideros.
 
+\section{Reconocimiento de entidades en \\cuerpos de texto}
+\label{sec:nertagger}
+Para el análisis y minería de texto no estructurado una de las técnicas más útiles es el \textbf{Named Entity Recognition (NER) Tagging}, es decir, el etiquetado de entidades. La idea es, dado un cuerpo de texto, extraer aquellas entidades que tengan un significado propio o relevante por sí mismas. En nuestro contexto, esto corresponde, por ejemplo, a nombres de enfermedades, partes del cuerpo, medicamentos, entre otras. Un NER Tagger entrenado sería capaz de detectar dichas entidades en el texto y devolver una lista de las mismas, automatizando la extracción de información.
+
+La librería SciSpacy \cite{neumann-etal-2019-scispacy} nos provee con una selección de NER Taggers preentrenados en diferentes corpus de caracter biomédico y los hace disponibles mediante la famosa librería Spacy \cite{spacy}, que se ha convertido en el estándar de la industria para el análisis del lenguaje natural.
+
+Estos son los taggers que utilizaremos en nuestra aplicación, aunque resulta sencillo incluir algún otro más que pudiera ser de interés.
+
+\begin{itemize}
+	\item \textbf{Med7} \cite{med7}: El Med7 es un NER entrenado en datos clínicos capaz de detectar 7 entidades diferentes: nombres de medicamentos (Aspirina, Advil), vía de administración del medicamento (oral, intravenosa, respiratoria), frecuencia (cada 8 horas), dosis (mg o ml), cantidad (número de pastillas), formato (pastilla, polvos, etc), y tiempo total de medicación (semanas, meses). 
+	\item \textbf{BC5CDR} \cite{bc5cdr}: Este tagger recibe su nombre del corpus en el que fue entrenado. Dicho corpus consta de 1500 artículos \textit{PubMed} con 4409 sustancias químicas etiquetadas, 5818 enfermedades y 3116 interacciones enfermedad-medicamento.
+	\item \textbf{BIONLP13CG} \cite{BIONLP13CG}: De igual forma, este tagger recibe su nombre del corpus que lo origina. Este tagger se especializa más en términos genéticos, cánceres, órganos y compuestos químicos como aminoácidos o proteínas, ligeramente mejor adecuado para prescripciones quirúrgicas.
+\end{itemize}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=.9\textwidth]{media/med7_example.png}
+	\caption{Ejemplo del Med7 en acción. Vemos cómo las entidades se han reconocido en diferentes colores, haciendo la extracción de información mucho más eficiente. bid viene del latin \textit{bis in die}, que se traduce por dos veces al día. PO viene de \textit{Per os}, vía oral. \textit{Suspension} hace referencia a una disolución en agua.}
+	\label{fig:med7}
+\end{figure}
+
+En la Figura \ref{fig:med7} vemos un ejemplo de cómo una de estas herramientas puede ayudar al análisis del texto, destacando con diferentes colores las entidades encontradas. Esto es, sin embargo, solo una aplicación de demostración. El verdadero poder reside en que dichas entidades están internamente representadas en forma de diccionario, asociando cada término encontrado en el texto con la entidad correspondiente. 
+
+Estos diccionarios pueden anexarse y guardarse en la base de datos correspondiente, haciendo su búsqueda y análisis muchísimo más rápidos, además de habilitando comparativas que no serían posibles de otra forma.
 
 \subsection{Transformers}
 En esta sección hablaremos del Transformer, un tipo de arquitectura de red neuronal creada por ingenieros de Google \cite{TransformerAshish2017}, en más profundidad, sus características principales en contraste con las demás tecnologías y de la configuración escogida para nuestro problema.
@@ -227,7 +251,7 @@ Esta arquitectura cíclica, recurrente, convierte a esta familia de redes en sis
 \end{figure}
 
 \subsubsection{Arquitectura}
-El Transformer corresponde con una de las técnicas más modernas de procesamiento de lenguaje natural, y una de las más relevantes del momento. Se la presenta como \textit{estado del arte en procesamiento del lenguaje natural}, constituyendo un modelo mucho más potente y \textbf{considerado} que las anteriores LSTM.
+El Transformer corresponde con una de las técnicas más modernas de procesamiento de lenguaje natural, y una de las más relevantes del momento. Se la presenta muchas publicaciones como \textit{estado del arte en procesamiento del lenguaje natural}, constituyendo un modelo mucho más potente y \textbf{considerado} que las anteriores LSTM.
 
 El transformer está princpalmente basado en redes recurrentes, redes cuya entrada está conectada a la salida y, generalmente, se las construye con un contexto temporal en mente. Esto quiere decir que dada una entrada en el momento $n$, predeciremos la salida en función de la salida que se obtuvo en el momento $n - 1$, además de la entrada del momento $n$ en sí.
 
@@ -253,21 +277,20 @@ Por otro lado, los modelos tradicionales sufren de no considerar dependencias en
 \subsection{Modelos basados en transformers}
 Habiendo descrito brevemente la arquitectura de un transformer en general, veamos qué se ha desarrollado con esta nueva tecnología.
 
+\subsubsection{GPT}
+GPT son las siglas de \textit{Generative Pre-trained Transformer}~\cite{GPT3openAI2020}. Este modelo trata de abarcar los problemas que otros transformers solían tener, como es la habilidad de un humano para continuar una tarea lingüística dado muy poco contexto o instrucciones. Escalando los modelos se logra mejorar significativamente la generalización del mismo y se descubre que no es necesario afinar los parámetros de los modelos, sino que esto puede corresponderse más con un problema de meta-aprendizaje.
+
+Existen varias versiones del GPT, como GPT-2 o GPT-3, así como varios tamaños dentro de cada versión. En el caso del GPT-3, se han creado versiones que empiezan con 125 millones de parámetros entrenables en la versión que denominan pequeña, hasta 175 mil millones, que es la versión que los investigadores denominan como ``GPT-3'' a secas. Jared Kaplan sugiere en \cite{kaplan2020scaling} que la función de pérdida en la etapa de validación debería corresponderse con la ley de potencia, (también conocida como el principio de Pareto) en función del tamaño de dicha red, de ahí que se probaran distintas configuraciones y tamaños.
+
 \subsubsection{BERT}
 BERT son las siglas en inglés de \textit{Bidirectional Encoder Representations from Transformers}~\cite{bertDevlin2019}. Es un modelo de lenguaje generativo basado en un encoder bidireccional como su nombre indica. Este modelo fue uno de los primeros en realmente conseguir una fluidez comunicativa convincente. Su arquitectura preentrenada permite, con una sola capa extra, craer modelos para tareas en casi cualquier ámbito, como responder preguntas o inferencia del lenguaje, sin necesidad de modificar particularmente su arquitectura interna.
-
 
 \subsubsection{LaMDA}
 LaMDA corresponde con las siglas de \textit{Language Model for Dialogue Applications}~\cite{LaMDAGoogle2020}, un proyecto de Google que compite de forma directa con los modelos antes mencionados. Este proyecto se creó con una aplicación en concreto: un \textit{chatbot} automático lo más natural posible, al que llamaron \textit{Meena}. Según las estadísticas de Google, Meena tiene casi el doble de capacidad de predicción e inferencia que el antiguo GPT-2, y se entrenó en 8 veces más datos. Es el buque insignia de la empresa.
 
-\subsubsection{GPT-3 Open AI}
-GPT son las siglas de \textit{Generative Pre-trained Transformer}~\cite{GPT3openAI2020}. Este modelo trata de abarcar los problemas que otros transformers solían tener, como es la habilidad de un humano para continuar una tarea lingüística dado muy poco contexto o instrucciones. Escalando los modelos se logra mejorar significativamente la generalización del mismo y se descubre que no es necesario afinar los parámetros de los modelos, sino que esto puede corresponderse más con un problema de meta-aprendizaje.
-
-Existen varias versiones del GPT-3, entrenadas en diferentes tamaños, desde 125 millones en la versión que denominan pequeña, hasta 175 mil millones, que es la versión que los investigadores denominan como ``GPT-3'' a secas. Jared Kaplan sugiere en \cite{kaplan2020scaling} que la función de pérdida en la etapa de validación debería corresponderse con la ley de potencia, (también conocida como el principio de Pareto) en función del tamaño de dicha red, de ahí que se probaran distintas configuraciones y tamaños.
-
-Para nuestro proyecto, hemos escogido el modelo GPT-2, de OpenAI. Concretamente usaremos la versión pequeña, que consta de 117M de parámetros. Este modelo fue entrenado en una base de datos de texto tomada de Wikipedia, constando de más de 60GB de datos de texto. 
-
-Utilizaremos el modelo preentrenado, que ya de por sí es capaz de hablar de forma genérica, y lo entrenaremos con nuestra base de datos para que aprenda a hablar tal y como lo haría un médico.
+\vspace{15mm}
+% \vfill
+Para nuestro proyecto, hemos escogido el modelo GPT-2, de OpenAI. Concretamente usaremos la versión pequeña, que consta de 117M de parámetros. Este modelo fue entrenado en una base de datos de texto tomada de Wikipedia, constando de más de 60GB de datos de texto. Utilizaremos el modelo preentrenado, que ya de por sí es capaz de hablar de forma genérica, y lo entrenaremos con nuestra base de datos para que aprenda a hablar tal y como lo haría un médico.
 
 
 
