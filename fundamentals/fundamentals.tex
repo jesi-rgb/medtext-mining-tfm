@@ -84,12 +84,12 @@ De forma similar, el valor \textit{Inverse Document Frequency}~\cite{Jones2004AS
 donde $d$ es un documento del conjunto de documentos con cardinalidad $N$, $t$ es el término en concreto y $df(t)$ es el número de documentos que contienen el término $t$.
 
 \subsubsection{Bolsas de palabras}
-Conociendo el concepto de frecuencias de palabaras, una de las aplicaciones directas son las bolsas de palabras, que recogen en una estructura con forma de diccionario cada término y su frecuencia.
+Conociendo el concepto de frecuencias de palabras, una de las aplicaciones directas son las bolsas de palabras, que recogen en una estructura con forma de diccionario cada término y su frecuencia.
 
 De esta forma, tenemos un \textit{ranking} para cada término. Esto se utiliza extensamente en sistemas de recomendación, en donde una consulta provista por un usuario se compara con la bolsa de palabras del posible conjunto de documentos, y este conjunto va afinándose conforme se van comparando los conjuntos de palabras. El resultado es una búsqueda más refinada que devuelve documentos más relevantes con respecto a la consulta realizada.
 
 \subsubsection{Word Clouds}
-Las nubes de palabras o \textit{Word Clouds} son un tipo de visualización especializada en conjuntos de datos de texto. Consisten en representar el conjunto de palabras más relevantes del texto que analicemos, disponiendo dicho conjunto de forma distrubida por la imagen. Por lo general, se suelen utilizar códigos de color o tamaño para aludir a factores como la frecuencia o la relevancia de dicha palabra en el texto.
+Las nubes de palabras o \textit{Word Clouds} son un tipo de visualización especializada en conjuntos de datos de texto. Consisten en representar el conjunto de palabras más relevantes del texto que analicemos, disponiendo dicho conjunto de forma distribuída por la imagen. Por lo general, se suelen utilizar códigos de color o tamaño para aludir a factores como la frecuencia o la relevancia de dicha palabra en el texto.
 
 Dada una bolsa de palabras, podemos tomar los $n$ términos más presentes y escribirlos en una imagen, haciendo la fuente tanto más grande cuanto más aparezca dicha palabra. Esto ofrece una manera rápida e intuitiva de averiguar el tema del cuerpo del texto y sus términos más relevantes.
 
@@ -117,7 +117,7 @@ Las principales técnicas desarrolladas para reducir la dimensionalidad incluyen
 \begin{itemize}
     \item \textbf{Principal Component Analysis (PCA)}: PCA o análisis de componentes principales trata de encontrar un subespacio latente que represente a los datos encontrando aquellas variables que estén menos relacionadas y que maximicen la varianza, para conservar la mayor cantidad de variabilidad posible. \cite{Jolliffe:1986} 
     \item \textbf{Independent Component Analysis (ICA)}: es una técnica similar que trata de expresar los datos con transformaciones lineales. \cite{Hyvrinen2014TopographicIC}
-    \item \textbf{Linear Discriminant Analysis (LDA)}: es otro método muy utilizado cuando los datos son de caracter categórico y no tienen una proporcion uniforme intraclase. \cite{LDA2009}
+    \item \textbf{Linear Discriminant Analysis (LDA)}: es otro método muy utilizado cuando los datos son de carácter categórico y no tienen una proporcion uniforme intraclase. \cite{LDA2009}
 \end{itemize}
 
 Toda esta familia de algoritmos resulta muy conveniente para \textit{comprimir} datos de alta dimensionalidad y extraer solo las \textbf{características principales} de los mismos. Se suelen usar en etapas de preprocesamiento, donde los datos resultantes se pasan a los algoritmos a entrenar, consiguiendo un mejor resultado y rendimiento en comparación con los datos sin preprocesar.
@@ -136,7 +136,7 @@ Los principales algoritmos de clasificación de texto, entre otros, son los sigu
     
     \item \textbf{Máquinas de Soporte Vectorial}: Las Support Vector Machines (SVM) son modelos muy conocidos de aprendizaje supervisado para clasificación y regresión. Aunque originalmente se concibieron como modelos de separación lineal entre las clases a clasificar, se pueden modificar sus \textit{kernels} para obtener clasificadores no lineales. El funcionamiento de estos modelos en clasificación de texto es muy bueno como se sugiere en \cite{SVMJoa1998}.
 
-    \item \textbf{Redes neuronales recurrentes}: las redes neuronales recurrentes son una especialización de las redes neuronales en las que un subonjunto de las neuronas reciben su salida como una entrada, generándose ciclos de retroalimentación o \textit{feedback}. Estas redes funcionan especialmente bien con datos con patrones y componentes temporales, características especialmente destacables del lenguaje humano, así como de la música o vídeo. \cite{ZhouLSTM}. Profundizaremos en este tema en las secciones siguientes.
+    \item \textbf{Redes neuronales recurrentes}: las redes neuronales recurrentes son una especialización de las redes neuronales en las que un subconjunto de las neuronas reciben su salida como una entrada, generándose ciclos de retroalimentación o \textit{feedback}. Estas redes funcionan especialmente bien con datos con patrones y componentes temporales, características especialmente destacables del lenguaje humano, así como de la música o vídeo. \cite{ZhouLSTM}. Profundizaremos en este tema en las secciones siguientes.
     
     \item \textbf{Boosting y bagging}: boosting y bagging son dos métodos basados en lo que se denomina en la literatura como \textit{ensemble learning}. Estos métodos no son algoritmos de clasificación en sí, sino que son métodos aplicables a cualquier modelo. Esta técnica utiliza un gran número de modelos que funcionan muy bien para casos muy específicos pero no generalizan correctamente. La idea es que la respuesta conjunta de todos los modelos provea la respuesta correcta de forma más probable. \cite{Bauer2004AnEC}
 
@@ -187,7 +187,7 @@ Como vemos, el SNOMED trata de unificar y sistematizar el lenguaje médico, por 
 \label{sec:nertagger}
 Para el análisis y minería de texto no estructurado una de las técnicas más útiles es el \textbf{Named Entity Recognition (NER) Tagging}, es decir, el etiquetado de entidades. La idea es, dado un cuerpo de texto, extraer aquellas entidades que tengan un significado propio o relevante por sí mismas. En nuestro contexto, esto corresponde, por ejemplo, a nombres de enfermedades, partes del cuerpo, medicamentos, entre otras. Un NER Tagger entrenado sería capaz de detectar dichas entidades en el texto y devolver una lista de las mismas, automatizando la extracción de información.
 
-La librería SciSpacy \cite{neumann-etal-2019-scispacy} nos provee con una selección de NER Taggers preentrenados en diferentes corpus de caracter biomédico y los hace disponibles mediante la famosa librería Spacy \cite{spacy}, que se ha convertido en el estándar de la industria para el análisis del lenguaje natural.
+La librería SciSpacy \cite{neumann-etal-2019-scispacy} nos provee con una selección de NER Taggers preentrenados en diferentes corpus de carácter biomédico y los hace disponibles mediante la famosa librería Spacy \cite{spacy}, que se ha convertido en el estándar de la industria para el análisis del lenguaje natural.
 
 Estos son los taggers que utilizaremos en nuestra aplicación, aunque resulta sencillo incluir algún otro más que pudiera ser de interés.
 
@@ -208,10 +208,10 @@ En la Figura \ref{fig:med7} vemos un ejemplo de cómo una de estas herramientas 
 
 Estos diccionarios pueden anexarse y guardarse en la base de datos correspondiente, haciendo su búsqueda y análisis muchísimo más rápidos, además de habilitando comparativas que no serían posibles de otra forma.
 
-\subsection{Transformers}
+\section{Transformers}
 En esta sección hablaremos del Transformer, un tipo de arquitectura de red neuronal creada por ingenieros de Google \cite{TransformerAshish2017}, en más profundidad, sus características principales en contraste con las demás tecnologías y de la configuración escogida para nuestro problema.
 
-\subsubsection{Redes neuronales}
+\subsection{Redes neuronales}
 Para entender lo que es un Transformer, debemos primero comprender lo que es una red neuronal y lo que es una red neuronal recurrente.
 
 Una red neuronal es un modelo algorítmico y matemático que trata de modelar el funcionamiento del cerebro en tareas de aprendizaje, de forma que el objetivo principal de estos modelos es ser capaz de aprender automáticamente la solución a la tarea en cuestión simplemente exponiéndose a ejemplos de dicha tarea.
@@ -227,7 +227,7 @@ Estos modelos se estructuran de forma muy similar a la de un cerebro real, const
 
 Aunque a primera vista parezca ser una tecnología muy nueva, ya que es en los últimos años cuando más hemos visto la integración de estos sistemas en problemas reales, es un campo que lleva en desarrollo desde los años 40. Podemos atribuir los inicios más determinantes a McCulloc y Pitts, que crearon el primer modelo computacional de una red neuronal en \cite{mcculloch43a}, y a Donald Hebb, considerado el padre de las redes neuronales tras desarrollar el concepto de \textit{aprendizaje hebbiano} \cite{hebb-organization-of-behavior-1949}, uno de las claves para el desarrollo de estos sistemas.
 
-\subsubsection{Redes Neuronales Recurrentes}
+\subsection{Redes Neuronales Recurrentes}
 El auge en la investigación de este campo llevó a crear diferentes categorías de redes neuronales. Dichas categorías se correspondían con la arquitectura de la misma, que, en gran medida, define el propósito para el que estaba diseñada. Esto dio lugar a las redes neuronales convolucionales, cuyo principal elemento era la capa de convolución, que se utiliza ampliamente en tareas de procesamiento de imágenes, o los autoencoders, que se utilizan principalmente en tareas de detección de anomalías.
 
 Una de estas arquitecturas es la red neuronal recurrente, cuya particularidad es que las distintas neuronas no solo están conectadas con neuronas adyacentes, sino consigo mismas. Es decir, su salida depende directamente de su entrada. De esta forma, estos modelos se suelen concebir con una componente temporal, y siempre hablamos de la salida en el momento $n$, que dependerá de la entrada en el momento $n$ y de la salida en el momento $n - 1$. Podemos ver este comportamiento en la Figura \ref{fig:rnn-unrolled}, donde la neurona inicial se \textit{desenrolla} en el tiempo para visualizar las salidas y las entradas en cada instante.
@@ -250,7 +250,7 @@ Esta arquitectura cíclica, recurrente, convierte a esta familia de redes en sis
     \label{fig:lstm-cell}
 \end{figure}
 
-\subsubsection{Arquitectura}
+\subsection{Arquitectura}
 El Transformer corresponde con una de las técnicas más modernas de procesamiento de lenguaje natural, y una de las más relevantes del momento. Se la presenta muchas publicaciones como \textit{estado del arte en procesamiento del lenguaje natural}, constituyendo un modelo mucho más potente y \textbf{considerado} que las anteriores LSTM.
 
 El transformer está princpalmente basado en redes recurrentes, redes cuya entrada está conectada a la salida y, generalmente, se las construye con un contexto temporal en mente. Esto quiere decir que dada una entrada en el momento $n$, predeciremos la salida en función de la salida que se obtuvo en el momento $n - 1$, además de la entrada del momento $n$ en sí.
@@ -264,8 +264,8 @@ Esto es en sí el funcionamiento de una red recurrente estándar. El transformer
     \label{fig:transformer}
 \end{figure}
 
-\subsubsection{Atención}
-Uno de los principales conceptos que añade el transformer es de la \textbf{atención}. Este concepto trata de emular el concepto de atención con el que todos estamos familiarizados: el de ponderar y distrubir los recursos cognitivos de forma que aquellos estímulos más importantes reciban más recursos de cómputo por parte del sistema, de la misma forma que nuestro cerebro procesa de forma más potente aquello en lo que estamos concentrados, ignorando aquellos estímulos que sean menos importantes en un determinado instante.
+\subsection{Atención}
+Uno de los principales conceptos que añade el transformer es de la \textbf{atención}. Este concepto trata de emular el concepto de atención con el que todos estamos familiarizados: el de ponderar y distribuir los recursos cognitivos de forma que aquellos estímulos más importantes reciban más recursos de cómputo por parte del sistema, de la misma forma que nuestro cerebro procesa de forma más potente aquello en lo que estamos concentrados, ignorando aquellos estímulos que sean menos importantes en un determinado instante.
 
 Uno de los principales problemas de las redes neuronales recurrentes clásicas es la imposibilidad de la paralelización de su ejecución, y el crecimiento de los términos a considerar conforme más avanzado es el análisis de la secuencia en concreto.
 

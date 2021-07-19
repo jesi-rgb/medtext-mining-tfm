@@ -30,6 +30,7 @@ La generación, como vimos en las secciones anteriores, viene determinada por do
 	}
 \end{thm}
 
+
 Vemos que en este caso, se han generado dos comentarios exactamente iguales. Esto es debido al alto grado determinista del generador en este caso. En azul se ha indicado la frase que inicia el ciclo, y en rojo el bucle infinito que obtendríamos de seguir generando dicho comentario. Esta combinación de parámetros no es trabajable.
 
 \subsubsection{Temp: 0.4, Top p: 0.4}
@@ -44,7 +45,7 @@ Vemos que en este caso, se han generado dos comentarios exactamente iguales. Est
 	}
 \end{thm}
 
-En este caso, vemos que el inicio, marcado en verde, es exacatamente igual que la generación anterior. En este caso, al aumentar la temperatura, obtenemos unos caminos ligeramente distintos al final del comentario, pero continuan apareciendo ciclos.
+En este caso, vemos que el inicio, marcado en verde, es exactamente igual que la generación anterior. En este caso, al aumentar la temperatura, obtenemos unos caminos ligeramente distintos al final del comentario, pero continúan apareciendo ciclos.
 
 \subsubsection{Temp: 0.6, Top p: 0.6}
 \begin{thm}
@@ -91,13 +92,13 @@ Conforme aumentamos el valor de la temperatura y estrechamos el rango de palabra
 	}
 \end{thm}
 
-En la Sección \ref{sec:comments} del Apéndice se exponen alguno más, por si su inspección resultase de interés. 
+En la Sección \ref{sec:comments} del Apéndice se exponen algunos más, por si su inspección resultase de interés. 
 
 Se puede apreciar que, a veces, los comentarios son muy cortos, como el comentario \ref{com:short}. En contadas ocasiones el generador ha devuelto una línea vacía. 
 
 En ocasiones, los comentarios pueden no ser rigurosos médicamente hablando, pero esto, de cara al análisis de las herramientas disponibles para el procesamiento de los comentarios, no es estrictamente necesario. Necesitamos que los comentarios incluyan conceptos que sean importantes y destacables, como tipos de enfermedades, medicaciones, etc. De esta forma, podremos analizar cómo las herramientas detectan diferentes tipos de información y cómo de fiables son. 
 
-Es por ello que poseer un generador de comentarios nos resulta conveniente, ya que se pueden considerar muchos más casos, prácticamente de forma ilimitada. Dados los resultados, el valor finalmente obtenido para los parámetros es de \textbf{0.9 para la temperatura} y \textbf{0.8 para el valor de p}.
+Es por ello que poseer un generador de comentarios nos resulta conveniente, ya que se pueden considerar muchos más casos, prácticamente de forma ilimitada. Dados los resultados, el valor finalmente elegido para los parámetros del GPT-2 es de \textbf{0.9 para la temperatura} y \textbf{0.8 para el valor de p}.
 
 \subsection{Métricas y calidad de los comentarios}
 
@@ -107,9 +108,9 @@ Con modelos clásicos que trabajan con números, o incluso imágenes, existe una
 
 En los modelos de lenguaje, y más aún, en los modelos generativos, obtener un valor cuantitativo que evalúe la calidad de los comentarios generados es, más que complicado, subjetivo.
 
-La pregunta que nos hacemos realmente es: ?`cómo de buenos son los comentarios generados? ?`Son comentarios coherentes? ?`Son comentarios rigurosos? ?`Cómo podemos evaluar de forma automática un conjunto de comentarios suficientemente representativo?
+Las preguntas que nos hacemos realmente son: ?`cómo de buenos son los comentarios generados? ?`Son comentarios coherentes? ?`Son comentarios rigurosos? ?`Cómo podemos evaluar de forma automática un conjunto de comentarios suficientemente representativo?
 
-Para solucionar estos problemas, se han inventado algunas técnicas, anuque las más relevantes son la métrica BLEU \cite{BLEU} y la métrica Rouge \cite{lin2004rouge}.
+Para solucionar estos problemas, se han inventado algunas técnicas, aunque las más relevantes son la métrica BLEU \cite{BLEU} y la métrica Rouge \cite{lin2004rouge}.
 
 \subsubsection{BLEU}
 
