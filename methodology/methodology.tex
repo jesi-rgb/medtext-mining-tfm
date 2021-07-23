@@ -7,7 +7,7 @@ En este capítulo ahondaremos en los conceptos más importantes que hemos de ent
 \section{Datos de entrada y preprocesamiento}
 En primer lugar, debemos ofrecer los datos de entrada al modelo. Estos datos deben estar previamente formateados y unificados. Veamos cómo se ha acometido dicho preprocesamiento.
 
-En la sección \ref{sec:preprocess} expondremos los diferentes métodos y técnicas utilizadas de preprocesamiento de texto para darle una forma apropiada y unificada al conjunto de datos, antes de poder introducirlos en el modelo.
+En la Sección \ref{sec:preprocess} expondremos los diferentes métodos y técnicas utilizadas de preprocesamiento de texto para darle una forma apropiada y unificada al conjunto de datos, antes de poder introducirlos en el modelo.
 
 En la Figura \ref{fig:preprocess-diagram} se ilustra un esquema de los pasos a seguir en dicha fase del proyecto. Explicaremos cada paso desde el punto de vista de los dos conjuntos de datos a unificar, ya que cada uno necesitará de un tratamiento particular en función de su etado inicial.
 
@@ -66,7 +66,7 @@ Dichos equipos pueden ser muy caros. Para ello, hicimos uso del servicio de clú
 
 Mediante \jesitt{ssh}, nos conectamos a la máquina que el equipo nos haya asignado y enviamos nuestros archivos usando \jesitt{scp}. Una vez nuestros archivos están en la máquina de destino, entrenamos el modelo, obtenemos los pesos y los descargamos de vuelta de la misma forma.
 
-Gracias a \jesitt{pytorch}\cite{pytorch} y \jesitt{transformers}\cite{WolfEtal2020Transformers}, podemos reentrenar nuestro modelo GPT-2 con nuestros datos, como se puede ver en \href{https://huggingface.co/transformers/custom_datasets.html}{Fine-tuning with custom datasets}. 
+Gracias a las bibliotecas \jesitt{pytorch}\cite{pytorch} y \jesitt{transformers}\cite{WolfEtal2020Transformers}, podemos reentrenar nuestro modelo GPT-2 con nuestros datos, como se puede ver en \href{https://huggingface.co/transformers/custom_datasets.html}{Fine-tuning with custom datasets}. 
 
 \subsection{Guardado del estado del modelo}
 Finalmente, una vez entrenado el modelo, lo más importante es guardar su estado. Mediante la función \jesitt{torch.save()}, podemos determinar el lugar en el que el estado del modelo se guardará. Este estado se guarda en un archivo, que, generalmente, consta de un diccionario en el que las claves corresponden a los nodos de las capas en sí, es decir, a sus parámetros entrenables, y cuyo valor es el peso de dicho nodo. 
@@ -290,4 +290,5 @@ En este caso, en lugar de tomar los K mejores términos, tomamos el conjunto má
 
 Esto provoca que en lugar de tomar un subconjunto de palabras de cardinalidad constante durante todo el proceso, ahora el tamaño varía. Se ha demostrado que esta flexibilidad ayuda y contribuye a una generación de texto más natural.
 
+\vspace{15mm}
 Estos dos últimos métodos son los más utilizados en el estado del arte, y este último es el que \textbf{utilizamos nosotros} en nuestro proyecto a la hora de generar palabras. Como vemos, aun disponiendo de una red neuronal muy potente, no es trivial extraer información coherente y de calidad.

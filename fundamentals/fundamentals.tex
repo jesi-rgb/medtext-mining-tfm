@@ -155,7 +155,7 @@ Además, mencionaremos brevemente los tres proyectos más grandes de lenguaje ge
 
 Debido al vocabulario y términos tan específicos con los que se tratan en el ámbito de la medicina, si deseamos automatizar cualquier proceso de extracción de conocimento debemos tener en cuenta este factor. Es por ello que en 1999 se creó el Systemized Nomenclature of Medicine -– Clinical Terms (SNOMED) \cite{snomed}. 
 
-El SNOMED es una colección de términos sistemáticamente organizada, que provee códigos, términos, sinónimos y definiciones utilizadas en el ámbito de la medicina. Podemos ver un pequeño ejemplo de las estadísticas que nos ofrece la web de SNOMED en la Tabla \ref{tab:snomed-example}. Se muestran los códigos generales, el nombre colectivo de todos los términos que caen bajo dicha categoría y cuántos términos exactamente pertenecen a dicha categoría. Esta tabla es solo un extracto, se pueden consultar el resto de términos en la \href{https://www.nlm.nih.gov/research/umls/sourcereleasedocs/current/SCTSPA/stats.html}{web del SNOMED}.
+El SNOMED es una colección de términos sistemáticamente organizada, que provee códigos, términos, sinónimos y definiciones utilizadas en el ámbito de la medicina. Podemos ver un pequeño ejemplo de las estadísticas que nos ofrece la web de SNOMED en la Tabla \ref{tab:snomed-example}. Se muestran los códigos generales, el nombre colectivo de todos los términos que caen bajo dicha categoría y cuántos términos exactamente pertenecen a dicha categoría. Esta tabla es solo un extracto, se pueden consultar el resto de términos en la \href{https://www.nlm.nih.gov/research/umls/sourcereleasedocs/current/SCTSPA/stats.html}{web de SNOMED}.
 
 % Please add the following required packages to your document preamble:
 % \usepackage{booktabs}
@@ -243,15 +243,9 @@ Una de estas arquitecturas es la red neuronal recurrente, cuya particularidad es
 
 Esta arquitectura cíclica, recurrente, convierte a esta familia de redes en sistemas muy potentes de procesamiento del lenguaje, vídeo o música, tipos de datos que tienen una componente temporal muy importante. Los modelos más relevantes son las redes recurrentes (RNN), las Long-Short Term Memory (LSTM), ambas estudiadas en \cite{sherstinsky2018fundamentals} y, finalmente, los muy nuevos Transformers.
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=.5\textwidth]{media/lstm-cell.pdf}
-    \caption{Ilustración de una neurona en una red LSTM}
-    \label{fig:lstm-cell}
-\end{figure}
 
 \subsection{Arquitectura}
-El Transformer corresponde con una de las técnicas más modernas de procesamiento de lenguaje natural, y una de las más relevantes del momento. Se la presenta muchas publicaciones como \textit{estado del arte en procesamiento del lenguaje natural}, constituyendo un modelo mucho más potente y \textbf{considerado} que las anteriores LSTM.
+El Transformer corresponde con una de las técnicas más modernas de procesamiento de lenguaje natural, y una de las más relevantes del momento. Se la presenta en muchas publicaciones como \textit{estado del arte en procesamiento del lenguaje natural}, constituyendo un modelo mucho más potente y \textbf{considerado} que las anteriores LSTM.
 
 El transformer está princpalmente basado en redes recurrentes, redes cuya entrada está conectada a la salida y, generalmente, se las construye con un contexto temporal en mente. Esto quiere decir que dada una entrada en el momento $n$, predeciremos la salida en función de la salida que se obtuvo en el momento $n - 1$, además de la entrada del momento $n$ en sí.
 

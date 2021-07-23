@@ -24,11 +24,11 @@ El dataset es en inglés, está anonimizado y los comentarios principalmente con
 
 El dataset está descompuesto en un archivo \jesitt{train.dat} y otro \jesitt{test.dat}. El archivo de entrenamiento contiene 14438 comentarios, y el de evaluación, 14442. En total, disponemos de 28880 comentarios.
 
-Como podemos observar en las Figuras \ref{fig:avg_char_train} y \ref{fig:avg_tokens_train}, la distribución de los distintos elementos de nuestro dataset de entrenamiento está muy normalmente distribuída.
+Como podemos observar en las Figuras \ref{fig:avg_char_train} y \ref{fig:avg_tokens_train}, la distribución de los distintos elementos de nuestro dataset de entrenamiento aparenta estar normalmente distribuída, si eliminamos los valores atípicos a partir de más de 2500 tokens o más de 350 palabras por comentarios.
 
 El número medio de caracteres por comentario es de 1230, y el número medio de tokens por comentario es de unos 180, correspondiéndose con las líneas amarillas en las figuras.
 
-Se pueden apreciar, aún así, algunos valores atípicos de comentarios particularmente largos. Esto, sin embargo, no es necesariamente malo en nuestro caso. En definitiva, cuanto más texto tengamos a nuestra disposición, mejor para el modelo.
+Como mencionábamos, se pueden apreciar algunos valores atípicos de comentarios particularmente largos. Esto, sin embargo, no es necesariamente malo en nuestro caso. En definitiva, cuanto más texto tengamos a nuestra disposición, mejor para el modelo.
 
 \begin{figure}[h!]
 	\centering
@@ -115,11 +115,11 @@ En esta sección, describiremos el preprocesamiento acometido en cada uno de los
 
 
 
-\subsection{Medical Text}
+\subsection{Dataset: Medical Text}
 Este conjunto de datos, siendo específicamente texto, el formato, ortografía y en general formato de los archivos es muy bueno. Simplemente hemos de eliminar las categorías adjuntas a cada comentario, para obtener una lista de comentarios crudos en sí. Por lo demás, los comentarios carecen de problemas de formato, codificación o cualquier otra cosa que pudiera interferir con el proceso de entrenamiento. Probablemente el autor ya hiciera esto por nosotros antes de publicarlo.
 
 
-\subsection{Medical Transcriptions}
+\subsection{Dataset: Medical Transcriptions}
 En el caso de las trancripciones médicas, la tarea es considerablemente más compleja. El conjunto de datos proviene de la página web \url{mtsamples.com}, como especificamos anteriomente. La autora efectuó un proceso de \textit{web scraping} para obtener toda la información y recogerla en el archivo \jesitt{.csv}. 
 
 Esto facilita las cosas, pero desde luego los comentarios deben ser tratados en profundidad antes de poder pasarlos a cualquier modelo. Los trazos de formato en HTML se dejan entrever en los comentarios con signos de puntuación o tabulaciones fuera de lugar, apreciables en el Comentario \ref{com:mt-before}, así que debemos arreglarlo previo entrenamiento.
